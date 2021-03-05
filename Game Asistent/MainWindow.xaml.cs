@@ -240,11 +240,42 @@ namespace GameAssistant
                     if (true)
                     {
                         string a = sr.ReadLine();
+
                         if (double.TryParse(a, out double aDouble))
                         {
                             clockInformation.BackgroundClockOpacity = aDouble;
                         }
                         else
+                        {
+                            sr.Close();
+                            return null;
+                        }
+                    }
+
+                    if (true)
+                    {
+                        string a = sr.ReadLine();
+
+                        if (a == null || a == "")
+                        {
+                            sr.Close();
+                            return null;
+                        }
+                        try
+                        {
+
+                            System.Windows.Media.Color color = (System.Windows.Media.Color)System.Windows.Media.ColorConverter.ConvertFromString(a);
+                            if (color != null)
+                            {
+                                clockInformation.BackgroundColor = color;
+                            }
+                            else
+                            {
+                                sr.Close();
+                                return null;
+                            }
+                        }
+                        catch
                         {
                             sr.Close();
                             return null;
@@ -277,6 +308,9 @@ namespace GameAssistant
 
                 cf.ClockLabel.Opacity = clockInf.ClockOpacity;
                 cf.rec1.Opacity = clockInf.BackgroundClockOpacity;
+
+                cf.rec1.Fill = new System.Windows.Media.SolidColorBrush(clockInf.BackgroundColor);
+
                 return cf;
             }
             else
@@ -309,6 +343,8 @@ namespace GameAssistant
                     sw.WriteLine(argCF.ClockLabel.Opacity.ToString());
                     sw.WriteLine(argCF.rec1.Opacity.ToString());
 
+                    sw.WriteLine(new System.Windows.Media.ColorConverter().ConvertToString(BrushToColorMedia(argCF.rec1.Fill)));
+
                     sw.Close();
                 }
                 #endregion
@@ -332,6 +368,8 @@ namespace GameAssistant
                     double _clockOpacity = clockInf.ClockOpacity;
                     double _backgroundClockOpacity = clockInf.BackgroundClockOpacity;
 
+                    string _backgroundColor = clockInf.BackgroundColor.ToString();
+
                     #endregion
 
                     #region OverwriteFile
@@ -348,6 +386,7 @@ namespace GameAssistant
 
                         sw.WriteLine(_clockOpacity.ToString());
                         sw.WriteLine(_backgroundClockOpacity.ToString());
+                        sw.WriteLine(_backgroundColor.ToString());
 
                         sw.Close();
                     }
@@ -361,7 +400,7 @@ namespace GameAssistant
 
                     using (StreamWriter sw = File.CreateText(ClockSettingsPath))
                     {
-                        sw.WriteLine(false.ToString());
+                        sw.WriteLine(true.ToString());
 
                         sw.WriteLine("100");
                         sw.WriteLine("100");
@@ -372,8 +411,9 @@ namespace GameAssistant
                         sw.WriteLine((0.75).ToString());
                         sw.WriteLine((0.50).ToString());
 
-                        sw.Close();
+                        sw.WriteLine("#FFFFFFB5");
 
+                        sw.Close();
                     }
 
                     #endregion
@@ -383,7 +423,6 @@ namespace GameAssistant
 
 
         }
-
         #endregion
 
         #region PictureFormStaticMethods
@@ -631,7 +670,7 @@ namespace GameAssistant
 
                     using (StreamWriter sw = File.CreateText(PictureSettingsPath))
                     {
-                        sw.WriteLine(false.ToString());
+                        sw.WriteLine(true.ToString());
 
                         sw.WriteLine("100");
                         sw.WriteLine("100");
@@ -938,21 +977,33 @@ namespace GameAssistant
 
         #region EventsMethods
 
+        /// <summary>
+        /// ClockForm size changed [Event]
+        /// </summary>
         private void ClockForm_SizeChanged(object sender, SizeChangedEventArgs e)
         {
             UpdateClockInformationOfFile(clockForm);
         }
 
+        /// <summary>
+        /// ClockForm location changed [Event]
+        /// </summary>
         private void ClockForm_LocationChanged(object sender, EventArgs e)
         {
             UpdateClockInformationOfFile(clockForm);
         }
 
+        /// <summary>
+        /// PictureForm size changed [Event]
+        /// </summary>
         private void PictureForm_SizeChanged(object sender, SizeChangedEventArgs e)
         {
             UpdatePictureInformationOfFile(pictureForm);
         }
 
+        /// <summary>
+        /// PictureForm location changed [Event]
+        /// </summary>
         private void PictureForm_LocationChanged(object sender, EventArgs e)
         {
             UpdatePictureInformationOfFile(pictureForm);
@@ -993,5 +1044,42 @@ namespace GameAssistant
         }
 
         #endregion
+
+        #region Helpers
+
+        /// <summary>
+        /// Convert Brush to Color (System.Windowd.Media)
+        /// </summary>
+        /// <param name="brush">Brush to convert</param>
+        /// <returns>Color of Brush</returns>
+        public static System.Windows.Media.Color BrushToColorMedia(System.Windows.Media.Brush brush)
+        {
+            System.Windows.Media.SolidColorBrush newBrush = (System.Windows.Media.SolidColorBrush)brush;
+            System.Windows.Media.Color myColorFromBrush = newBrush.Color;
+            return myColorFromBrush;
+        }
+
+        /// <summary>
+        /// Convert System.Windows.Media.Color to System.Drawing.Color
+        /// </summary>
+        /// <param name="colorMedia">Color to convert</param>
+        /// <returns>Color of return</returns>
+        public static System.Drawing.Color ColorMediaToDrawing(System.Windows.Media.Color colorMedia)
+        {
+            return System.Drawing.Color.FromArgb(colorMedia.A, colorMedia.R, colorMedia.G, colorMedia.B);
+        }
+
+        /// <summary>
+        /// Convert System.Drawing.Color to System.Windows.Media.Color
+        /// </summary>
+        /// <param name="colorDrawing">Color to convert</param>
+        /// <returns>Color of return</returns>
+        public static System.Windows.Media.Color ColorDrawingToMedia(System.Drawing.Color colorDrawing)
+        {
+            return System.Windows.Media.Color.FromArgb(colorDrawing.A, colorDrawing.R, colorDrawing.G, colorDrawing.B);
+        }
+
+        #endregion
+
     }
 }

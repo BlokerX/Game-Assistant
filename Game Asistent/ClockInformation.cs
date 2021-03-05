@@ -1,22 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace GameAssistant
 {
-    public class ClockInformation
+    public class ClockInformation : WidgetInformation
     {
-        public bool IsChosed;
-
-        public int PositionX;
-        public int PositionY;
-
-        public int Width;
-        public int Heigth;
-
         public double ClockOpacity;
         public double BackgroundClockOpacity;
+        public System.Windows.Media.Color BackgroundColor;
     }
 }

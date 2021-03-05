@@ -101,6 +101,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="WidgetInformation.cs" />
     <Page Include="ClockForm.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>

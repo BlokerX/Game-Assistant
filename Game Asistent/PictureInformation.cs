@@ -6,16 +6,8 @@ using System.Threading.Tasks;
 
 namespace GameAssistant
 {
-    public class PictureInformation
+    public class PictureInformation : WidgetInformation
     {
-        public bool IsChosed;
-
-        public int PositionX;
-        public int PositionY;
-
-        public int Width;
-        public int Heigth;
-
         public double PictureOpacity;
         public string PicturePath;
     }

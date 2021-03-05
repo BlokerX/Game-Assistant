@@ -7,7 +7,7 @@
         mc:Ignorable="d"
         Title="Clock Widget" Height="62" Width="200" Topmost="True" Cursor="" AllowsTransparency="True" WindowStyle="None" Background="Transparent" AllowDrop="True" Activated="ClockWindow_Activated" ResizeMode="CanMinimize" ShowInTaskbar="False" Closing="ClockWindow_Closing">
     <Grid x:Name="Grid" Background="Transparent">
-        <Rectangle x:Name="rec1" Stroke="#FFFFFFB5" Opacity="0.5">
+        <Rectangle x:Name="rec1" Opacity="0.5">
             <Rectangle.Fill>
                 <SolidColorBrush Color="#FFFFFFB5"/>
             </Rectangle.Fill>

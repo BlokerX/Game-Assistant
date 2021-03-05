@@ -43,8 +43,11 @@ namespace GameAssistant
 
             #endregion
 
-            #region LoadingWidgets
+            LoadingWidgets();
+        }
 
+        private void LoadingWidgets()
+        {
             #region ClockFormLoading
 
             ClockInformation clockInf = MainWindow.DownloadClockInformationOfFile();
@@ -173,9 +176,6 @@ namespace GameAssistant
             }
 
             #endregion
-
-            #endregion
-
         }
 
         #endregion
@@ -418,6 +418,95 @@ namespace GameAssistant
 
         #endregion
 
+        #region ClockBackgroundColor
+
+        /// <summary>
+        /// Chose Clock's background color
+        /// </summary>
+        private void ChoseClockBackgroundColorButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (clockForm != null)
+            {
+                System.Drawing.Color colorDrawing = MainWindow.ColorMediaToDrawing(MainWindow.BrushToColorMedia(ClockBackgroundColorRectangle.Fill));
+
+                try
+                {
+                    using (System.Windows.Forms.ColorDialog colorDialog = new System.Windows.Forms.ColorDialog()
+                    {
+                        FullOpen = true,
+                        Color = colorDrawing
+                    })
+                    {
+                        if (colorDialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+                        {
+                            clockForm.rec1.Fill = new System.Windows.Media.SolidColorBrush(MainWindow.ColorDrawingToMedia(colorDialog.Color));
+                            ClockBackgroundColorRectangle.Fill = new System.Windows.Media.SolidColorBrush(MainWindow.ColorDrawingToMedia(colorDialog.Color));
+                        }
+                        MainWindow.UpdateClockInformationOfFile(clockForm);
+                    }
+                }
+                catch { }
+            }
+        }
+
+        /// <summary>
+        /// Loadnig clock's background color to rectangle 
+        /// </summary>
+        private void ClockBackgroundColorRectangle_Loaded(object sender, RoutedEventArgs e)
+        {
+            ClockBackgroundColorRectangle.Fill = clockForm.rec1.Fill;
+        }
+
+        #endregion
+
+        #region ButtonResetSettingsToDefault
+
+        /// <summary>
+        /// Reset widgets settings
+        /// </summary>
+        private void ButtonResetSettingsToDefault_Click(object sender, RoutedEventArgs e)
+        {
+            if (MessageBox.Show(
+                "Are you sure you want to restore the default settings? " +
+                "These changes cannot be undone?",
+                "Do you want reset settings?",
+                MessageBoxButton.YesNo,
+                MessageBoxImage.Question,
+                MessageBoxResult.No) == MessageBoxResult.Yes)
+            {
+
+                if (clockForm != null)
+                {
+                    clockForm.Close();
+                    clockForm = null;
+                }
+
+                if (pictureForm != null)
+                {
+                    pictureForm.Close();
+                    pictureForm = null;
+                }
+
+                if (File.Exists(MainWindow.ClockSettingsPath))
+                {
+                    File.Delete(MainWindow.ClockSettingsPath);
+                }
+
+                if (File.Exists(MainWindow.PictureSettingsPath))
+                {
+                    File.Delete(MainWindow.PictureSettingsPath);
+                }
+
+                LoadingWidgets();
+
+                ClockVisibleCheckBox_Loaded(sender, e);
+                PictureBoxVisibleCheckBox_Loaded(sender, e);
+                ClockBackgroundColorRectangle_Loaded(sender, e);
+            }
+        }
+
+        #endregion
+
         #region ButtonCloseApp
 
         private void ButtonCloseApplication_Click(object sender, RoutedEventArgs e)
@@ -475,5 +564,6 @@ namespace GameAssistant
         }
 
         #endregion
+
     }
 }
