@@ -447,6 +447,17 @@ namespace GameAssistant
                 }
                 catch { }
             }
+            else
+            {
+                MessageBox.Show
+                    (
+                    "If you want to change clock's background color, you need to enable the Clock widget!",
+                    "The color cannot be changed:",
+                    MessageBoxButton.OK,
+                    MessageBoxImage.Hand,
+                    MessageBoxResult.OK
+                    );
+            }
         }
 
         /// <summary>
@@ -454,7 +465,14 @@ namespace GameAssistant
         /// </summary>
         private void ClockBackgroundColorRectangle_Loaded(object sender, RoutedEventArgs e)
         {
-            ClockBackgroundColorRectangle.Fill = clockForm.rec1.Fill;
+            if (File.Exists(MainWindow.ClockSettingsPath))
+            {
+                ClockBackgroundColorRectangle.Fill = new System.Windows.Media.SolidColorBrush(MainWindow.DownloadClockInformationOfFile().BackgroundColor);
+            }
+            else if (clockForm != null)
+            {
+                ClockBackgroundColorRectangle.Fill = clockForm.rec1.Fill;
+            }
         }
 
         #endregion
