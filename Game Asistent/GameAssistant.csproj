@@ -36,7 +36,7 @@
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup>
-    <ApplicationIcon>Resources\firstIcon.ico</ApplicationIcon>
+    <ApplicationIcon>zegar.ico</ApplicationIcon>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
     <DebugSymbols>true</DebugSymbols>
@@ -172,6 +172,9 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="DefaultImageToImageBox.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="zegar.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

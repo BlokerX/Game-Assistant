@@ -15,26 +15,32 @@
     {
         "Entry"
         {
-        "MsmKey" = "8:_6AA379CF09B65968150FB99FD10DBE7B"
-        "OwnerKey" = "8:_FCD1D380F83B45DB87C18CCBDC62DA84"
+        "MsmKey" = "8:_11EDB378694748F285C3F97511A6F576"
+        "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
-        "MsmKey" = "8:_FCD1D380F83B45DB87C18CCBDC62DA84"
+        "MsmKey" = "8:_6AA379CF09B65968150FB99FD10DBE7B"
+        "OwnerKey" = "8:_11EDB378694748F285C3F97511A6F576"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_9A067C0EEE1542A4803016C240931114"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
         "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_FCD1D380F83B45DB87C18CCBDC62DA84"
+        "OwnerKey" = "8:_6AA379CF09B65968150FB99FD10DBE7B"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
         "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_6AA379CF09B65968150FB99FD10DBE7B"
+        "OwnerKey" = "8:_11EDB378694748F285C3F97511A6F576"
         "MsmSig" = "8:_UNDEFINED"
         }
     }
@@ -62,6 +68,14 @@
             "PrerequisitesLocation" = "2:1"
             "Url" = "8:"
             "ComponentsUrl" = "8:"
+                "Items"
+                {
+                    "{EDC2488A-8267-493A-A98E-7D9C3B36CDF3}:.NETFramework,Version=v4.7.2"
+                    {
+                    "Name" = "8:Microsoft .NET Framework 4.7.2 (x86 and x64)"
+                    "ProductCode" = "8:.NETFramework,Version=v4.7.2"
+                    }
+                }
             }
         }
         "Release"
@@ -86,6 +100,14 @@
             "PrerequisitesLocation" = "2:1"
             "Url" = "8:"
             "ComponentsUrl" = "8:"
+                "Items"
+                {
+                    "{EDC2488A-8267-493A-A98E-7D9C3B36CDF3}:.NETFramework,Version=v4.7.2"
+                    {
+                    "Name" = "8:Microsoft .NET Framework 4.7.2 (x86 and x64)"
+                    "ProductCode" = "8:.NETFramework,Version=v4.7.2"
+                    }
+                }
             }
         }
     }
@@ -145,6 +167,26 @@
             "Register" = "3:1"
             "Exclude" = "11:FALSE"
             "IsDependency" = "11:TRUE"
+            "IsolateTo" = "8:"
+            }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_9A067C0EEE1542A4803016C240931114"
+            {
+            "SourcePath" = "8:D:\\Moje dokumenty\\Pobrane\\favicon (1).ico"
+            "TargetName" = "8:favicon.ico"
+            "Tag" = "8:"
+            "Folder" = "8:_0DBF2EDCE8A24E688630C2DF086CFA16"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
         }
@@ -215,7 +257,7 @@
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:Game Assistant"
         "ProductCode" = "8:{68222FE0-EE23-4ED9-AE9E-D7C35C9CC238}"
-        "PackageCode" = "8:{411F01F8-B931-4E35-8334-F6E9B5D0359A}"
+        "PackageCode" = "8:{CA4059E8-8CCA-44A8-8836-9EB8D3F4F7CA}"
         "UpgradeCode" = "8:{799E4CB6-02B2-43A9-A662-37356B4A546F}"
         "AspNetVersion" = "8:4.0.30319.0"
         "RestartWWWService" = "11:FALSE"
@@ -232,7 +274,7 @@
         "Keywords" = "8:"
         "ARPCOMMENTS" = "8:Classic App Instaler"
         "ARPURLINFOABOUT" = "8:"
-        "ARPPRODUCTICON" = "8:"
+        "ARPPRODUCTICON" = "8:_9A067C0EEE1542A4803016C240931114"
         "ARPIconIndex" = "3:0"
         "SearchPath" = "8:"
         "UseSystemSearchPath" = "11:TRUE"
@@ -335,7 +377,7 @@
         }
         "Shortcut"
         {
-            "{970C0BB2-C7D0-45D7-ABFA-7EC378858BC0}:_1275C6253F114D38A5E6667F3CC5EB38"
+            "{970C0BB2-C7D0-45D7-ABFA-7EC378858BC0}:_15D09EAA84CB493994BF4930F14C360D"
             {
             "Name" = "8:Game Assistant"
             "Arguments" = "8:"
@@ -343,24 +385,24 @@
             "ShowCmd" = "3:1"
             "IconIndex" = "3:0"
             "Transitive" = "11:FALSE"
-            "Target" = "8:_FCD1D380F83B45DB87C18CCBDC62DA84"
-            "Folder" = "8:_8F0F7064243A4F3C87A50CA30DA05D29"
-            "WorkingFolder" = "8:_0DBF2EDCE8A24E688630C2DF086CFA16"
-            "Icon" = "8:"
-            "Feature" = "8:"
-            }
-            "{970C0BB2-C7D0-45D7-ABFA-7EC378858BC0}:_9280D9B0B9284BE2A0C31615E6832A2E"
-            {
-            "Name" = "8:Game Assistant"
-            "Arguments" = "8:"
-            "Description" = "8:"
-            "ShowCmd" = "3:1"
-            "IconIndex" = "3:0"
-            "Transitive" = "11:FALSE"
-            "Target" = "8:_FCD1D380F83B45DB87C18CCBDC62DA84"
+            "Target" = "8:_11EDB378694748F285C3F97511A6F576"
             "Folder" = "8:_F5501F0117434AD39ACD78D111FA2971"
             "WorkingFolder" = "8:_0DBF2EDCE8A24E688630C2DF086CFA16"
-            "Icon" = "8:"
+            "Icon" = "8:_9A067C0EEE1542A4803016C240931114"
+            "Feature" = "8:"
+            }
+            "{970C0BB2-C7D0-45D7-ABFA-7EC378858BC0}:_289A73F788B74B0BAE110C16D0C55291"
+            {
+            "Name" = "8:Game Assistant"
+            "Arguments" = "8:"
+            "Description" = "8:"
+            "ShowCmd" = "3:1"
+            "IconIndex" = "3:0"
+            "Transitive" = "11:FALSE"
+            "Target" = "8:_11EDB378694748F285C3F97511A6F576"
+            "Folder" = "8:_8F0F7064243A4F3C87A50CA30DA05D29"
+            "WorkingFolder" = "8:_0DBF2EDCE8A24E688630C2DF086CFA16"
+            "Icon" = "8:_9A067C0EEE1542A4803016C240931114"
             "Feature" = "8:"
             }
         }
@@ -762,9 +804,9 @@
         }
         "ProjectOutput"
         {
-            "{5259A561-127C-4D43-A0A1-72F10C7B3BF8}:_FCD1D380F83B45DB87C18CCBDC62DA84"
+            "{5259A561-127C-4D43-A0A1-72F10C7B3BF8}:_11EDB378694748F285C3F97511A6F576"
             {
-            "SourcePath" = "8:..\\Game Asistent\\obj\\Release\\Game Assistant.exe"
+            "SourcePath" = "8:..\\Game Asistent\\obj\\Debug\\Game Assistant.exe"
             "TargetName" = "8:"
             "Tag" = "8:"
             "Folder" = "8:_0DBF2EDCE8A24E688630C2DF086CFA16"
