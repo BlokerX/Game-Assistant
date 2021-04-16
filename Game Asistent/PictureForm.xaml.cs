@@ -21,15 +21,18 @@ namespace GameAssistant
     public partial class PictureForm : Window
     {
         public string ImagePath = "Default";
-        
+
+        public bool IsAllowDrag = false;
+
         public PictureForm()
         {
             InitializeComponent();
+            rec1.Visibility = Visibility.Hidden;
         }
 
         private void ImageBox_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-            if (e.LeftButton == MouseButtonState.Pressed)
+            if (IsAllowDrag && e.LeftButton == MouseButtonState.Pressed)
             {
                 this.DragMove();
             }

@@ -26,13 +26,19 @@ namespace GameAssistant
         // Widgets instantions
         ClockForm clockForm;
         PictureForm pictureForm;
+        NoteForm noteForm;
 
         // Paths
         public static string SystemDriveName = "-";
+
         public static string GameAssistantFolderPath;
+
         public static string SettingsFolderPath;
-        public static string ClockSettingsPath;
+        public static string NotesDirePath;
+
         public static string PictureSettingsPath;
+        public static string NoteSettingsPath;
+        public static string ClockSettingsPath;
 
         /// <summary>
         /// Select main disk and set paths
@@ -53,9 +59,13 @@ namespace GameAssistant
             #endregion
 
             GameAssistantFolderPath = $@"{SystemDriveName}Users\{Environment.UserName}\GameAssistantFiles";
+
             SettingsFolderPath = $@"{GameAssistantFolderPath}\Settings";
+            NotesDirePath = Path.Combine(GameAssistantFolderPath, "Notes");
+
             ClockSettingsPath = $@"{SettingsFolderPath}\ClockWidgetSettings.txt";
             PictureSettingsPath = $@"{SettingsFolderPath}\PictureWidgetSettings.txt";
+            NoteSettingsPath = Path.Combine(SettingsFolderPath, "NoteWidgetSettings.txt");
         }
 
         #endregion
@@ -108,6 +118,11 @@ namespace GameAssistant
             if (!Directory.Exists(SettingsFolderPath))
             {
                 Directory.CreateDirectory(SettingsFolderPath);
+            }
+
+            if (!Directory.Exists(NotesDirePath))
+            {
+                Directory.CreateDirectory(NotesDirePath);
             }
         }
 
@@ -692,6 +707,388 @@ namespace GameAssistant
 
         #endregion
 
+        #region NoteFormStaticMethods
+
+        /// <summary>
+        /// Read and return save informaions about NoteForm
+        /// </summary>
+        /// <returns>Informations about Save of NoteForm</returns>
+        public static NoteInformation DownloadNoteInformationOfFile()
+        {
+            if (File.Exists(NoteSettingsPath))
+            {
+                NoteInformation noteInformation = new NoteInformation();
+
+                using (StreamReader sr = File.OpenText(NoteSettingsPath))
+                {
+                    if (true)
+                    {
+                        string a = sr.ReadLine();
+                        if (bool.TryParse(a, out bool aBool))
+                        {
+                            noteInformation.IsChosed = aBool;
+                        }
+                        else
+                        {
+                            sr.Close();
+                            return null;
+                        }
+                    }
+
+                    if (true)
+                    {
+                        string a = sr.ReadLine();
+                        if (int.TryParse(a, out int aInt))
+                        {
+                            noteInformation.PositionX = aInt;
+                        }
+                        else
+                        {
+                            sr.Close();
+                            return null;
+                        }
+                    }
+
+                    if (true)
+                    {
+                        string a = sr.ReadLine();
+                        if (int.TryParse(a, out int aInt))
+                        {
+                            noteInformation.PositionY = aInt;
+                        }
+                        else
+                        {
+                            sr.Close();
+                            return null;
+                        }
+                    }
+
+                    if (true)
+                    {
+                        string a = sr.ReadLine();
+                        if (int.TryParse(a, out int aInt))
+                        {
+                            noteInformation.Width = aInt;
+                        }
+                        else
+                        {
+                            sr.Close();
+                            return null;
+                        }
+                    }
+
+                    if (true)
+                    {
+                        string a = sr.ReadLine();
+                        if (int.TryParse(a, out int aInt))
+                        {
+                            noteInformation.Heigth = aInt;
+                        }
+                        else
+                        {
+                            sr.Close();
+                            return null;
+                        }
+                    }
+
+                    if (true)
+                    {
+                        string a = sr.ReadLine();
+                        if (double.TryParse(a, out double aDouble))
+                        {
+                            noteInformation.BackgroundOpacity = aDouble;
+                        }
+                        else
+                        {
+                            sr.Close();
+                            return null;
+                        }
+                    }
+
+                    if (true)
+                    {
+                        string a = sr.ReadLine();
+
+                        if (a == null || a == "")
+                        {
+                            sr.Close();
+                            return null;
+                        }
+                        try
+                        {
+
+                            System.Windows.Media.Color color = (System.Windows.Media.Color)System.Windows.Media.ColorConverter.ConvertFromString(a);
+                            if (color != null)
+                            {
+                                noteInformation.BackgroundColor = color;
+                            }
+                            else
+                            {
+                                sr.Close();
+                                return null;
+                            }
+                        }
+                        catch
+                        {
+                            sr.Close();
+                            return null;
+                        }
+                    }
+
+                    if (true)
+                    {
+                        string a = sr.ReadLine();
+                        if (double.TryParse(a, out double aDouble))
+                        {
+                            noteInformation.FontOpacity = aDouble;
+                        }
+                        else
+                        {
+                            sr.Close();
+                            return null;
+                        }
+                    }
+
+                    if (true)
+                    {
+                        string a = sr.ReadLine();
+
+                        if (a == null || a == "")
+                        {
+                            sr.Close();
+                            return null;
+                        }
+                        try
+                        {
+
+                            System.Windows.Media.Color color = (System.Windows.Media.Color)System.Windows.Media.ColorConverter.ConvertFromString(a);
+                            if (color != null)
+                            {
+                                noteInformation.FontColor = color;
+                            }
+                            else
+                            {
+                                sr.Close();
+                                return null;
+                            }
+                        }
+                        catch
+                        {
+                            sr.Close();
+                            return null;
+                        }
+                    }
+
+                    if (true)
+                    {
+                        string a = sr.ReadLine();
+
+                        if (a == null || a == "")
+                        {
+                            sr.Close();
+                            return null;
+                        }
+                        try
+                        {
+                            System.Windows.Media.FontFamily fontFamily = (System.Windows.Media.FontFamily)new System.Windows.Media.FontFamilyConverter().ConvertFromString(a);
+                            if (fontFamily != null)
+                            {
+                                noteInformation.FontFamily = fontFamily;
+                            }
+                            else
+                            {
+                                sr.Close();
+                                return null;
+                            }
+                        }
+                        catch
+                        {
+                            sr.Close();
+                            return null;
+                        }
+                    }
+
+                    if (true)
+                    {
+                        string a = sr.ReadLine();
+                        if (double.TryParse(a, out double aDouble))
+                        {
+                            noteInformation.FontSize = aDouble;
+                        }
+                        else
+                        {
+                            sr.Close();
+                            return null;
+                        }
+                    }
+
+                    sr.Close();
+
+                    return noteInformation;
+                }
+            }
+            else { return null; }
+        }
+
+        /// <summary>
+        /// Create NoteForm
+        /// </summary>
+        /// <returns>NoteForm</returns>
+        public static NoteForm CreateNoteForm()
+        {
+            NoteInformation noteInf = DownloadNoteInformationOfFile();
+
+            if (noteInf != null)
+            {
+                NoteForm nf = new NoteForm()
+                {
+                    Left = noteInf.PositionX,
+                    Top = noteInf.PositionY
+                };
+                nf.Width = noteInf.Width;
+                nf.Height = noteInf.Heigth;
+
+                nf.Rec1.Opacity = noteInf.BackgroundOpacity;
+
+                nf.Rec1.Fill = new System.Windows.Media.SolidColorBrush(noteInf.BackgroundColor);
+
+                nf.TextBox1.Opacity = noteInf.FontOpacity;
+
+                nf.TextBox1.Foreground = new System.Windows.Media.SolidColorBrush(noteInf.FontColor);
+
+                nf.TextBox1.FontFamily = noteInf.FontFamily;
+
+                nf.TextBox1.FontSize = noteInf.FontSize;
+
+                return nf;
+            }
+            else
+            { return new NoteForm(); }
+        }
+
+        /// <summary>
+        /// Write in file selected settings about NoteForm
+        /// </summary>
+        /// <param name="argNF">NoteForm to saving</param>
+        public static void UpdateNoteInformationOfFile(NoteForm argNF)
+        {
+            CheckProgramDiresArchitecture();
+
+            if (argNF != null && argNF.IsVisible) //todo sprawdzanie widoczności
+            {
+                #region CreateFileOfSettings NowSettings
+
+                using (StreamWriter sw = File.CreateText(NoteSettingsPath))
+                {
+                    sw.WriteLine(true.ToString());
+
+                    sw.WriteLine(argNF.Left.ToString());
+                    sw.WriteLine(argNF.Top.ToString());
+
+                    sw.WriteLine(argNF.Width.ToString());
+                    sw.WriteLine(argNF.Height.ToString());
+
+                    sw.WriteLine(argNF.Rec1.Opacity);
+                    sw.WriteLine(new System.Windows.Media.ColorConverter().ConvertToString(BrushToColorMedia(argNF.Rec1.Fill)));
+
+                    sw.WriteLine(argNF.TextBox1.Opacity.ToString());
+
+                    sw.WriteLine(new System.Windows.Media.ColorConverter().ConvertToString(BrushToColorMedia(argNF.TextBox1.Foreground)));
+
+                    sw.WriteLine(argNF.TextBox1.FontFamily.ToString());
+
+                    sw.WriteLine(argNF.TextBox1.FontSize.ToString());
+
+                    sw.Close();
+                }
+
+                #endregion
+            }
+            else
+            {
+                NoteInformation nI = DownloadNoteInformationOfFile();
+                if (File.Exists(NoteSettingsPath) && nI != null)
+                {
+                    #region DownloadInformationsOfFile
+
+                    NoteInformation noteInf = DownloadNoteInformationOfFile();
+                    bool _isChosed = false;
+
+                    int _positionX = noteInf.PositionX;
+                    int _positionY = noteInf.PositionY;
+
+                    int _width = noteInf.Width;
+                    int _heigth = noteInf.Heigth;
+
+                    double _backgroundOpacity = noteInf.BackgroundOpacity;
+                    System.Windows.Media.Color _backgroundColor = noteInf.BackgroundColor;
+
+                    double _fontOpacity = noteInf.FontOpacity;
+                    System.Windows.Media.Color _fontColor = noteInf.FontColor;
+                    System.Windows.Media.FontFamily _fontFamily = noteInf.FontFamily;
+                    double _fontSize = noteInf.FontSize;
+
+                    #endregion
+
+                    #region OverwriteFile
+
+                    using (StreamWriter sw = File.CreateText(NoteSettingsPath))
+                    {
+                        sw.WriteLine(_isChosed.ToString());
+
+                        sw.WriteLine(_positionX.ToString());
+                        sw.WriteLine(_positionY.ToString());
+
+                        sw.WriteLine(_width.ToString());
+                        sw.WriteLine(_heigth.ToString());
+
+                        sw.WriteLine(_backgroundOpacity.ToString());
+                        sw.WriteLine(_backgroundColor.ToString());
+
+                        sw.WriteLine(_fontOpacity.ToString());
+                        sw.WriteLine(_fontColor.ToString());
+                        sw.WriteLine(new System.Windows.Media.FontFamilyConverter().ConvertToString(_fontFamily));
+                        sw.WriteLine(_fontSize.ToString());
+
+                        sw.Close();
+                    }
+
+                    #endregion
+
+                }
+                else
+                {
+                    #region CreateFileOfSettings DeffaultSettings
+
+                    using (StreamWriter sw = File.CreateText(NoteSettingsPath))
+                    {
+                        sw.WriteLine(true.ToString());
+
+                        sw.WriteLine("104");
+                        sw.WriteLine("104");
+
+                        sw.WriteLine("302");
+                        sw.WriteLine("330");
+
+                        sw.WriteLine((0.5).ToString());
+                        sw.WriteLine("#FFF3E126");
+
+                        sw.WriteLine((0.75).ToString());
+                        sw.WriteLine("#FF000000");
+                        sw.WriteLine("Century Gothic");
+                        sw.WriteLine("20");
+
+                        sw.Close();
+                    }
+
+                    #endregion
+                }
+            }
+
+        }
+
+        #endregion
+
         #endregion
 
         #region NotifyIconMethods
@@ -709,6 +1106,7 @@ namespace GameAssistant
 
             notifyIcon.ContextMenuStrip.Items.Add("Picture", null, NotifyIconContextMenu_Picture_Click);
             notifyIcon.ContextMenuStrip.Items.Add("Clock", null, NotifyIconContextMenu_Clock_Click);
+            notifyIcon.ContextMenuStrip.Items.Add("Note", null, NotifyIconContextMenu_Note_Click);
             notifyIcon.ContextMenuStrip.Items.Add("-");
             notifyIcon.ContextMenuStrip.Items.Add("Open Window", null, NotifyIconContextMenu_OpenWindow_Click);
             notifyIcon.ContextMenuStrip.Items.Add("Close", null, NotifyIconContextMenu_Close_Click);
@@ -731,20 +1129,19 @@ namespace GameAssistant
 
             UpdateClockInformationOfFile(this.clockForm);
             UpdatePictureInformationOfFile(this.pictureForm);
+            UpdateNoteInformationOfFile(this.noteForm);
 
             #endregion
 
             #region SettingsOn
 
+            /*/ Notify icon /*/
             notifyIcon.Visible = false;
-            if (clockForm != null)
-            {
-                clockForm.Close();
-            }
-            if (pictureForm != null)
-            {
-                pictureForm.Close();
-            }
+            
+            /*/ Widgets /*/
+            clockForm?.Close();
+            pictureForm?.Close();
+            noteForm?.Close();
 
             #endregion
 
@@ -761,12 +1158,12 @@ namespace GameAssistant
             // Check close proposition
             if (settingsWindow.IsClosing)
             {
-                settingsWindow.Close();
-                this.Close();
+                settingsWindow?.Close();
+                this?.Close();
                 goto End;
             }
 
-            settingsWindow.Close();
+            settingsWindow?.Close();
 
             #endregion
 
@@ -801,6 +1198,16 @@ namespace GameAssistant
         private void NotifyIconContextMenu_Picture_Click(object sender, EventArgs e)
         {
             OpenOrClosePictureForm();
+        }
+
+        /// <summary>
+        /// On click "Note" button in NotifyIcon
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void NotifyIconContextMenu_Note_Click(object sender, EventArgs e)
+        {
+            OpenOrCloseNoteForm();
         }
 
         #endregion
@@ -896,6 +1303,47 @@ namespace GameAssistant
                     pictureForm.Show();
                     //todo dodaj zapis ustawień okna
                 }
+
+                NoteInformation noteInf = DownloadNoteInformationOfFile();
+                if (noteInf != null)
+                {
+                    if (noteInf.IsChosed == true)
+                    {
+                        if (noteForm != null)
+                        {
+                            noteForm.Close();
+                        }
+
+                        noteForm = CreateNoteForm();
+                        noteForm.LocationChanged += NoteForm_LocationChanged;
+                        noteForm.SizeChanged += NoteForm_SizeChanged;
+                        noteForm.Show();
+
+                        System.Windows.Forms.ToolStripMenuItem menuitem = (System.Windows.Forms.ToolStripMenuItem)notifyIcon.ContextMenuStrip.Items[2];
+                        if (menuitem != null)
+                            menuitem.Checked = true;
+                    }
+                    else
+                    {
+                        noteForm = null;
+
+                        System.Windows.Forms.ToolStripMenuItem menuitem = (System.Windows.Forms.ToolStripMenuItem)notifyIcon.ContextMenuStrip.Items[2];
+                        if (menuitem != null)
+                            menuitem.Checked = false;
+                    }
+                }
+                else
+                {
+                    if (noteForm != null)
+                    {
+                        noteForm.Close();
+                    }
+                    noteForm = CreateNoteForm();
+                    noteForm.LocationChanged += NoteForm_LocationChanged;
+                    noteForm.SizeChanged += NoteForm_SizeChanged;
+                    noteForm.Show();
+                    //todo dodaj zapis ustawień okna
+                }
             }
         }
 
@@ -958,6 +1406,35 @@ namespace GameAssistant
             }
         }
 
+        /// <summary>
+        /// Open or close note widget
+        /// </summary>
+        public void OpenOrCloseNoteForm()
+        {
+            System.Windows.Forms.ToolStripMenuItem menuitem = (System.Windows.Forms.ToolStripMenuItem)notifyIcon.ContextMenuStrip.Items[2];
+
+            if (noteForm != null)
+            {
+                UpdateNoteInformationOfFile(this.noteForm);
+                noteForm.Close();
+                noteForm = null;
+                UpdateNoteInformationOfFile(this.noteForm);
+                noteForm = null;
+                if (menuitem != null)
+                    menuitem.Checked = false;
+            }
+            else
+            {
+                noteForm = CreateNoteForm();
+                noteForm.LocationChanged += NoteForm_LocationChanged;
+                noteForm.SizeChanged += NoteForm_SizeChanged;
+                noteForm.Show();
+                UpdateNoteInformationOfFile(this.noteForm);
+                if (menuitem != null)
+                    menuitem.Checked = true;
+            }
+        }
+
         #endregion
 
         /// <summary>
@@ -968,9 +1445,10 @@ namespace GameAssistant
             // Update select settngs in program's files
             UpdateClockInformationOfFile(this.clockForm);
             UpdatePictureInformationOfFile(this.pictureForm);
+            UpdateNoteInformationOfFile(this.noteForm);
 
             // Close application
-            this.Close();
+            this?.Close();
         }
 
         #endregion
@@ -1009,6 +1487,22 @@ namespace GameAssistant
             UpdatePictureInformationOfFile(pictureForm);
         }
 
+        /// <summary>
+        /// PictureForm size changed [Event]
+        /// </summary>
+        private void NoteForm_SizeChanged(object sender, SizeChangedEventArgs e)
+        {
+            UpdateNoteInformationOfFile(noteForm);
+        }
+
+        /// <summary>
+        /// PictureForm location changed [Event]
+        /// </summary>
+        private void NoteForm_LocationChanged(object sender, EventArgs e)
+        {
+            UpdateNoteInformationOfFile(noteForm);
+        }
+
         #endregion
 
         #region InTheEnd
@@ -1021,25 +1515,19 @@ namespace GameAssistant
             #region CloseWidgetsForms
 
             /// Close ClockForm
-            if (clockForm != null)
-            {
-                this.clockForm.Close();
-            }
+            this.clockForm?.Close();
 
             /// Close PictureForm
-            if (pictureForm != null)
-            {
-                this.pictureForm.Close();
-            }
+            this.pictureForm?.Close();
+
+            /// Close NoteForm
+            this.noteForm?.Close();
 
             #endregion
 
             /// Delete NotifyIcon
-            if (notifyIcon != null)
-            {
-                notifyIcon.Dispose();
-                notifyIcon = null;
-            }
+            notifyIcon?.Dispose();
+            notifyIcon = null;
 
         }
 
@@ -1077,6 +1565,16 @@ namespace GameAssistant
         public static System.Windows.Media.Color ColorDrawingToMedia(System.Drawing.Color colorDrawing)
         {
             return System.Windows.Media.Color.FromArgb(colorDrawing.A, colorDrawing.R, colorDrawing.G, colorDrawing.B);
+        }
+        
+        /// <summary>
+        /// Convert System.Drawing.Color to System.Windows.Media.Color
+        /// </summary>
+        /// <param name="colorDrawing">Color to convert</param>
+        /// <returns>Color of return</returns>
+        public static System.Drawing.FontFamily FontFamilyMediaToDrawing(System.Windows.Media.FontFamily fontFamilyMedia)
+        {
+            return new System.Drawing.FontFamily(fontFamilyMedia.ToString());
         }
 
         #endregion

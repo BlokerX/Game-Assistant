@@ -13,6 +13,8 @@ namespace GameAssistant
         // Varibles:
         public DispatcherTimer clockTimer = new DispatcherTimer(DispatcherPriority.Background);
 
+        public bool IsAllowDrag = false;
+
         public ClockForm()
         {
             InitializeComponent();
@@ -26,6 +28,7 @@ namespace GameAssistant
             clockTimer.Start();
             #endregion
         }
+
         private void OnClockTimer_Tick(object sender, EventArgs e)
         {
             this.ClockLabel.Content =
@@ -39,7 +42,7 @@ namespace GameAssistant
 
         private void ClockLabel_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-            if (e.LeftButton == MouseButtonState.Pressed)
+            if (IsAllowDrag && e.LeftButton == MouseButtonState.Pressed)
             {
                 this.DragMove();
             }
