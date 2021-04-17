@@ -53,8 +53,6 @@ namespace GameAssistant
 
             ClockInformation clockInf = MainWindow.DownloadClockInformationOfFile();
 
-            //todo Pobierz informacje do controlek w oknie
-
             if (clockInf != null)
             {
                 if (clockInf.IsChosed == true)
@@ -120,12 +118,12 @@ namespace GameAssistant
                 clockForm.LocationChanged += ClockForm_LocationChanged;
                 clockForm.SizeChanged += ClockForm_SizeChanged;
                 clockForm.Show();
-                //todo pomyśleć nad sytułacją bez zrzutu informacji
             }
 
             if (clockForm != null)
             {
                 clockForm.IsAllowDrag = true;
+                clockForm.ResizeMode = ResizeMode.CanResizeWithGrip;
             }
 
             #endregion
@@ -251,8 +249,6 @@ namespace GameAssistant
                         break;
                 }
 
-                //todo dla noteWidget this.PicturePathTextBox.Text = noteInf.PicturePath;
-
             }
             else
             {
@@ -270,7 +266,6 @@ namespace GameAssistant
 
             #endregion
 
-            //todo dodaj NoteFormLoading in settingsWindow
         }
 
         #endregion
@@ -340,6 +335,7 @@ namespace GameAssistant
                 if (clockForm != null)
                 {
                     clockForm.IsAllowDrag = true;
+                    clockForm.ResizeMode = ResizeMode.CanResizeWithGrip;
                 }
                 clockForm.Show();
                 MainWindow.UpdateClockInformationOfFile(clockForm);

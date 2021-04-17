@@ -615,7 +615,7 @@ namespace GameAssistant
         {
             CheckProgramDiresArchitecture();
 
-            if (argPF != null && argPF.IsVisible) //todo sprawdzanie widoczności
+            if (argPF != null && argPF.IsVisible)
             {
                 #region CreateFileOfSettings NowSettings
 
@@ -974,7 +974,7 @@ namespace GameAssistant
         {
             CheckProgramDiresArchitecture();
 
-            if (argNF != null && argNF.IsVisible) //todo sprawdzanie widoczności
+            if (argNF != null && argNF.IsVisible)
             {
                 #region CreateFileOfSettings NowSettings
 
@@ -1153,7 +1153,7 @@ namespace GameAssistant
             // Show SettingsWindow
             settingsWindow.Show();
 
-            while (settingsWindow.IsVisible) { DoEvents(); } //todo rozpatrzeć inne opcje badania stanu okna
+            while (settingsWindow.IsVisible) { DoEvents(); }
 
             // Check close proposition
             if (settingsWindow.IsClosing)
@@ -1260,7 +1260,6 @@ namespace GameAssistant
                     clockForm.LocationChanged += ClockForm_LocationChanged;
                     clockForm.SizeChanged += ClockForm_SizeChanged;
                     clockForm.Show();
-                    //todo dodaj zapis ustawień okna
                 }
 
                 PictureInformation pictureInf = DownloadPictureInformationOfFile();
@@ -1301,7 +1300,6 @@ namespace GameAssistant
                     pictureForm.LocationChanged += PictureForm_LocationChanged;
                     pictureForm.SizeChanged += PictureForm_SizeChanged;
                     pictureForm.Show();
-                    //todo dodaj zapis ustawień okna
                 }
 
                 NoteInformation noteInf = DownloadNoteInformationOfFile();
@@ -1342,7 +1340,6 @@ namespace GameAssistant
                     noteForm.LocationChanged += NoteForm_LocationChanged;
                     noteForm.SizeChanged += NoteForm_SizeChanged;
                     noteForm.Show();
-                    //todo dodaj zapis ustawień okna
                 }
             }
         }
@@ -1578,6 +1575,5 @@ namespace GameAssistant
         }
 
         #endregion
-
     }
 }

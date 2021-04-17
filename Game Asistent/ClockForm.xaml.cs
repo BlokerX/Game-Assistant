@@ -18,6 +18,7 @@ namespace GameAssistant
         public ClockForm()
         {
             InitializeComponent();
+            UpdateTimeToNow();
         }
 
         private void ClockWindow_Activated(object sender, EventArgs e)
@@ -31,13 +32,18 @@ namespace GameAssistant
 
         private void OnClockTimer_Tick(object sender, EventArgs e)
         {
+            UpdateTimeToNow();
+        }
+
+        private void UpdateTimeToNow()
+        {
             this.ClockLabel.Content =
-                (DateTime.Now.Hour / 10).ToString() +
-                (DateTime.Now.Hour % 10).ToString() + ":" +
-                (DateTime.Now.Minute / 10).ToString() +
-                (DateTime.Now.Minute % 10).ToString() + ":" +
-                (DateTime.Now.Second / 10).ToString() +
-                (DateTime.Now.Second % 10).ToString();
+                            (DateTime.Now.Hour / 10).ToString() +
+                            (DateTime.Now.Hour % 10).ToString() + ":" +
+                            (DateTime.Now.Minute / 10).ToString() +
+                            (DateTime.Now.Minute % 10).ToString() + ":" +
+                            (DateTime.Now.Second / 10).ToString() +
+                            (DateTime.Now.Second % 10).ToString();
         }
 
         private void ClockLabel_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)

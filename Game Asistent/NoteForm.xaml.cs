@@ -1,5 +1,4 @@
-﻿using System;
-using System.IO;
+﻿using System.IO;
 using System.Windows;
 using System.Windows.Input;
 
@@ -81,5 +80,31 @@ namespace GameAssistant
             }
         }
 
+        private void TextBox1_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Enter)
+            {
+                string s = "";
+                int ci = TextBox1.CaretIndex;
+                if (TextBox1.Text.Length != 0)
+                {
+                    for (int i = 0; i < ci; i++)
+                    {
+                        s += TextBox1.Text[i];
+                    }
+                    s += "\n";
+                    for (int i = ci; i < TextBox1.Text.Length; i++)
+                    {
+                        s += TextBox1.Text[i];
+                    }
+                }
+                else
+                {
+                    s += "\n";
+                }
+                TextBox1.Text = s;
+                TextBox1.CaretIndex = ci + 1;
+            }
+        }
     }
 }
