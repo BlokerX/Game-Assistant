@@ -1137,7 +1137,7 @@ namespace GameAssistant
 
             /*/ Notify icon /*/
             notifyIcon.Visible = false;
-            
+
             /*/ Widgets /*/
             clockForm?.Close();
             pictureForm?.Close();
@@ -1566,7 +1566,7 @@ namespace GameAssistant
         {
             return System.Windows.Media.Color.FromArgb(colorDrawing.A, colorDrawing.R, colorDrawing.G, colorDrawing.B);
         }
-        
+
         /// <summary>
         /// Convert System.Drawing.Color to System.Windows.Media.Color
         /// </summary>

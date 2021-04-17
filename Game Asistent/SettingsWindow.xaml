@@ -6,39 +6,39 @@
         xmlns:local="clr-namespace:GameAssistant"
         xmlns:System="clr-namespace:System;assembly=mscorlib" x:Name="MainWindowElement" x:Class="GameAssistant.SettingsWindow"
         mc:Ignorable="d"
-        Title="Settings window" Height="450" Width="800" Visibility="Visible" Closing="MainWindowElement_Closing">
+        Title="Settings window" Height="600" Width="621" Visibility="Visible" Closing="MainWindowElement_Closing">
     <Grid x:Name="Grid">
         <Rectangle x:Name="gt" Stroke="Transparent">
             <Rectangle.Fill>
                 <SolidColorBrush Color="White" Opacity="0.01"/>
             </Rectangle.Fill>
         </Rectangle>
-        <Label x:Name="ChosedPictureLabel" Content="Chosed picture:" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="15,118,0,0"/>
-        <Button x:Name="ChosePictureButton" Content="Chose picture" HorizontalAlignment="Left" Margin="15,149,0,0" VerticalAlignment="Top" Width="92" Click="ChosePictureButton_Click"/>
-        <TextBlock x:Name="PicturePathTextBox" Margin="112,118,10,0" TextWrapping="Wrap" Text="Default" VerticalAlignment="Top" Height="51" ScrollViewer.CanContentScroll="True" Cursor="IBeam" Background="White" Padding="4,1" FontSize="16"/>
-        <Label x:Name="VisibleItemsLabel" Content="Visible widgets:" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,13,0,0" FontSize="16"/>
-        <Label x:Name="PictureOptionsLabel" Content="Picture options:" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,90,0,0" FontSize="16"/>
-        <CheckBox x:Name="ClockVisibleCheckBox" Content="Clock" HorizontalAlignment="Left" Margin="15,45,0,0" VerticalAlignment="Top" Checked="ClockVisibleCheckBox_Checked" Unchecked="ClockVisibleCheckBox_Unchecked" Loaded="ClockVisibleCheckBox_Loaded"/>
-        <CheckBox x:Name="PictureBoxVisibleCheckBox" Content="Picture" HorizontalAlignment="Left" Margin="15,65,0,0" VerticalAlignment="Top" Checked="PictureBoxVisibleCheckBox_Checked" Unchecked="PictureBoxVisibleCheckBox_Unchecked" Loaded="PictureBoxVisibleCheckBox_Loaded"/>
-        <Label x:Name="OpacityOptionsLabel" Content="Opacity options:" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,180,0,0" FontSize="16"/>
-        <ComboBox x:Name="PictureOpacityComboBox" HorizontalAlignment="Left" Margin="112,267,0,0" VerticalAlignment="Top" Width="120" SelectedIndex="0" Height="24" SelectionChanged="PictureOpacityComboBox_SelectionChanged">
+        <Label x:Name="ChosedPictureLabel" Content="Chosed picture:" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="19,481,0,0"/>
+        <Button x:Name="ChosePictureButton" Content="Chose picture" HorizontalAlignment="Left" Margin="19,512,0,0" VerticalAlignment="Top" Width="92" Click="ChosePictureButton_Click"/>
+        <TextBlock x:Name="PicturePathTextBox" Margin="116,481,20,0" TextWrapping="Wrap" Text="Default" VerticalAlignment="Top" Height="51" ScrollViewer.CanContentScroll="True" Cursor="IBeam" Background="White" Padding="4,1" FontSize="16"/>
+        <Label x:Name="VisibleItemsLabel" Content="Visible widgets:" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,14,0,0" FontSize="16"/>
+        <Label x:Name="PictureOptionsLabel" Content="Picture options:" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,450,0,0" FontSize="16"/>
+        <CheckBox x:Name="ClockVisibleCheckBox" Content="Clock" HorizontalAlignment="Left" Margin="20,45,0,0" VerticalAlignment="Top" Checked="ClockVisibleCheckBox_Checked" Unchecked="ClockVisibleCheckBox_Unchecked" Loaded="ClockVisibleCheckBox_Loaded"/>
+        <CheckBox x:Name="PictureBoxVisibleCheckBox" Content="Picture" HorizontalAlignment="Left" Margin="20,65,0,0" VerticalAlignment="Top" Checked="PictureBoxVisibleCheckBox_Checked" Unchecked="PictureBoxVisibleCheckBox_Unchecked" Loaded="PictureBoxVisibleCheckBox_Loaded"/>
+        <Label x:Name="OpacityOptionsLabel" Content="Opacity options:" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,105,0,0" FontSize="16"/>
+        <ComboBox x:Name="PictureOpacityComboBox" HorizontalAlignment="Left" Margin="117,192,0,0" VerticalAlignment="Top" Width="120" SelectedIndex="0" Height="24" SelectionChanged="PictureOpacityComboBox_SelectionChanged">
             <System:String>100%</System:String>
             <System:String>75%</System:String>
             <System:String>50%</System:String>
             <System:String>25%</System:String>
             <System:String>0%</System:String>
         </ComboBox>
-        <Label x:Name="PictureOpacityLabel" Content="Picture opacity:" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="15,265,0,0"/>
-        <Label x:Name="ClockBackgroundOpacityLabel" Content="Clock's background opacity:" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="15,238,0,0"/>
-        <Label x:Name="ClockOpacityLabel" Content="Clock opacity:" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="15,209,0,0"/>
-        <ComboBox x:Name="ClockBackgroundOpacityComboBox" HorizontalAlignment="Left" Margin="178,240,0,0" VerticalAlignment="Top" Width="120" SelectedIndex="1" SelectionChanged="ClockBackgroundOpacityComboBox_SelectionChanged">
+        <Label x:Name="PictureOpacityLabel" Content="Picture opacity:" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="20,190,0,0"/>
+        <Label x:Name="ClockBackgroundOpacityLabel" Content="Clock's background opacity:" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="20,163,0,0"/>
+        <Label x:Name="ClockOpacityLabel" Content="Clock opacity:" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="20,134,0,0"/>
+        <ComboBox x:Name="ClockBackgroundOpacityComboBox" HorizontalAlignment="Left" Margin="183,165,0,0" VerticalAlignment="Top" Width="120" SelectedIndex="1" SelectionChanged="ClockBackgroundOpacityComboBox_SelectionChanged">
             <System:String>100%</System:String>
             <System:String>75%</System:String>
             <System:String>50%</System:String>
             <System:String>25%</System:String>
             <System:String>0%</System:String>
         </ComboBox>
-        <ComboBox x:Name="ClockOpacityComboBox" HorizontalAlignment="Left" Margin="103,211,0,0" VerticalAlignment="Top" Width="120" SelectedIndex="1" SelectionChanged="ClockOpacityComboBox_SelectionChanged">
+        <ComboBox x:Name="ClockOpacityComboBox" HorizontalAlignment="Left" Margin="108,136,0,0" VerticalAlignment="Top" Width="120" SelectedIndex="1" SelectionChanged="ClockOpacityComboBox_SelectionChanged">
             <System:String>100%</System:String>
             <System:String>75%</System:String>
             <System:String>50%</System:String>
@@ -50,8 +50,8 @@
                 <SolidColorBrush Color="#FFFF7777"/>
             </Button.Background>
         </Button>
-        <Button x:Name="ChoseClockBackgroundColorButton" Content="Chose clock's background color" HorizontalAlignment="Left" Margin="357,209,0,0" VerticalAlignment="Top" Width="185" Height="20" Click="ChoseClockBackgroundColorButton_Click"/>
-        <Rectangle x:Name="ClockBackgroundColorRectangle" HorizontalAlignment="Left" Height="20" Margin="547,209,0,0" VerticalAlignment="Top" Width="39" Loaded="ClockBackgroundColorRectangle_Loaded">
+        <Button x:Name="ChoseClockBackgroundColorButton" Content="Chose clock's background color" HorizontalAlignment="Left" Margin="20,319,0,0" VerticalAlignment="Top" Width="185" Height="20" Click="ChoseClockBackgroundColorButton_Click"/>
+        <Rectangle x:Name="ClockBackgroundColorRectangle" HorizontalAlignment="Left" Height="20" Margin="210,319,0,0" VerticalAlignment="Top" Width="39" Loaded="ClockBackgroundColorRectangle_Loaded">
             <Rectangle.Stroke>
                 <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
                     <GradientStop Color="Black" Offset="0"/>
@@ -62,27 +62,27 @@
                 <SolidColorBrush Color="White" Opacity="0.01"/>
             </Rectangle.Fill>
         </Rectangle>
-        <Label x:Name="ColorsLabel" Content="Colors:" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="352,178,0,0" FontSize="16"/>
+        <Label x:Name="ColorsLabel" Content="Colors:" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,283,0,0" FontSize="16"/>
         <Button x:Name="ButtonResetSettingsToDefault" Content="Default Settings" Margin="0,0,117,10" Click="ButtonResetSettingsToDefault_Click" Height="20" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="102" Background="#FFD4D4D4"/>
-        <CheckBox x:Name="NoteVisibleCheckBox" Content="Note" HorizontalAlignment="Left" Margin="91,45,0,0" VerticalAlignment="Top" Checked="NoteVisibleCheckBox_Checked" Unchecked="NoteVisibleCheckBox_Unchecked" Loaded="NoteVisibleCheckBox_Loaded"/>
-        <ComboBox x:Name="NoteBackgroundOpacityComboBox" HorizontalAlignment="Left" Margin="168,298,0,0" VerticalAlignment="Top" Width="120" SelectedIndex="2" Height="24" SelectionChanged="NoteBackgroundOpacityComboBox_SelectionChanged">
+        <CheckBox x:Name="NoteVisibleCheckBox" Content="Note" HorizontalAlignment="Left" Margin="20,85,0,0" VerticalAlignment="Top" Checked="NoteVisibleCheckBox_Checked" Unchecked="NoteVisibleCheckBox_Unchecked" Loaded="NoteVisibleCheckBox_Loaded"/>
+        <ComboBox x:Name="NoteBackgroundOpacityComboBox" HorizontalAlignment="Left" Margin="173,223,0,0" VerticalAlignment="Top" Width="120" SelectedIndex="2" Height="24" SelectionChanged="NoteBackgroundOpacityComboBox_SelectionChanged">
             <System:String>100%</System:String>
             <System:String>75%</System:String>
             <System:String>50%</System:String>
             <System:String>25%</System:String>
             <System:String>0%</System:String>
         </ComboBox>
-        <Label x:Name="NoteBackgroundOpacityLabel" Content="Note background opacity:" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="15,296,0,0"/>
-        <ComboBox x:Name="NoteFontOpacityComboBox" HorizontalAlignment="Left" Margin="126,329,0,0" VerticalAlignment="Top" Width="120" SelectedIndex="1" Height="24" SelectionChanged="NoteFontOpacityComboBox_SelectionChanged">
+        <Label x:Name="NoteBackgroundOpacityLabel" Content="Note background opacity:" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="20,221,0,0"/>
+        <ComboBox x:Name="NoteFontOpacityComboBox" HorizontalAlignment="Left" Margin="131,254,0,0" VerticalAlignment="Top" Width="120" SelectedIndex="1" Height="24" SelectionChanged="NoteFontOpacityComboBox_SelectionChanged">
             <System:String>100%</System:String>
             <System:String>75%</System:String>
             <System:String>50%</System:String>
             <System:String>25%</System:String>
             <System:String>0%</System:String>
         </ComboBox>
-        <Label x:Name="NoteFontOpacityLabel" Content="Note font opacity:" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="15,327,0,0"/>
-        <Button x:Name="ChoseNoteBackgroundColorButton" Content="Chose note's background color" HorizontalAlignment="Left" Margin="357,234,0,0" VerticalAlignment="Top" Width="185" Height="20" Click="ChoseNoteBackgroundColorButton_Click"/>
-        <Rectangle x:Name="NoteBackgroundColorRectangle" HorizontalAlignment="Left" Height="20" Margin="547,234,0,0" VerticalAlignment="Top" Width="39" Loaded="NoteBackgroundColorRectangle_Loaded">
+        <Label x:Name="NoteFontOpacityLabel" Content="Note font opacity:" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="20,252,0,0"/>
+        <Button x:Name="ChoseNoteBackgroundColorButton" Content="Chose note's background color" HorizontalAlignment="Left" Margin="20,344,0,0" VerticalAlignment="Top" Width="185" Height="20" Click="ChoseNoteBackgroundColorButton_Click"/>
+        <Rectangle x:Name="NoteBackgroundColorRectangle" HorizontalAlignment="Left" Height="20" Margin="210,344,0,0" VerticalAlignment="Top" Width="39" Loaded="NoteBackgroundColorRectangle_Loaded">
             <Rectangle.Stroke>
                 <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
                     <GradientStop Color="Black" Offset="0"/>
@@ -93,8 +93,8 @@
                 <SolidColorBrush Color="White" Opacity="0.01"/>
             </Rectangle.Fill>
         </Rectangle>
-        <Button x:Name="ChoseNoteFontColorButton" Content="Chose note's font color" HorizontalAlignment="Left" Margin="357,259,0,0" VerticalAlignment="Top" Width="185" Height="20" Click="ChoseNoteFontColorButton_Click"/>
-        <Rectangle x:Name="NoteFontColorRectangle" HorizontalAlignment="Left" Height="20" Margin="547,259,0,0" VerticalAlignment="Top" Width="39" Loaded="NoteFontColorRectangle_Loaded">
+        <Button x:Name="ChoseNoteFontColorButton" Content="Chose note's font color" HorizontalAlignment="Left" Margin="20,369,0,0" VerticalAlignment="Top" Width="185" Height="20" Click="ChoseNoteFontColorButton_Click"/>
+        <Rectangle x:Name="NoteFontColorRectangle" HorizontalAlignment="Left" Height="20" Margin="210,369,0,0" VerticalAlignment="Top" Width="39" Loaded="NoteFontColorRectangle_Loaded">
             <Rectangle.Stroke>
                 <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
                     <GradientStop Color="Black" Offset="0"/>
@@ -105,8 +105,8 @@
                 <SolidColorBrush Color="White" Opacity="0.01"/>
             </Rectangle.Fill>
         </Rectangle>
-        <Button x:Name="ChoseNoteFontSettingsButton" Content="Chose note's font settings" HorizontalAlignment="Left" Margin="362,338,0,0" VerticalAlignment="Top" Width="185" Height="20" Click="ChoseNoteFontSettingsButton_Click"/>
-        <Label x:Name="NoteOptionsLabel" Content="Note options:" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="357,307,0,0" FontSize="16"/>
+        <Button x:Name="ChoseNoteFontSettingsButton" Content="Chose note's font settings" HorizontalAlignment="Left" Margin="15,425,0,0" VerticalAlignment="Top" Width="185" Height="20" Click="ChoseNoteFontSettingsButton_Click"/>
+        <Label x:Name="NoteOptionsLabel" Content="Note options:" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,394,0,0" FontSize="16"/>
 
     </Grid>
 </Window>

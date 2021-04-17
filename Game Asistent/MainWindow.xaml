@@ -6,4 +6,4 @@
         xmlns:local="clr-namespace:GameAssistant"
         xmlns:System="clr-namespace:System;assembly=mscorlib" x:Name="MainWindowElement" x:Class="GameAssistant.MainWindow"
         mc:Ignorable="d"
-        Title="Game Assistant" Height="0" Width="0" Visibility="Visible" WindowStyle="None" Content="Game Assistant (by Bloker)" Background="Transparent" Foreground="Transparent" AllowsTransparency="True" Closing="MainWindowElement_Closing"/>
+        Title="Game Assistant" Height="0" Width="0" Visibility="Visible" WindowStyle="None" Content="Game Assistant (by Bloker)" Background="Transparent" Foreground="Transparent" AllowsTransparency="True" Closing="MainWindowElement_Closing" Topmost="True"/>

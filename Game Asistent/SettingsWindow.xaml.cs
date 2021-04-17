@@ -860,14 +860,14 @@ namespace GameAssistant
                 MessageBoxResult.No) == MessageBoxResult.Yes)
             {
 
-                    clockForm?.Close();
-                    clockForm = null;
+                clockForm?.Close();
+                clockForm = null;
 
-                    pictureForm?.Close();
-                    pictureForm = null;
-                
-                    noteForm?.Close();
-                    noteForm = null;
+                pictureForm?.Close();
+                pictureForm = null;
+
+                noteForm?.Close();
+                noteForm = null;
 
                 if (File.Exists(MainWindow.ClockSettingsPath))
                 {
@@ -878,7 +878,7 @@ namespace GameAssistant
                 {
                     File.Delete(MainWindow.PictureSettingsPath);
                 }
-                
+
                 if (File.Exists(MainWindow.NoteSettingsPath))
                 {
                     File.Delete(MainWindow.NoteSettingsPath);
