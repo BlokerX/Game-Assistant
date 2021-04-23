@@ -108,6 +108,7 @@
     </Compile>
     <Compile Include="NoteInformation.cs" />
     <Compile Include="WidgetInformation.cs" />
+    <Compile Include="WidgetWindow.cs" />
     <Page Include="ClockForm.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>

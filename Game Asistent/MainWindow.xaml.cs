@@ -24,9 +24,9 @@ namespace GameAssistant
         };
 
         // Widgets instantions
-        ClockForm clockForm;
-        PictureForm pictureForm;
-        NoteForm noteForm;
+        ClockWidget clockWidget;
+        PictureWidget pictureWidget;
+        NoteWidget noteWidget;
 
         // Paths
         public static string SystemDriveName = "-";
@@ -57,7 +57,7 @@ namespace GameAssistant
                 }
             }
             #endregion
-
+            
             GameAssistantFolderPath = $@"{SystemDriveName}Users\{Environment.UserName}\GameAssistantFiles";
 
             SettingsFolderPath = $@"{GameAssistantFolderPath}\Settings";
@@ -67,43 +67,6 @@ namespace GameAssistant
             PictureSettingsPath = $@"{SettingsFolderPath}\PictureWidgetSettings.txt";
             NoteSettingsPath = Path.Combine(SettingsFolderPath, "NoteWidgetSettings.txt");
         }
-
-        #endregion
-
-        #region Constructor
-
-        /// <summary>
-        /// Constructor of MainWindow
-        /// </summary>
-        public MainWindow()
-        {
-
-            InitializeComponent();
-            this.Visibility = Visibility.Collapsed;
-
-            #region FileAndDirectoresSystemStart
-
-            // Set Paths
-            SetPaths();
-
-            // Check dires system
-            CheckProgramDiresArchitecture();
-
-            #endregion
-
-            #region ConfigureNotifyIcon
-
-            NotifyIconLoadingComponents();
-
-            #endregion
-
-            LoadingWidgets();
-
-        }
-
-        #endregion
-
-        #region StaticMethods
 
         /// <summary>
         /// Check program dires architecture (Create dires for program's files)
@@ -126,34 +89,36 @@ namespace GameAssistant
             }
         }
 
-        /// <summary>
-        /// Check all events and do it in real time if the event is on
-        /// </summary>
-        public static void DoEvents()
-        {
-            Application.Current.Dispatcher.Invoke(DispatcherPriority.Background,
-                                                  new Action(delegate { }));
-        }
+        #endregion
+
+        #region Constructor
 
         /// <summary>
-        /// Convert Bitmap to BitmapSource
+        /// Constructor of MainWindow
         /// </summary>
-        /// <param name="bitmap">Bitmap</param>
-        /// <returns>BitmapSource</returns>
-        public static BitmapSource GetBitmapSource(Bitmap bitmap)
+        public MainWindow()
         {
-            BitmapSource bitmapSource = Imaging.CreateBitmapSourceFromHBitmap
-            (
-                bitmap.GetHbitmap(),
-                IntPtr.Zero,
-                Int32Rect.Empty,
-                BitmapSizeOptions.FromEmptyOptions()
-            );
+            InitializeComponent();
+            this.Visibility = Visibility.Collapsed;
 
-            return bitmapSource;
+            #region FileAndDirectoresSystemStart
+            // Set Paths
+            SetPaths();
+
+            // Check dires system
+            CheckProgramDiresArchitecture();
+            #endregion
+
+            NotifyIconLoadingComponents();
+            LoadingWidgets();
+
         }
 
-        #region ClockFormStaticMethods
+        #endregion
+
+        #region WidgetsMethods
+
+        #region ClockWidgetStaticMethods
 
         /// <summary>
         /// Read and return save informaions about ClockForm
@@ -308,12 +273,12 @@ namespace GameAssistant
         /// Create ClockForm
         /// </summary>
         /// <returns>ClockForm</returns>
-        public static ClockForm CreateClockForm()
+        public static ClockWidget CreateClockWidget()
         {
             ClockInformation clockInf = DownloadClockInformationOfFile();
             if (clockInf != null)
             {
-                ClockForm cf = new ClockForm()
+                ClockWidget cf = new ClockWidget()
                 {
                     Left = clockInf.PositionX,
                     Top = clockInf.PositionY
@@ -329,7 +294,7 @@ namespace GameAssistant
                 return cf;
             }
             else
-            { return new ClockForm(); }
+            { return new ClockWidget(); }
 
         }
 
@@ -337,7 +302,7 @@ namespace GameAssistant
         /// Write in file selected settings about ClockForm
         /// </summary>
         /// <param name="argCF">ClockForm to saving</param>
-        public static void UpdateClockInformationOfFile(ClockForm argCF)
+        public static void UpdateClockInformationOfFile(ClockWidget argCF)
         {
             CheckProgramDiresArchitecture();
 
@@ -440,7 +405,7 @@ namespace GameAssistant
         }
         #endregion
 
-        #region PictureFormStaticMethods
+        #region PictureWidgetStaticMethods
 
         /// <summary>
         /// Read and return save informaions about PictureForm
@@ -568,13 +533,13 @@ namespace GameAssistant
         /// Create PictureForm
         /// </summary>
         /// <returns>PictureForm</returns>
-        public static PictureForm CreatePictureForm()
+        public static PictureWidget CreatePictureWidget()
         {
             PictureInformation pictureInf = DownloadPictureInformationOfFile();
 
             if (pictureInf != null)
             {
-                PictureForm pf = new PictureForm()
+                PictureWidget pf = new PictureWidget()
                 {
                     Left = pictureInf.PositionX,
                     Top = pictureInf.PositionY
@@ -604,14 +569,14 @@ namespace GameAssistant
                 return pf;
             }
             else
-            { return new PictureForm(); }
+            { return new PictureWidget(); }
         }
 
         /// <summary>
         /// Write in file selected settings about PictureForm
         /// </summary>
         /// <param name="argPF">PictureForm to saving</param>
-        public static void UpdatePictureInformationOfFile(PictureForm argPF)
+        public static void UpdatePictureInformationOfFile(PictureWidget argPF)
         {
             CheckProgramDiresArchitecture();
 
@@ -934,13 +899,13 @@ namespace GameAssistant
         /// Create NoteForm
         /// </summary>
         /// <returns>NoteForm</returns>
-        public static NoteForm CreateNoteForm()
+        public static NoteWidget CreateNoteWidget()
         {
             NoteInformation noteInf = DownloadNoteInformationOfFile();
 
             if (noteInf != null)
             {
-                NoteForm nf = new NoteForm()
+                NoteWidget nf = new NoteWidget()
                 {
                     Left = noteInf.PositionX,
                     Top = noteInf.PositionY
@@ -963,14 +928,14 @@ namespace GameAssistant
                 return nf;
             }
             else
-            { return new NoteForm(); }
+            { return new NoteWidget(); }
         }
 
         /// <summary>
         /// Write in file selected settings about NoteForm
         /// </summary>
         /// <param name="argNF">NoteForm to saving</param>
-        public static void UpdateNoteInformationOfFile(NoteForm argNF)
+        public static void UpdateNoteInformationOfFile(NoteWidget argNF)
         {
             CheckProgramDiresArchitecture();
 
@@ -1125,13 +1090,7 @@ namespace GameAssistant
         /// </summary>
         private void NotifyIconContextMenu_OpenWindow_Click(object sender, EventArgs e)
         {
-            #region Save settings
-
-            UpdateClockInformationOfFile(this.clockForm);
-            UpdatePictureInformationOfFile(this.pictureForm);
-            UpdateNoteInformationOfFile(this.noteForm);
-
-            #endregion
+            SaveWidgetsSettings();
 
             #region SettingsOn
 
@@ -1139,9 +1098,7 @@ namespace GameAssistant
             notifyIcon.Visible = false;
 
             /*/ Widgets /*/
-            clockForm?.Close();
-            pictureForm?.Close();
-            noteForm?.Close();
+            CloseWidgets();
 
             #endregion
 
@@ -1203,8 +1160,6 @@ namespace GameAssistant
         /// <summary>
         /// On click "Note" button in NotifyIcon
         /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
         private void NotifyIconContextMenu_Note_Click(object sender, EventArgs e)
         {
             OpenOrCloseNoteForm();
@@ -1228,14 +1183,14 @@ namespace GameAssistant
                 {
                     if (clockInf.IsChosed == true)
                     {
-                        if (clockForm != null)
+                        if (clockWidget != null)
                         {
-                            clockForm.Close();
+                            clockWidget.Close();
                         }
-                        clockForm = CreateClockForm();
-                        clockForm.LocationChanged += ClockForm_LocationChanged;
-                        clockForm.SizeChanged += ClockForm_SizeChanged;
-                        clockForm.Show();
+                        clockWidget = CreateClockWidget();
+                        clockWidget.LocationChanged += ClockForm_LocationChanged;
+                        clockWidget.SizeChanged += ClockForm_SizeChanged;
+                        clockWidget.Show();
 
                         System.Windows.Forms.ToolStripMenuItem menuitem = (System.Windows.Forms.ToolStripMenuItem)notifyIcon.ContextMenuStrip.Items[1];
                         if (menuitem != null)
@@ -1243,7 +1198,7 @@ namespace GameAssistant
                     }
                     else
                     {
-                        clockForm = null;
+                        clockWidget = null;
 
                         System.Windows.Forms.ToolStripMenuItem menuitem = (System.Windows.Forms.ToolStripMenuItem)notifyIcon.ContextMenuStrip.Items[1];
                         if (menuitem != null)
@@ -1252,14 +1207,14 @@ namespace GameAssistant
                 }
                 else
                 {
-                    if (clockForm != null)
+                    if (clockWidget != null)
                     {
-                        clockForm.Close();
+                        clockWidget.Close();
                     }
-                    clockForm = CreateClockForm();
-                    clockForm.LocationChanged += ClockForm_LocationChanged;
-                    clockForm.SizeChanged += ClockForm_SizeChanged;
-                    clockForm.Show();
+                    clockWidget = CreateClockWidget();
+                    clockWidget.LocationChanged += ClockForm_LocationChanged;
+                    clockWidget.SizeChanged += ClockForm_SizeChanged;
+                    clockWidget.Show();
                 }
 
                 PictureInformation pictureInf = DownloadPictureInformationOfFile();
@@ -1267,15 +1222,15 @@ namespace GameAssistant
                 {
                     if (pictureInf.IsChosed == true)
                     {
-                        if (pictureForm != null)
+                        if (pictureWidget != null)
                         {
-                            pictureForm.Close();
+                            pictureWidget.Close();
                         }
 
-                        pictureForm = CreatePictureForm();
-                        pictureForm.LocationChanged += PictureForm_LocationChanged;
-                        pictureForm.SizeChanged += PictureForm_SizeChanged;
-                        pictureForm.Show();
+                        pictureWidget = CreatePictureWidget();
+                        pictureWidget.LocationChanged += PictureForm_LocationChanged;
+                        pictureWidget.SizeChanged += PictureForm_SizeChanged;
+                        pictureWidget.Show();
 
                         System.Windows.Forms.ToolStripMenuItem menuitem = (System.Windows.Forms.ToolStripMenuItem)notifyIcon.ContextMenuStrip.Items[0];
                         if (menuitem != null)
@@ -1283,7 +1238,7 @@ namespace GameAssistant
                     }
                     else
                     {
-                        pictureForm = null;
+                        pictureWidget = null;
 
                         System.Windows.Forms.ToolStripMenuItem menuitem = (System.Windows.Forms.ToolStripMenuItem)notifyIcon.ContextMenuStrip.Items[0];
                         if (menuitem != null)
@@ -1292,14 +1247,14 @@ namespace GameAssistant
                 }
                 else
                 {
-                    if (pictureForm != null)
+                    if (pictureWidget != null)
                     {
-                        pictureForm.Close();
+                        pictureWidget.Close();
                     }
-                    pictureForm = CreatePictureForm();
-                    pictureForm.LocationChanged += PictureForm_LocationChanged;
-                    pictureForm.SizeChanged += PictureForm_SizeChanged;
-                    pictureForm.Show();
+                    pictureWidget = CreatePictureWidget();
+                    pictureWidget.LocationChanged += PictureForm_LocationChanged;
+                    pictureWidget.SizeChanged += PictureForm_SizeChanged;
+                    pictureWidget.Show();
                 }
 
                 NoteInformation noteInf = DownloadNoteInformationOfFile();
@@ -1307,15 +1262,15 @@ namespace GameAssistant
                 {
                     if (noteInf.IsChosed == true)
                     {
-                        if (noteForm != null)
+                        if (noteWidget != null)
                         {
-                            noteForm.Close();
+                            noteWidget.Close();
                         }
 
-                        noteForm = CreateNoteForm();
-                        noteForm.LocationChanged += NoteForm_LocationChanged;
-                        noteForm.SizeChanged += NoteForm_SizeChanged;
-                        noteForm.Show();
+                        noteWidget = CreateNoteWidget();
+                        noteWidget.LocationChanged += NoteForm_LocationChanged;
+                        noteWidget.SizeChanged += NoteForm_SizeChanged;
+                        noteWidget.Show();
 
                         System.Windows.Forms.ToolStripMenuItem menuitem = (System.Windows.Forms.ToolStripMenuItem)notifyIcon.ContextMenuStrip.Items[2];
                         if (menuitem != null)
@@ -1323,7 +1278,7 @@ namespace GameAssistant
                     }
                     else
                     {
-                        noteForm = null;
+                        noteWidget = null;
 
                         System.Windows.Forms.ToolStripMenuItem menuitem = (System.Windows.Forms.ToolStripMenuItem)notifyIcon.ContextMenuStrip.Items[2];
                         if (menuitem != null)
@@ -1332,14 +1287,14 @@ namespace GameAssistant
                 }
                 else
                 {
-                    if (noteForm != null)
+                    if (noteWidget != null)
                     {
-                        noteForm.Close();
+                        noteWidget.Close();
                     }
-                    noteForm = CreateNoteForm();
-                    noteForm.LocationChanged += NoteForm_LocationChanged;
-                    noteForm.SizeChanged += NoteForm_SizeChanged;
-                    noteForm.Show();
+                    noteWidget = CreateNoteWidget();
+                    noteWidget.LocationChanged += NoteForm_LocationChanged;
+                    noteWidget.SizeChanged += NoteForm_SizeChanged;
+                    noteWidget.Show();
                 }
             }
         }
@@ -1353,22 +1308,22 @@ namespace GameAssistant
         {
             System.Windows.Forms.ToolStripMenuItem menuitem = (System.Windows.Forms.ToolStripMenuItem)notifyIcon.ContextMenuStrip.Items[1];
 
-            if (clockForm != null)
+            if (clockWidget != null)
             {
-                UpdateClockInformationOfFile(this.clockForm);
-                clockForm.Close();
-                clockForm = null;
-                UpdateClockInformationOfFile(this.clockForm);
+                UpdateClockInformationOfFile(this.clockWidget);
+                clockWidget.Close();
+                clockWidget = null;
+                UpdateClockInformationOfFile(this.clockWidget);
                 if (menuitem != null)
                     menuitem.Checked = false;
             }
             else
             {
-                clockForm = CreateClockForm();
-                clockForm.LocationChanged += ClockForm_LocationChanged;
-                clockForm.SizeChanged += ClockForm_SizeChanged;
-                clockForm.Show();
-                UpdateClockInformationOfFile(this.clockForm);
+                clockWidget = CreateClockWidget();
+                clockWidget.LocationChanged += ClockForm_LocationChanged;
+                clockWidget.SizeChanged += ClockForm_SizeChanged;
+                clockWidget.Show();
+                UpdateClockInformationOfFile(this.clockWidget);
                 if (menuitem != null)
                     menuitem.Checked = true;
             }
@@ -1381,23 +1336,23 @@ namespace GameAssistant
         {
             System.Windows.Forms.ToolStripMenuItem menuitem = (System.Windows.Forms.ToolStripMenuItem)notifyIcon.ContextMenuStrip.Items[0];
 
-            if (pictureForm != null)
+            if (pictureWidget != null)
             {
-                UpdatePictureInformationOfFile(this.pictureForm);
-                pictureForm.Close();
-                pictureForm = null;
-                UpdatePictureInformationOfFile(this.pictureForm);
-                pictureForm = null;
+                UpdatePictureInformationOfFile(this.pictureWidget);
+                pictureWidget.Close();
+                pictureWidget = null;
+                UpdatePictureInformationOfFile(this.pictureWidget);
+                pictureWidget = null;
                 if (menuitem != null)
                     menuitem.Checked = false;
             }
             else
             {
-                pictureForm = CreatePictureForm();
-                pictureForm.LocationChanged += PictureForm_LocationChanged;
-                pictureForm.SizeChanged += PictureForm_SizeChanged;
-                pictureForm.Show();
-                UpdatePictureInformationOfFile(this.pictureForm);
+                pictureWidget = CreatePictureWidget();
+                pictureWidget.LocationChanged += PictureForm_LocationChanged;
+                pictureWidget.SizeChanged += PictureForm_SizeChanged;
+                pictureWidget.Show();
+                UpdatePictureInformationOfFile(this.pictureWidget);
                 if (menuitem != null)
                     menuitem.Checked = true;
             }
@@ -1410,23 +1365,23 @@ namespace GameAssistant
         {
             System.Windows.Forms.ToolStripMenuItem menuitem = (System.Windows.Forms.ToolStripMenuItem)notifyIcon.ContextMenuStrip.Items[2];
 
-            if (noteForm != null)
+            if (noteWidget != null)
             {
-                UpdateNoteInformationOfFile(this.noteForm);
-                noteForm.Close();
-                noteForm = null;
-                UpdateNoteInformationOfFile(this.noteForm);
-                noteForm = null;
+                UpdateNoteInformationOfFile(this.noteWidget);
+                noteWidget.Close();
+                noteWidget = null;
+                UpdateNoteInformationOfFile(this.noteWidget);
+                noteWidget = null;
                 if (menuitem != null)
                     menuitem.Checked = false;
             }
             else
             {
-                noteForm = CreateNoteForm();
-                noteForm.LocationChanged += NoteForm_LocationChanged;
-                noteForm.SizeChanged += NoteForm_SizeChanged;
-                noteForm.Show();
-                UpdateNoteInformationOfFile(this.noteForm);
+                noteWidget = CreateNoteWidget();
+                noteWidget.LocationChanged += NoteForm_LocationChanged;
+                noteWidget.SizeChanged += NoteForm_SizeChanged;
+                noteWidget.Show();
+                UpdateNoteInformationOfFile(this.noteWidget);
                 if (menuitem != null)
                     menuitem.Checked = true;
             }
@@ -1434,15 +1389,41 @@ namespace GameAssistant
 
         #endregion
 
+        private void SaveWidgetsSettings()
+        {
+            UpdateClockInformationOfFile(this.clockWidget);
+            UpdatePictureInformationOfFile(this.pictureWidget);
+            UpdateNoteInformationOfFile(this.noteWidget);
+        }
+
+        private void CloseWidgetsWithNotifyIcon()
+        {
+            CloseWidgets();
+
+            /// Delete NotifyIcon
+            notifyIcon?.Dispose();
+            notifyIcon = null;
+        }
+
+        private void CloseWidgets()
+        {
+            /// Close ClockForm
+            this.clockWidget?.Close();
+
+            /// Close PictureForm
+            this.pictureWidget?.Close();
+
+            /// Close NoteForm
+            this.noteWidget?.Close();
+        }
+
         /// <summary>
         /// [Click Close Button] Save settings and close application
         /// </summary>
         private void CloseApplication_Click()
         {
             // Update select settngs in program's files
-            UpdateClockInformationOfFile(this.clockForm);
-            UpdatePictureInformationOfFile(this.pictureForm);
-            UpdateNoteInformationOfFile(this.noteForm);
+            SaveWidgetsSettings();
 
             // Close application
             this?.Close();
@@ -1457,7 +1438,7 @@ namespace GameAssistant
         /// </summary>
         private void ClockForm_SizeChanged(object sender, SizeChangedEventArgs e)
         {
-            UpdateClockInformationOfFile(clockForm);
+            UpdateClockInformationOfFile(clockWidget);
         }
 
         /// <summary>
@@ -1465,7 +1446,7 @@ namespace GameAssistant
         /// </summary>
         private void ClockForm_LocationChanged(object sender, EventArgs e)
         {
-            UpdateClockInformationOfFile(clockForm);
+            UpdateClockInformationOfFile(clockWidget);
         }
 
         /// <summary>
@@ -1473,7 +1454,7 @@ namespace GameAssistant
         /// </summary>
         private void PictureForm_SizeChanged(object sender, SizeChangedEventArgs e)
         {
-            UpdatePictureInformationOfFile(pictureForm);
+            UpdatePictureInformationOfFile(pictureWidget);
         }
 
         /// <summary>
@@ -1481,7 +1462,7 @@ namespace GameAssistant
         /// </summary>
         private void PictureForm_LocationChanged(object sender, EventArgs e)
         {
-            UpdatePictureInformationOfFile(pictureForm);
+            UpdatePictureInformationOfFile(pictureWidget);
         }
 
         /// <summary>
@@ -1489,7 +1470,7 @@ namespace GameAssistant
         /// </summary>
         private void NoteForm_SizeChanged(object sender, SizeChangedEventArgs e)
         {
-            UpdateNoteInformationOfFile(noteForm);
+            UpdateNoteInformationOfFile(noteWidget);
         }
 
         /// <summary>
@@ -1497,7 +1478,7 @@ namespace GameAssistant
         /// </summary>
         private void NoteForm_LocationChanged(object sender, EventArgs e)
         {
-            UpdateNoteInformationOfFile(noteForm);
+            UpdateNoteInformationOfFile(noteWidget);
         }
 
         #endregion
@@ -1509,28 +1490,21 @@ namespace GameAssistant
         /// </summary>
         private void MainWindowElement_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
-            #region CloseWidgetsForms
-
-            /// Close ClockForm
-            this.clockForm?.Close();
-
-            /// Close PictureForm
-            this.pictureForm?.Close();
-
-            /// Close NoteForm
-            this.noteForm?.Close();
-
-            #endregion
-
-            /// Delete NotifyIcon
-            notifyIcon?.Dispose();
-            notifyIcon = null;
-
+            CloseWidgetsWithNotifyIcon();
         }
 
         #endregion
 
         #region Helpers
+
+        /// <summary>
+        /// Check all events and do it in real time if the event is on
+        /// </summary>
+        public static void DoEvents()
+        {
+            Application.Current.Dispatcher.Invoke(DispatcherPriority.Background,
+                                                  new Action(delegate { }));
+        }
 
         /// <summary>
         /// Convert Brush to Color (System.Windowd.Media)
@@ -1567,11 +1541,29 @@ namespace GameAssistant
         /// <summary>
         /// Convert System.Drawing.Color to System.Windows.Media.Color
         /// </summary>
-        /// <param name="colorDrawing">Color to convert</param>
+        /// <param name="fontFamilyMedia">Color to convert</param>
         /// <returns>Color of return</returns>
         public static System.Drawing.FontFamily FontFamilyMediaToDrawing(System.Windows.Media.FontFamily fontFamilyMedia)
         {
             return new System.Drawing.FontFamily(fontFamilyMedia.ToString());
+        }
+
+        /// <summary>
+        /// Convert Bitmap to BitmapSource
+        /// </summary>
+        /// <param name="bitmap">Bitmap</param>
+        /// <returns>BitmapSource</returns>
+        public static BitmapSource GetBitmapSource(Bitmap bitmap)
+        {
+            BitmapSource bitmapSource = Imaging.CreateBitmapSourceFromHBitmap
+            (
+                bitmap.GetHbitmap(),
+                IntPtr.Zero,
+                Int32Rect.Empty,
+                BitmapSizeOptions.FromEmptyOptions()
+            );
+
+            return bitmapSource;
         }
 
         #endregion

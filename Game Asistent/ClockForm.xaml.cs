@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Windows;
-using System.Windows.Input;
 using System.Windows.Threading;
 
 namespace GameAssistant
@@ -8,14 +6,12 @@ namespace GameAssistant
     /// <summary>
     /// Logika interakcji dla klasy MainWindow.xaml
     /// </summary>
-    public partial class ClockForm : Window
+    public partial class ClockWidget : WidgetWindow
     {
         // Varibles:
         public DispatcherTimer clockTimer = new DispatcherTimer(DispatcherPriority.Background);
 
-        public bool IsAllowDrag = false;
-
-        public ClockForm()
+        public ClockWidget()
         {
             InitializeComponent();
             UpdateTimeToNow();
@@ -46,17 +42,10 @@ namespace GameAssistant
                             (DateTime.Now.Second % 10).ToString();
         }
 
-        private void ClockLabel_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
-        {
-            if (IsAllowDrag && e.LeftButton == MouseButtonState.Pressed)
-            {
-                this.DragMove();
-            }
-        }
-
         private void ClockWindow_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
             clockTimer.Stop();
         }
+
     }
 }

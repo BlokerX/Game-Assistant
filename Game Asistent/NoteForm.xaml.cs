@@ -1,5 +1,4 @@
 ﻿using System.IO;
-using System.Windows;
 using System.Windows.Input;
 
 namespace GameAssistant
@@ -7,13 +6,11 @@ namespace GameAssistant
     /// <summary>
     /// Logika interakcji dla klasy NoteForm.xaml
     /// </summary>
-    public partial class NoteForm : Window
+    public partial class NoteWidget : WidgetWindow
     {
-        public bool IsAllowDrag = false;
-
         public string[] NotePath = new string[] { Path.Combine(MainWindow.NotesDirePath, "Note_1.txt") };
 
-        public NoteForm()
+        public NoteWidget()
         {
             InitializeComponent();
             if (!File.Exists(NotePath[0]))
@@ -32,29 +29,6 @@ namespace GameAssistant
                 sr.Dispose();
             }
             TextBox1.Text = textFromFile;
-        }
-
-        private void Window_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
-        {
-            DragWindow(e);
-        }
-
-        private void Grid_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
-        {
-            DragWindow(e);
-        }
-
-        private void Rec1_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
-        {
-            DragWindow(e);
-        }
-
-        private void DragWindow(MouseButtonEventArgs e)
-        {
-            if (IsAllowDrag && e.LeftButton == MouseButtonState.Pressed)
-            {
-                this.DragMove();
-            }
         }
 
         private void TextBox1_TextChanged(object sender, System.Windows.Controls.TextChangedEventArgs e)
@@ -106,5 +80,6 @@ namespace GameAssistant
                 TextBox1.CaretIndex = ci + 1;
             }
         }
+
     }
 }

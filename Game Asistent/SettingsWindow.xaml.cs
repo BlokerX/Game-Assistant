@@ -13,9 +13,9 @@ namespace GameAssistant
         #region ObjectsAndVaribles
 
         // Instation of widgets
-        public ClockForm clockForm = null;
-        public PictureForm pictureForm = null;
-        public NoteForm noteForm = null;
+        public ClockWidget clockForm = null;
+        public PictureWidget pictureForm = null;
+        public NoteWidget noteForm = null;
 
         // Varibles
         /// <summary>
@@ -57,7 +57,7 @@ namespace GameAssistant
             {
                 if (clockInf.IsChosed == true)
                 {
-                    clockForm = MainWindow.CreateClockForm();
+                    clockForm = MainWindow.CreateClockWidget();
                     clockForm.LocationChanged += ClockForm_LocationChanged;
                     clockForm.SizeChanged += ClockForm_SizeChanged;
                     clockForm.Show();
@@ -114,7 +114,7 @@ namespace GameAssistant
             }
             else
             {
-                clockForm = MainWindow.CreateClockForm();
+                clockForm = MainWindow.CreateClockWidget();
                 clockForm.LocationChanged += ClockForm_LocationChanged;
                 clockForm.SizeChanged += ClockForm_SizeChanged;
                 clockForm.Show();
@@ -136,7 +136,7 @@ namespace GameAssistant
             {
                 if (pictureInf.IsChosed == true)
                 {
-                    pictureForm = MainWindow.CreatePictureForm();
+                    pictureForm = MainWindow.CreatePictureWidget();
                     pictureForm.LocationChanged += PictureForm_LocationChanged;
                     pictureForm.SizeChanged += PictureForm_SizeChanged;
                     pictureForm.Show();
@@ -173,7 +173,7 @@ namespace GameAssistant
             }
             else
             {
-                pictureForm = MainWindow.CreatePictureForm();
+                pictureForm = MainWindow.CreatePictureWidget();
                 pictureForm.LocationChanged += PictureForm_LocationChanged;
                 pictureForm.SizeChanged += PictureForm_SizeChanged;
                 pictureForm.Show();
@@ -195,7 +195,7 @@ namespace GameAssistant
             {
                 if (noteInf.IsChosed == true)
                 {
-                    noteForm = MainWindow.CreateNoteForm();
+                    noteForm = MainWindow.CreateNoteWidget();
                     noteForm.LocationChanged += NoteForm_LocationChanged;
                     noteForm.SizeChanged += NoteForm_SizeChanged;
                     noteForm.Show();
@@ -252,7 +252,7 @@ namespace GameAssistant
             }
             else
             {
-                noteForm = MainWindow.CreateNoteForm();
+                noteForm = MainWindow.CreateNoteWidget();
                 noteForm.LocationChanged += NoteForm_LocationChanged;
                 noteForm.SizeChanged += NoteForm_SizeChanged;
                 noteForm.Show();
@@ -329,7 +329,7 @@ namespace GameAssistant
         {
             if (clockForm == null)
             {
-                clockForm = MainWindow.CreateClockForm();
+                clockForm = MainWindow.CreateClockWidget();
                 clockForm.LocationChanged += ClockForm_LocationChanged;
                 clockForm.SizeChanged += ClockForm_SizeChanged;
                 if (clockForm != null)
@@ -382,7 +382,7 @@ namespace GameAssistant
         {
             if (pictureForm == null)
             {
-                pictureForm = MainWindow.CreatePictureForm();
+                pictureForm = MainWindow.CreatePictureWidget();
                 pictureForm.LocationChanged += PictureForm_LocationChanged;
                 pictureForm.SizeChanged += PictureForm_SizeChanged;
                 if (pictureForm != null)
@@ -436,7 +436,7 @@ namespace GameAssistant
         {
             if (noteForm == null)
             {
-                noteForm = MainWindow.CreateNoteForm();
+                noteForm = MainWindow.CreateNoteWidget();
                 noteForm.LocationChanged += NoteForm_LocationChanged;
                 noteForm.SizeChanged += NoteForm_SizeChanged;
                 if (noteForm != null)

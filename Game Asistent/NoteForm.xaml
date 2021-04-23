@@ -1,13 +1,13 @@
-﻿<Window x:Name="Window" x:Class="GameAssistant.NoteForm"
+﻿<local:WidgetWindow x:Name="WindowComponent" x:Class="GameAssistant.NoteWidget"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:GameAssistant"
         mc:Ignorable="d"
-        Title="NoteForm" Height="330" Width="302" AllowsTransparency="True" WindowStyle="None" Background="Transparent" MouseLeftButtonDown="Window_MouseLeftButtonDown" ShowInTaskbar="False" ResizeMode="NoResize" Topmost="True">
-    <Grid x:Name="Grid" MouseLeftButtonDown="Grid_MouseLeftButtonDown">
-        <Rectangle x:Name="Rec1" Fill="#FFF3E126" Stroke="Transparent" Opacity="0.5" MouseLeftButtonDown="Rec1_MouseLeftButtonDown"/>
+        Title="NoteForm" Height="330" Width="302" AllowsTransparency="True" WindowStyle="None" Background="Transparent" MouseLeftButtonDown="DragWindow" ShowInTaskbar="False" ResizeMode="NoResize" Topmost="True">
+    <Grid x:Name="Grid" MouseLeftButtonDown="DragWindow">
+        <Rectangle x:Name="Rec1" Fill="#FFF3E126" Stroke="Transparent" Opacity="0.5" MouseLeftButtonDown="DragWindow"/>
         <TextBox x:Name="TextBox1" Margin="10" TextWrapping="Wrap" FontSize="20" FontFamily="Century Gothic" BorderBrush="Transparent" Background="Transparent" TextChanged="TextBox1_TextChanged" Text="Tutaj wpisz swoją notatkę..." Opacity="0.75" KeyDown="TextBox1_KeyDown"/>
     </Grid>
-</Window>
+</local:WidgetWindow>
