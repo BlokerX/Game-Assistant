@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:GameAssistant"
         mc:Ignorable="d"
-        Title="Picture Widget" Height="413" Width="733" Background="Transparent" AllowsTransparency="True" WindowStyle="None" Topmost="True" ShowInTaskbar="False" ResizeMode="NoResize" BorderThickness="1" AllowDrop="True">
+        Title="Picture Widget" Height="413" Width="733" Background="Transparent" AllowsTransparency="True" WindowStyle="None" Topmost="True" ShowInTaskbar="False" ResizeMode="NoResize" BorderThickness="1" AllowDrop="True" LocationChanged="PictureWidget_LocationChanged" SizeChanged="PictureWidget_SizeChanged">
     <Grid x:Name="Grid">
         <Image x:Name="ImageBox" MouseLeftButtonDown="DragWindow" Source="DefaultImageToImageBox.jpg"/>
         <Rectangle x:Name="rec1" HorizontalAlignment="Right" Height="16" VerticalAlignment="Bottom" Width="16">

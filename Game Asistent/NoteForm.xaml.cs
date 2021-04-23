@@ -1,10 +1,12 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
+using System.Windows;
 using System.Windows.Input;
 
 namespace GameAssistant
 {
     /// <summary>
-    /// Logika interakcji dla klasy NoteForm.xaml
+    /// Logika interakcji dla klasy NoteWidget.xaml
     /// </summary>
     public partial class NoteWidget : WidgetWindow
     {
@@ -79,6 +81,16 @@ namespace GameAssistant
                 TextBox1.Text = s;
                 TextBox1.CaretIndex = ci + 1;
             }
+        }
+
+        private void NoteWidget_SizeChanged(object sender, SizeChangedEventArgs e)
+        {
+            MainWindow.UpdateNoteInformationOfFile(this);
+        }
+
+        private void NoteWidget_LocationChanged(object sender, EventArgs e)
+        {
+            MainWindow.UpdateNoteInformationOfFile(this);
         }
 
     }

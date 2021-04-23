@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:GameAssistant"
         mc:Ignorable="d"
-        Title="Clock Widget" Height="62" Width="200" Topmost="True" Cursor="" AllowsTransparency="True" WindowStyle="None" Background="Transparent" AllowDrop="True" Activated="ClockWindow_Activated" ResizeMode="CanMinimize" ShowInTaskbar="False" Closing="ClockWindow_Closing">
+        Title="Clock Widget" Height="62" Width="200" Topmost="True" Cursor="" AllowsTransparency="True" WindowStyle="None" Background="Transparent" AllowDrop="True" Activated="ClockWidget_Activated" ResizeMode="CanMinimize" ShowInTaskbar="False" Closing="ClockWidget_Closing" SizeChanged="ClockWidget_SizeChanged" LocationChanged="ClockWidget_LocationChanged">
     <Grid x:Name="Grid" Background="Transparent">
         <Rectangle x:Name="rec1" Opacity="0.5">
             <Rectangle.Fill>

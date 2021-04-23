@@ -13,9 +13,9 @@ namespace GameAssistant
         #region ObjectsAndVaribles
 
         // Instation of widgets
-        public ClockWidget clockForm = null;
-        public PictureWidget pictureForm = null;
-        public NoteWidget noteForm = null;
+        public ClockWidget clockWidget = null;
+        public PictureWidget pictureWidget = null;
+        public NoteWidget noteWidget = null;
 
         // Varibles
         /// <summary>
@@ -33,23 +33,16 @@ namespace GameAssistant
         public SettingsWindow()
         {
             InitializeComponent();
-
-            #region FileAndDirectoresSystemStart
-
             // Set Paths
             MainWindow.SetPaths();
-
             // Check dires system
             MainWindow.CheckProgramDiresArchitecture();
-
-            #endregion
-
             LoadingWidgets();
         }
 
         private void LoadingWidgets()
         {
-            #region ClockFormLoading
+            #region ClockWidgetLoading
 
             ClockInformation clockInf = MainWindow.DownloadClockInformationOfFile();
 
@@ -57,14 +50,12 @@ namespace GameAssistant
             {
                 if (clockInf.IsChosed == true)
                 {
-                    clockForm = MainWindow.CreateClockWidget();
-                    clockForm.LocationChanged += ClockForm_LocationChanged;
-                    clockForm.SizeChanged += ClockForm_SizeChanged;
-                    clockForm.Show();
+                    clockWidget = MainWindow.CreateClockWidget();
+                    clockWidget.Show();
                 }
                 else
                 {
-                    clockForm = null;
+                    clockWidget = null;
                 }
 
                 switch (clockInf.ClockOpacity)
@@ -114,21 +105,19 @@ namespace GameAssistant
             }
             else
             {
-                clockForm = MainWindow.CreateClockWidget();
-                clockForm.LocationChanged += ClockForm_LocationChanged;
-                clockForm.SizeChanged += ClockForm_SizeChanged;
-                clockForm.Show();
+                clockWidget = MainWindow.CreateClockWidget();
+                clockWidget.Show();
             }
 
-            if (clockForm != null)
+            if (clockWidget != null)
             {
-                clockForm.IsAllowDrag = true;
-                clockForm.ResizeMode = ResizeMode.CanResizeWithGrip;
+                clockWidget.IsAllowDrag = true;
+                clockWidget.ResizeMode = ResizeMode.CanResizeWithGrip;
             }
 
             #endregion
 
-            #region PictureFormLoading
+            #region PictureWidgetLoading
 
             PictureInformation pictureInf = MainWindow.DownloadPictureInformationOfFile();
 
@@ -136,14 +125,12 @@ namespace GameAssistant
             {
                 if (pictureInf.IsChosed == true)
                 {
-                    pictureForm = MainWindow.CreatePictureWidget();
-                    pictureForm.LocationChanged += PictureForm_LocationChanged;
-                    pictureForm.SizeChanged += PictureForm_SizeChanged;
-                    pictureForm.Show();
+                    pictureWidget = MainWindow.CreatePictureWidget();
+                    pictureWidget.Show();
                 }
                 else
                 {
-                    pictureForm = null;
+                    pictureWidget = null;
                 }
 
                 switch (pictureInf.PictureOpacity)
@@ -173,21 +160,19 @@ namespace GameAssistant
             }
             else
             {
-                pictureForm = MainWindow.CreatePictureWidget();
-                pictureForm.LocationChanged += PictureForm_LocationChanged;
-                pictureForm.SizeChanged += PictureForm_SizeChanged;
-                pictureForm.Show();
+                pictureWidget = MainWindow.CreatePictureWidget();
+                pictureWidget.Show();
             }
-            if (pictureForm != null)
+            if (pictureWidget != null)
             {
-                pictureForm.IsAllowDrag = true;
-                pictureForm.ResizeMode = ResizeMode.CanResizeWithGrip;
-                pictureForm.rec1.Visibility = Visibility.Visible;
+                pictureWidget.IsAllowDrag = true;
+                pictureWidget.ResizeMode = ResizeMode.CanResizeWithGrip;
+                pictureWidget.rec1.Visibility = Visibility.Visible;
             }
 
             #endregion
 
-            #region NoteFormLoading
+            #region NoteWidgetLoading
 
             NoteInformation noteInf = MainWindow.DownloadNoteInformationOfFile();
 
@@ -195,14 +180,12 @@ namespace GameAssistant
             {
                 if (noteInf.IsChosed == true)
                 {
-                    noteForm = MainWindow.CreateNoteWidget();
-                    noteForm.LocationChanged += NoteForm_LocationChanged;
-                    noteForm.SizeChanged += NoteForm_SizeChanged;
-                    noteForm.Show();
+                    noteWidget = MainWindow.CreateNoteWidget();
+                    noteWidget.Show();
                 }
                 else
                 {
-                    noteForm = null;
+                    noteWidget = null;
                 }
 
                 switch (noteInf.BackgroundOpacity)
@@ -252,16 +235,14 @@ namespace GameAssistant
             }
             else
             {
-                noteForm = MainWindow.CreateNoteWidget();
-                noteForm.LocationChanged += NoteForm_LocationChanged;
-                noteForm.SizeChanged += NoteForm_SizeChanged;
-                noteForm.Show();
+                noteWidget = MainWindow.CreateNoteWidget();
+                noteWidget.Show();
             }
 
-            if (noteForm != null)
+            if (noteWidget != null)
             {
-                noteForm.IsAllowDrag = true;
-                noteForm.ResizeMode = ResizeMode.CanResizeWithGrip;
+                noteWidget.IsAllowDrag = true;
+                noteWidget.ResizeMode = ResizeMode.CanResizeWithGrip;
             }
 
             #endregion
@@ -275,11 +256,11 @@ namespace GameAssistant
         #region ChosePicture
 
         /// <summary>
-        /// Set picture in PictureForm 
+        /// Set picture in PictureWidget 
         /// </summary>
         private void ChosePictureButton_Click(object sender, RoutedEventArgs e)
         {
-            if (pictureForm != null)
+            if (pictureWidget != null)
             {
                 using
                 (
@@ -294,10 +275,10 @@ namespace GameAssistant
                     {
                         if (openFileDialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
                         {
-                            pictureForm.ImageBox.Source = new BitmapImage(new Uri(Path.Combine(Environment.CurrentDirectory, openFileDialog.FileName)));
+                            pictureWidget.ImageBox.Source = new BitmapImage(new Uri(Path.Combine(Environment.CurrentDirectory, openFileDialog.FileName)));
                             PicturePathTextBox.Text = openFileDialog.FileName;
-                            pictureForm.ImagePath = openFileDialog.FileName;
-                            MainWindow.UpdatePictureInformationOfFile(pictureForm);
+                            pictureWidget.ImagePath = openFileDialog.FileName;
+                            MainWindow.UpdatePictureInformationOfFile(pictureWidget);
                         }
                     }
                     catch { }
@@ -327,18 +308,16 @@ namespace GameAssistant
         /// </summary>
         private void ClockVisibleCheckBox_Checked(object sender, RoutedEventArgs e)
         {
-            if (clockForm == null)
+            if (clockWidget == null)
             {
-                clockForm = MainWindow.CreateClockWidget();
-                clockForm.LocationChanged += ClockForm_LocationChanged;
-                clockForm.SizeChanged += ClockForm_SizeChanged;
-                if (clockForm != null)
+                clockWidget = MainWindow.CreateClockWidget();
+                if (clockWidget != null)
                 {
-                    clockForm.IsAllowDrag = true;
-                    clockForm.ResizeMode = ResizeMode.CanResizeWithGrip;
+                    clockWidget.IsAllowDrag = true;
+                    clockWidget.ResizeMode = ResizeMode.CanResizeWithGrip;
                 }
-                clockForm.Show();
-                MainWindow.UpdateClockInformationOfFile(clockForm);
+                clockWidget.Show();
+                MainWindow.UpdateClockInformationOfFile(clockWidget);
             }
         }
 
@@ -347,12 +326,12 @@ namespace GameAssistant
         /// </summary>
         private void ClockVisibleCheckBox_Unchecked(object sender, RoutedEventArgs e)
         {
-            if (clockForm != null)
+            if (clockWidget != null)
             {
-                MainWindow.UpdateClockInformationOfFile(clockForm);
-                clockForm.Close();
-                clockForm = null;
-                MainWindow.UpdateClockInformationOfFile(clockForm);
+                MainWindow.UpdateClockInformationOfFile(clockWidget);
+                clockWidget.Close();
+                clockWidget = null;
+                MainWindow.UpdateClockInformationOfFile(clockWidget);
             }
         }
 
@@ -361,11 +340,11 @@ namespace GameAssistant
         /// </summary>
         private void ClockVisibleCheckBox_Loaded(object sender, RoutedEventArgs e)
         {
-            if (clockForm != null)
+            if (clockWidget != null)
             {
                 this.ClockVisibleCheckBox.IsChecked = true;
             }
-            else if (clockForm == null)
+            else if (clockWidget == null)
             {
                 this.ClockVisibleCheckBox.IsChecked = false;
             }
@@ -380,19 +359,17 @@ namespace GameAssistant
         /// </summary>
         private void PictureBoxVisibleCheckBox_Checked(object sender, RoutedEventArgs e)
         {
-            if (pictureForm == null)
+            if (pictureWidget == null)
             {
-                pictureForm = MainWindow.CreatePictureWidget();
-                pictureForm.LocationChanged += PictureForm_LocationChanged;
-                pictureForm.SizeChanged += PictureForm_SizeChanged;
-                if (pictureForm != null)
+                pictureWidget = MainWindow.CreatePictureWidget();
+                if (pictureWidget != null)
                 {
-                    pictureForm.IsAllowDrag = true;
-                    pictureForm.ResizeMode = ResizeMode.CanResizeWithGrip;
-                    pictureForm.rec1.Visibility = Visibility.Visible;
+                    pictureWidget.IsAllowDrag = true;
+                    pictureWidget.ResizeMode = ResizeMode.CanResizeWithGrip;
+                    pictureWidget.rec1.Visibility = Visibility.Visible;
                 }
-                pictureForm.Show();
-                MainWindow.UpdatePictureInformationOfFile(pictureForm);
+                pictureWidget.Show();
+                MainWindow.UpdatePictureInformationOfFile(pictureWidget);
             }
         }
 
@@ -401,12 +378,12 @@ namespace GameAssistant
         /// </summary>
         private void PictureBoxVisibleCheckBox_Unchecked(object sender, RoutedEventArgs e)
         {
-            if (pictureForm != null)
+            if (pictureWidget != null)
             {
-                MainWindow.UpdatePictureInformationOfFile(pictureForm);
-                pictureForm.Close();
-                pictureForm = null;
-                MainWindow.UpdatePictureInformationOfFile(pictureForm);
+                MainWindow.UpdatePictureInformationOfFile(pictureWidget);
+                pictureWidget.Close();
+                pictureWidget = null;
+                MainWindow.UpdatePictureInformationOfFile(pictureWidget);
             }
         }
 
@@ -415,11 +392,11 @@ namespace GameAssistant
         /// </summary>
         private void PictureBoxVisibleCheckBox_Loaded(object sender, RoutedEventArgs e)
         {
-            if (pictureForm != null)
+            if (pictureWidget != null)
             {
                 this.PictureBoxVisibleCheckBox.IsChecked = true;
             }
-            else if (pictureForm == null)
+            else if (pictureWidget == null)
             {
                 this.PictureBoxVisibleCheckBox.IsChecked = false;
             }
@@ -434,18 +411,16 @@ namespace GameAssistant
         /// </summary>
         private void NoteVisibleCheckBox_Checked(object sender, RoutedEventArgs e)
         {
-            if (noteForm == null)
+            if (noteWidget == null)
             {
-                noteForm = MainWindow.CreateNoteWidget();
-                noteForm.LocationChanged += NoteForm_LocationChanged;
-                noteForm.SizeChanged += NoteForm_SizeChanged;
-                if (noteForm != null)
+                noteWidget = MainWindow.CreateNoteWidget();
+                if (noteWidget != null)
                 {
-                    noteForm.IsAllowDrag = true;
-                    noteForm.ResizeMode = ResizeMode.CanResizeWithGrip;
+                    noteWidget.IsAllowDrag = true;
+                    noteWidget.ResizeMode = ResizeMode.CanResizeWithGrip;
                 }
-                noteForm?.Show();
-                MainWindow.UpdateNoteInformationOfFile(noteForm);
+                noteWidget?.Show();
+                MainWindow.UpdateNoteInformationOfFile(noteWidget);
             }
         }
 
@@ -454,12 +429,12 @@ namespace GameAssistant
         /// </summary>
         private void NoteVisibleCheckBox_Unchecked(object sender, RoutedEventArgs e)
         {
-            if (noteForm != null)
+            if (noteWidget != null)
             {
-                MainWindow.UpdateNoteInformationOfFile(noteForm);
-                noteForm?.Close();
-                noteForm = null;
-                MainWindow.UpdateNoteInformationOfFile(noteForm);
+                MainWindow.UpdateNoteInformationOfFile(noteWidget);
+                noteWidget?.Close();
+                noteWidget = null;
+                MainWindow.UpdateNoteInformationOfFile(noteWidget);
             }
         }
 
@@ -468,11 +443,11 @@ namespace GameAssistant
         /// </summary>
         private void NoteVisibleCheckBox_Loaded(object sender, RoutedEventArgs e)
         {
-            if (noteForm != null)
+            if (noteWidget != null)
             {
                 this.NoteVisibleCheckBox.IsChecked = true;
             }
-            else if (noteForm == null)
+            else if (noteWidget == null)
             {
                 this.NoteVisibleCheckBox.IsChecked = false;
             }
@@ -488,53 +463,53 @@ namespace GameAssistant
 
         private void ClockOpacityComboBox_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
         {
-            if (clockForm != null)
+            if (clockWidget != null)
             {
                 switch (ClockOpacityComboBox.SelectedIndex)
                 {
                     case 0:
-                        clockForm.ClockLabel.Opacity = 1;
+                        clockWidget.ClockLabel.Opacity = 1;
                         break;
                     case 1:
-                        clockForm.ClockLabel.Opacity = 0.75;
+                        clockWidget.ClockLabel.Opacity = 0.75;
                         break;
                     case 2:
-                        clockForm.ClockLabel.Opacity = 0.5;
+                        clockWidget.ClockLabel.Opacity = 0.5;
                         break;
                     case 3:
-                        clockForm.ClockLabel.Opacity = 0.25;
+                        clockWidget.ClockLabel.Opacity = 0.25;
                         break;
                     case 4:
-                        clockForm.ClockLabel.Opacity = 0;
+                        clockWidget.ClockLabel.Opacity = 0;
                         break;
                 }
-                MainWindow.UpdateClockInformationOfFile(clockForm);
+                MainWindow.UpdateClockInformationOfFile(clockWidget);
             }
         }
 
         private void ClockBackgroundOpacityComboBox_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
         {
-            if (clockForm != null)
+            if (clockWidget != null)
             {
                 switch (ClockBackgroundOpacityComboBox.SelectedIndex)
                 {
                     case 0:
-                        clockForm.rec1.Opacity = 1;
+                        clockWidget.rec1.Opacity = 1;
                         break;
                     case 1:
-                        clockForm.rec1.Opacity = 0.75;
+                        clockWidget.rec1.Opacity = 0.75;
                         break;
                     case 2:
-                        clockForm.rec1.Opacity = 0.5;
+                        clockWidget.rec1.Opacity = 0.5;
                         break;
                     case 3:
-                        clockForm.rec1.Opacity = 0.25;
+                        clockWidget.rec1.Opacity = 0.25;
                         break;
                     case 4:
-                        clockForm.rec1.Opacity = 0;
+                        clockWidget.rec1.Opacity = 0;
                         break;
                 }
-                MainWindow.UpdateClockInformationOfFile(clockForm);
+                MainWindow.UpdateClockInformationOfFile(clockWidget);
             }
         }
 
@@ -544,27 +519,27 @@ namespace GameAssistant
 
         private void PictureOpacityComboBox_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
         {
-            if (pictureForm != null)
+            if (pictureWidget != null)
             {
                 switch (PictureOpacityComboBox.SelectedIndex)
                 {
                     case 0:
-                        pictureForm.ImageBox.Opacity = 1;
+                        pictureWidget.ImageBox.Opacity = 1;
                         break;
                     case 1:
-                        pictureForm.ImageBox.Opacity = 0.75;
+                        pictureWidget.ImageBox.Opacity = 0.75;
                         break;
                     case 2:
-                        pictureForm.ImageBox.Opacity = 0.5;
+                        pictureWidget.ImageBox.Opacity = 0.5;
                         break;
                     case 3:
-                        pictureForm.ImageBox.Opacity = 0.25;
+                        pictureWidget.ImageBox.Opacity = 0.25;
                         break;
                     case 4:
-                        pictureForm.ImageBox.Opacity = 0;
+                        pictureWidget.ImageBox.Opacity = 0;
                         break;
                 }
-                MainWindow.UpdatePictureInformationOfFile(pictureForm);
+                MainWindow.UpdatePictureInformationOfFile(pictureWidget);
             }
         }
 
@@ -574,26 +549,26 @@ namespace GameAssistant
 
         private void ChoseNoteFontSettingsButton_Click(object sender, RoutedEventArgs e)
         {
-            if (noteForm != null)
+            if (noteWidget != null)
             {
-                System.Drawing.FontFamily font1 = MainWindow.FontFamilyMediaToDrawing(noteForm.TextBox1.FontFamily);
+                System.Drawing.FontFamily font1 = MainWindow.FontFamilyMediaToDrawing(noteWidget.TextBox1.FontFamily);
 
                 try
                 {
                     using (System.Windows.Forms.FontDialog fontDialog = new System.Windows.Forms.FontDialog()
                     {
-                        Color = MainWindow.ColorMediaToDrawing(MainWindow.BrushToColorMedia(noteForm.TextBox1.Foreground)),
-                        Font = new System.Drawing.Font(font1.Name, float.Parse(noteForm.TextBox1.FontSize.ToString())),
+                        Color = MainWindow.ColorMediaToDrawing(MainWindow.BrushToColorMedia(noteWidget.TextBox1.Foreground)),
+                        Font = new System.Drawing.Font(font1.Name, float.Parse(noteWidget.TextBox1.FontSize.ToString())),
                         ShowEffects = false
                     })
                     {
                         if (fontDialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
                         {
                             // todo naprawić font family
-                            noteForm.TextBox1.FontFamily = (System.Windows.Media.FontFamily)new System.Windows.Media.FontFamilyConverter().ConvertFrom(fontDialog.Font.FontFamily.Name);
-                            noteForm.TextBox1.FontSize = fontDialog.Font.Size;
+                            noteWidget.TextBox1.FontFamily = (System.Windows.Media.FontFamily)new System.Windows.Media.FontFamilyConverter().ConvertFrom(fontDialog.Font.FontFamily.Name);
+                            noteWidget.TextBox1.FontSize = fontDialog.Font.Size;
                         }
-                        MainWindow.UpdateNoteInformationOfFile(noteForm);
+                        MainWindow.UpdateNoteInformationOfFile(noteWidget);
                     }
                 }
                 catch { }
@@ -617,53 +592,53 @@ namespace GameAssistant
 
         private void NoteBackgroundOpacityComboBox_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
         {
-            if (noteForm != null)
+            if (noteWidget != null)
             {
                 switch (NoteBackgroundOpacityComboBox.SelectedIndex)
                 {
                     case 0:
-                        noteForm.Rec1.Opacity = 1;
+                        noteWidget.Rec1.Opacity = 1;
                         break;
                     case 1:
-                        noteForm.Rec1.Opacity = 0.75;
+                        noteWidget.Rec1.Opacity = 0.75;
                         break;
                     case 2:
-                        noteForm.Rec1.Opacity = 0.5;
+                        noteWidget.Rec1.Opacity = 0.5;
                         break;
                     case 3:
-                        noteForm.Rec1.Opacity = 0.25;
+                        noteWidget.Rec1.Opacity = 0.25;
                         break;
                     case 4:
-                        noteForm.Rec1.Opacity = 0;
+                        noteWidget.Rec1.Opacity = 0;
                         break;
                 }
-                MainWindow.UpdateNoteInformationOfFile(noteForm);
+                MainWindow.UpdateNoteInformationOfFile(noteWidget);
             }
         }
 
         private void NoteFontOpacityComboBox_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
         {
-            if (noteForm != null)
+            if (noteWidget != null)
             {
                 switch (NoteFontOpacityComboBox.SelectedIndex)
                 {
                     case 0:
-                        noteForm.TextBox1.Opacity = 1;
+                        noteWidget.TextBox1.Opacity = 1;
                         break;
                     case 1:
-                        noteForm.TextBox1.Opacity = 0.75;
+                        noteWidget.TextBox1.Opacity = 0.75;
                         break;
                     case 2:
-                        noteForm.TextBox1.Opacity = 0.5;
+                        noteWidget.TextBox1.Opacity = 0.5;
                         break;
                     case 3:
-                        noteForm.TextBox1.Opacity = 0.25;
+                        noteWidget.TextBox1.Opacity = 0.25;
                         break;
                     case 4:
-                        noteForm.TextBox1.Opacity = 0;
+                        noteWidget.TextBox1.Opacity = 0;
                         break;
                 }
-                MainWindow.UpdateNoteInformationOfFile(noteForm);
+                MainWindow.UpdateNoteInformationOfFile(noteWidget);
             }
         }
 
@@ -678,7 +653,7 @@ namespace GameAssistant
         /// </summary>
         private void ChoseClockBackgroundColorButton_Click(object sender, RoutedEventArgs e)
         {
-            if (clockForm != null)
+            if (clockWidget != null)
             {
                 System.Drawing.Color colorDrawing = MainWindow.ColorMediaToDrawing(MainWindow.BrushToColorMedia(ClockBackgroundColorRectangle.Fill));
 
@@ -692,10 +667,10 @@ namespace GameAssistant
                     {
                         if (colorDialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
                         {
-                            clockForm.rec1.Fill = new System.Windows.Media.SolidColorBrush(MainWindow.ColorDrawingToMedia(colorDialog.Color));
+                            clockWidget.rec1.Fill = new System.Windows.Media.SolidColorBrush(MainWindow.ColorDrawingToMedia(colorDialog.Color));
                             ClockBackgroundColorRectangle.Fill = new System.Windows.Media.SolidColorBrush(MainWindow.ColorDrawingToMedia(colorDialog.Color));
                         }
-                        MainWindow.UpdateClockInformationOfFile(clockForm);
+                        MainWindow.UpdateClockInformationOfFile(clockWidget);
                     }
                 }
                 catch { }
@@ -722,9 +697,9 @@ namespace GameAssistant
             {
                 ClockBackgroundColorRectangle.Fill = new System.Windows.Media.SolidColorBrush(MainWindow.DownloadClockInformationOfFile().BackgroundColor);
             }
-            else if (clockForm != null)
+            else if (clockWidget != null)
             {
-                ClockBackgroundColorRectangle.Fill = clockForm.rec1.Fill;
+                ClockBackgroundColorRectangle.Fill = clockWidget.rec1.Fill;
             }
         }
 
@@ -733,7 +708,7 @@ namespace GameAssistant
         /// </summary>
         private void ChoseNoteBackgroundColorButton_Click(object sender, RoutedEventArgs e)
         {
-            if (noteForm != null)
+            if (noteWidget != null)
             {
                 System.Drawing.Color colorDrawing = MainWindow.ColorMediaToDrawing(MainWindow.BrushToColorMedia(NoteBackgroundColorRectangle.Fill));
 
@@ -747,10 +722,10 @@ namespace GameAssistant
                     {
                         if (colorDialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
                         {
-                            noteForm.Rec1.Fill = new System.Windows.Media.SolidColorBrush(MainWindow.ColorDrawingToMedia(colorDialog.Color));
+                            noteWidget.Rec1.Fill = new System.Windows.Media.SolidColorBrush(MainWindow.ColorDrawingToMedia(colorDialog.Color));
                             NoteBackgroundColorRectangle.Fill = new System.Windows.Media.SolidColorBrush(MainWindow.ColorDrawingToMedia(colorDialog.Color));
                         }
-                        MainWindow.UpdateNoteInformationOfFile(noteForm);
+                        MainWindow.UpdateNoteInformationOfFile(noteWidget);
                     }
                 }
                 catch { }
@@ -777,9 +752,9 @@ namespace GameAssistant
             {
                 NoteBackgroundColorRectangle.Fill = new System.Windows.Media.SolidColorBrush(MainWindow.DownloadNoteInformationOfFile().BackgroundColor);
             }
-            else if (clockForm != null)
+            else if (clockWidget != null)
             {
-                NoteBackgroundColorRectangle.Fill = noteForm.Rec1.Fill;
+                NoteBackgroundColorRectangle.Fill = noteWidget.Rec1.Fill;
             }
         }
 
@@ -788,7 +763,7 @@ namespace GameAssistant
         /// </summary>
         private void ChoseNoteFontColorButton_Click(object sender, RoutedEventArgs e)
         {
-            if (noteForm != null)
+            if (noteWidget != null)
             {
                 System.Drawing.Color colorDrawing = MainWindow.ColorMediaToDrawing(MainWindow.BrushToColorMedia(NoteFontColorRectangle.Fill));
 
@@ -802,10 +777,10 @@ namespace GameAssistant
                     {
                         if (colorDialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
                         {
-                            noteForm.TextBox1.Foreground = new System.Windows.Media.SolidColorBrush(MainWindow.ColorDrawingToMedia(colorDialog.Color));
+                            noteWidget.TextBox1.Foreground = new System.Windows.Media.SolidColorBrush(MainWindow.ColorDrawingToMedia(colorDialog.Color));
                             NoteFontColorRectangle.Fill = new System.Windows.Media.SolidColorBrush(MainWindow.ColorDrawingToMedia(colorDialog.Color));
                         }
-                        MainWindow.UpdateNoteInformationOfFile(noteForm);
+                        MainWindow.UpdateNoteInformationOfFile(noteWidget);
                     }
                 }
                 catch { }
@@ -832,9 +807,9 @@ namespace GameAssistant
             {
                 NoteFontColorRectangle.Fill = new System.Windows.Media.SolidColorBrush(MainWindow.DownloadNoteInformationOfFile().FontColor);
             }
-            else if (clockForm != null)
+            else if (clockWidget != null)
             {
-                NoteFontColorRectangle.Fill = noteForm.TextBox1.Foreground;
+                NoteFontColorRectangle.Fill = noteWidget.TextBox1.Foreground;
             }
         }
 
@@ -856,14 +831,7 @@ namespace GameAssistant
                 MessageBoxResult.No) == MessageBoxResult.Yes)
             {
 
-                clockForm?.Close();
-                clockForm = null;
-
-                pictureForm?.Close();
-                pictureForm = null;
-
-                noteForm?.Close();
-                noteForm = null;
+                MainWindow.CloseWidgets(clockWidget, pictureWidget, noteWidget);
 
                 if (File.Exists(MainWindow.ClockSettingsPath))
                 {
@@ -907,56 +875,12 @@ namespace GameAssistant
 
         #endregion
 
-        #region EventsMethods
-
-        private void ClockForm_SizeChanged(object sender, SizeChangedEventArgs e)
-        {
-            MainWindow.UpdateClockInformationOfFile(clockForm);
-        }
-
-        private void ClockForm_LocationChanged(object sender, EventArgs e)
-        {
-            MainWindow.UpdateClockInformationOfFile(clockForm);
-        }
-
-        private void PictureForm_SizeChanged(object sender, SizeChangedEventArgs e)
-        {
-            MainWindow.UpdatePictureInformationOfFile(pictureForm);
-        }
-
-        private void PictureForm_LocationChanged(object sender, EventArgs e)
-        {
-            MainWindow.UpdatePictureInformationOfFile(pictureForm);
-        }
-
-        private void NoteForm_SizeChanged(object sender, SizeChangedEventArgs e)
-        {
-            MainWindow.UpdateNoteInformationOfFile(noteForm);
-        }
-
-        private void NoteForm_LocationChanged(object sender, EventArgs e)
-        {
-            MainWindow.UpdateNoteInformationOfFile(noteForm);
-        }
-
-        #endregion
-
         #region CloseMethod
 
         private void MainWindowElement_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
-            MainWindow.UpdateClockInformationOfFile(clockForm);
-            MainWindow.UpdatePictureInformationOfFile(pictureForm);
-            MainWindow.UpdateNoteInformationOfFile(noteForm);
-
-            clockForm?.Close();
-            clockForm = null;
-
-            pictureForm?.Close();
-            pictureForm = null;
-
-            noteForm?.Close();
-            noteForm = null;
+            MainWindow.SaveWidgetsSettings(clockWidget, pictureWidget, noteWidget);
+            MainWindow.CloseWidgets(clockWidget, pictureWidget, noteWidget);
         }
 
         #endregion

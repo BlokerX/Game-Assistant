@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:GameAssistant"
         mc:Ignorable="d"
-        Title="NoteForm" Height="330" Width="302" AllowsTransparency="True" WindowStyle="None" Background="Transparent" MouseLeftButtonDown="DragWindow" ShowInTaskbar="False" ResizeMode="NoResize" Topmost="True">
+        Title="NoteWidget" Height="330" Width="302" AllowsTransparency="True" WindowStyle="None" Background="Transparent" MouseLeftButtonDown="DragWindow" ShowInTaskbar="False" ResizeMode="NoResize" Topmost="True" SizeChanged="NoteWidget_SizeChanged" LocationChanged="NoteWidget_LocationChanged">
     <Grid x:Name="Grid" MouseLeftButtonDown="DragWindow">
         <Rectangle x:Name="Rec1" Fill="#FFF3E126" Stroke="Transparent" Opacity="0.5" MouseLeftButtonDown="DragWindow"/>
         <TextBox x:Name="TextBox1" Margin="10" TextWrapping="Wrap" FontSize="20" FontFamily="Century Gothic" BorderBrush="Transparent" Background="Transparent" TextChanged="TextBox1_TextChanged" Text="Tutaj wpisz swoją notatkę..." Opacity="0.75" KeyDown="TextBox1_KeyDown"/>

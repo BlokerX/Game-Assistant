@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Windows;
 using System.Windows.Threading;
 
 namespace GameAssistant
@@ -17,7 +18,7 @@ namespace GameAssistant
             UpdateTimeToNow();
         }
 
-        private void ClockWindow_Activated(object sender, EventArgs e)
+        private void ClockWidget_Activated(object sender, EventArgs e)
         {
             #region TimerStartProcedure
             clockTimer.Interval = TimeSpan.FromMilliseconds(50);
@@ -42,10 +43,19 @@ namespace GameAssistant
                             (DateTime.Now.Second % 10).ToString();
         }
 
-        private void ClockWindow_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        private void ClockWidget_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
             clockTimer.Stop();
         }
 
+        private void ClockWidget_SizeChanged(object sender, SizeChangedEventArgs e)
+        {
+            MainWindow.UpdateClockInformationOfFile(this);
+        }
+        
+        private void ClockWidget_LocationChanged(object sender, EventArgs e)
+        {
+            MainWindow.UpdateClockInformationOfFile(this);
+        }
     }
 }
