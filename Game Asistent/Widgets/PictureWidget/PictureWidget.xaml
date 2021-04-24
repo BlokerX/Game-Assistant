@@ -7,7 +7,7 @@
         mc:Ignorable="d"
         Title="Picture Widget" Height="413" Width="733" Background="Transparent" AllowsTransparency="True" WindowStyle="None" Topmost="True" ShowInTaskbar="False" ResizeMode="NoResize" BorderThickness="1" AllowDrop="True" LocationChanged="PictureWidget_LocationChanged" SizeChanged="PictureWidget_SizeChanged">
     <Grid x:Name="Grid">
-        <Image x:Name="ImageBox" MouseLeftButtonDown="DragWindow" Source="DefaultImageToImageBox.jpg"/>
+        <Image x:Name="ImageBox" MouseLeftButtonDown="DragWindow" Source="pack://siteoforigin:,,,/Resources/DefaultImageToImageBox.jpg"/>
         <Rectangle x:Name="rec1" HorizontalAlignment="Right" Height="16" VerticalAlignment="Bottom" Width="16">
             <Rectangle.Stroke>
                 <SolidColorBrush Color="Black" Opacity="0.1"/>

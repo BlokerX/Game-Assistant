@@ -103,13 +103,13 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="NoteForm.xaml.cs">
-      <DependentUpon>NoteForm.xaml</DependentUpon>
+    <Compile Include="Widgets\NoteWidget\NoteWidget.xaml.cs">
+      <DependentUpon>NoteWidget.xaml</DependentUpon>
     </Compile>
-    <Compile Include="NoteInformation.cs" />
-    <Compile Include="WidgetInformation.cs" />
-    <Compile Include="WidgetWindow.cs" />
-    <Page Include="ClockForm.xaml">
+    <Compile Include="Widgets\NoteWidget\NoteInformation.cs" />
+    <Compile Include="Widgets\WidgetWindow\WidgetInformation.cs" />
+    <Compile Include="Widgets\WidgetWindow\WidgetWindow.cs" />
+    <Page Include="Widgets\ClockWidget\ClockWidget.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -117,11 +117,11 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="ClockForm.xaml.cs">
-      <DependentUpon>ClockForm.xaml</DependentUpon>
+    <Compile Include="Widgets\ClockWidget\ClockWidget.xaml.cs">
+      <DependentUpon>ClockWidget.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Page Include="NoteForm.xaml">
+    <Page Include="Widgets\NoteWidget\NoteWidget.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -133,14 +133,14 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="PictureForm.xaml">
+    <Page Include="Widgets\PictureWidget\PictureWidget.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ClockInformation.cs" />
-    <Compile Include="PictureInformation.cs" />
+    <Compile Include="Widgets\ClockWidget\ClockInformation.cs" />
+    <Compile Include="Widgets\PictureWidget\PictureInformation.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -152,8 +152,8 @@
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="PictureForm.xaml.cs">
-      <DependentUpon>PictureForm.xaml</DependentUpon>
+    <Compile Include="Widgets\PictureWidget\PictureWidget.xaml.cs">
+      <DependentUpon>PictureWidget.xaml</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
@@ -182,10 +182,10 @@
     <None Include="Resources\DefaultImageToImageBox.jpg" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="DefaultImageToImageBox.jpg" />
+    <Resource Include="zegar.ico" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="zegar.ico" />
+    <Resource Include="DefaultImageToImageBox.jpg" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

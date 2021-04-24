@@ -44,13 +44,13 @@ namespace GameAssistant
         {
             #region ClockWidgetLoading
 
-            ClockInformation clockInf = MainWindow.DownloadClockInformationOfFile();
+            ClockInformation clockInf = ClockWidget.DownloadWidgetInformationOfFile();
 
             if (clockInf != null)
             {
                 if (clockInf.IsChosed == true)
                 {
-                    clockWidget = MainWindow.CreateClockWidget();
+                    clockWidget = ClockWidget.CreateWidget();
                     clockWidget.Show();
                 }
                 else
@@ -105,7 +105,7 @@ namespace GameAssistant
             }
             else
             {
-                clockWidget = MainWindow.CreateClockWidget();
+                clockWidget = ClockWidget.CreateWidget();
                 clockWidget.Show();
             }
 
@@ -119,13 +119,13 @@ namespace GameAssistant
 
             #region PictureWidgetLoading
 
-            PictureInformation pictureInf = MainWindow.DownloadPictureInformationOfFile();
+            PictureInformation pictureInf = PictureWidget.DownloadWidgetInformationOfFile();
 
             if (pictureInf != null)
             {
                 if (pictureInf.IsChosed == true)
                 {
-                    pictureWidget = MainWindow.CreatePictureWidget();
+                    pictureWidget = PictureWidget.CreateWidget();
                     pictureWidget.Show();
                 }
                 else
@@ -160,7 +160,7 @@ namespace GameAssistant
             }
             else
             {
-                pictureWidget = MainWindow.CreatePictureWidget();
+                pictureWidget = PictureWidget.CreateWidget();
                 pictureWidget.Show();
             }
             if (pictureWidget != null)
@@ -174,13 +174,13 @@ namespace GameAssistant
 
             #region NoteWidgetLoading
 
-            NoteInformation noteInf = MainWindow.DownloadNoteInformationOfFile();
+            NoteInformation noteInf = NoteWidget.DownloadWidgetInformationOfFile();
 
             if (noteInf != null)
             {
                 if (noteInf.IsChosed == true)
                 {
-                    noteWidget = MainWindow.CreateNoteWidget();
+                    noteWidget = NoteWidget.CreateWidget();
                     noteWidget.Show();
                 }
                 else
@@ -235,7 +235,7 @@ namespace GameAssistant
             }
             else
             {
-                noteWidget = MainWindow.CreateNoteWidget();
+                noteWidget = NoteWidget.CreateWidget();
                 noteWidget.Show();
             }
 
@@ -278,7 +278,7 @@ namespace GameAssistant
                             pictureWidget.ImageBox.Source = new BitmapImage(new Uri(Path.Combine(Environment.CurrentDirectory, openFileDialog.FileName)));
                             PicturePathTextBox.Text = openFileDialog.FileName;
                             pictureWidget.ImagePath = openFileDialog.FileName;
-                            MainWindow.UpdatePictureInformationOfFile(pictureWidget);
+                            PictureWidget.UpdateWidgetInformationOfFile(pictureWidget);
                         }
                     }
                     catch { }
@@ -310,14 +310,14 @@ namespace GameAssistant
         {
             if (clockWidget == null)
             {
-                clockWidget = MainWindow.CreateClockWidget();
+                clockWidget = ClockWidget.CreateWidget();
                 if (clockWidget != null)
                 {
                     clockWidget.IsAllowDrag = true;
                     clockWidget.ResizeMode = ResizeMode.CanResizeWithGrip;
                 }
                 clockWidget.Show();
-                MainWindow.UpdateClockInformationOfFile(clockWidget);
+                ClockWidget.UpdateWidgetInformationOfFile(clockWidget);
             }
         }
 
@@ -328,10 +328,10 @@ namespace GameAssistant
         {
             if (clockWidget != null)
             {
-                MainWindow.UpdateClockInformationOfFile(clockWidget);
+                ClockWidget.UpdateWidgetInformationOfFile(clockWidget);
                 clockWidget.Close();
                 clockWidget = null;
-                MainWindow.UpdateClockInformationOfFile(clockWidget);
+                ClockWidget.UpdateWidgetInformationOfFile(clockWidget);
             }
         }
 
@@ -361,7 +361,7 @@ namespace GameAssistant
         {
             if (pictureWidget == null)
             {
-                pictureWidget = MainWindow.CreatePictureWidget();
+                pictureWidget = PictureWidget.CreateWidget();
                 if (pictureWidget != null)
                 {
                     pictureWidget.IsAllowDrag = true;
@@ -369,7 +369,7 @@ namespace GameAssistant
                     pictureWidget.rec1.Visibility = Visibility.Visible;
                 }
                 pictureWidget.Show();
-                MainWindow.UpdatePictureInformationOfFile(pictureWidget);
+                PictureWidget.UpdateWidgetInformationOfFile(pictureWidget);
             }
         }
 
@@ -380,10 +380,10 @@ namespace GameAssistant
         {
             if (pictureWidget != null)
             {
-                MainWindow.UpdatePictureInformationOfFile(pictureWidget);
+                PictureWidget.UpdateWidgetInformationOfFile(pictureWidget);
                 pictureWidget.Close();
                 pictureWidget = null;
-                MainWindow.UpdatePictureInformationOfFile(pictureWidget);
+                PictureWidget.UpdateWidgetInformationOfFile(pictureWidget);
             }
         }
 
@@ -413,14 +413,14 @@ namespace GameAssistant
         {
             if (noteWidget == null)
             {
-                noteWidget = MainWindow.CreateNoteWidget();
+                noteWidget = NoteWidget.CreateWidget();
                 if (noteWidget != null)
                 {
                     noteWidget.IsAllowDrag = true;
                     noteWidget.ResizeMode = ResizeMode.CanResizeWithGrip;
                 }
                 noteWidget?.Show();
-                MainWindow.UpdateNoteInformationOfFile(noteWidget);
+                NoteWidget.UpdateWidgetInformationOfFile(noteWidget);
             }
         }
 
@@ -431,10 +431,10 @@ namespace GameAssistant
         {
             if (noteWidget != null)
             {
-                MainWindow.UpdateNoteInformationOfFile(noteWidget);
+                NoteWidget.UpdateWidgetInformationOfFile(noteWidget);
                 noteWidget?.Close();
                 noteWidget = null;
-                MainWindow.UpdateNoteInformationOfFile(noteWidget);
+                NoteWidget.UpdateWidgetInformationOfFile(noteWidget);
             }
         }
 
@@ -483,7 +483,7 @@ namespace GameAssistant
                         clockWidget.ClockLabel.Opacity = 0;
                         break;
                 }
-                MainWindow.UpdateClockInformationOfFile(clockWidget);
+                ClockWidget.UpdateWidgetInformationOfFile(clockWidget);
             }
         }
 
@@ -509,7 +509,7 @@ namespace GameAssistant
                         clockWidget.rec1.Opacity = 0;
                         break;
                 }
-                MainWindow.UpdateClockInformationOfFile(clockWidget);
+                ClockWidget.UpdateWidgetInformationOfFile(clockWidget);
             }
         }
 
@@ -539,7 +539,7 @@ namespace GameAssistant
                         pictureWidget.ImageBox.Opacity = 0;
                         break;
                 }
-                MainWindow.UpdatePictureInformationOfFile(pictureWidget);
+                PictureWidget.UpdateWidgetInformationOfFile(pictureWidget);
             }
         }
 
@@ -568,7 +568,7 @@ namespace GameAssistant
                             noteWidget.TextBox1.FontFamily = (System.Windows.Media.FontFamily)new System.Windows.Media.FontFamilyConverter().ConvertFrom(fontDialog.Font.FontFamily.Name);
                             noteWidget.TextBox1.FontSize = fontDialog.Font.Size;
                         }
-                        MainWindow.UpdateNoteInformationOfFile(noteWidget);
+                        NoteWidget.UpdateWidgetInformationOfFile(noteWidget);
                     }
                 }
                 catch { }
@@ -612,7 +612,7 @@ namespace GameAssistant
                         noteWidget.Rec1.Opacity = 0;
                         break;
                 }
-                MainWindow.UpdateNoteInformationOfFile(noteWidget);
+                NoteWidget.UpdateWidgetInformationOfFile(noteWidget);
             }
         }
 
@@ -638,7 +638,7 @@ namespace GameAssistant
                         noteWidget.TextBox1.Opacity = 0;
                         break;
                 }
-                MainWindow.UpdateNoteInformationOfFile(noteWidget);
+                NoteWidget.UpdateWidgetInformationOfFile(noteWidget);
             }
         }
 
@@ -670,7 +670,7 @@ namespace GameAssistant
                             clockWidget.rec1.Fill = new System.Windows.Media.SolidColorBrush(MainWindow.ColorDrawingToMedia(colorDialog.Color));
                             ClockBackgroundColorRectangle.Fill = new System.Windows.Media.SolidColorBrush(MainWindow.ColorDrawingToMedia(colorDialog.Color));
                         }
-                        MainWindow.UpdateClockInformationOfFile(clockWidget);
+                        ClockWidget.UpdateWidgetInformationOfFile(clockWidget);
                     }
                 }
                 catch { }
@@ -693,9 +693,9 @@ namespace GameAssistant
         /// </summary>
         private void ClockBackgroundColorRectangle_Loaded(object sender, RoutedEventArgs e)
         {
-            if (File.Exists(MainWindow.ClockSettingsPath))
+            if (File.Exists(ClockWidget.ClockSettingsPath))
             {
-                ClockBackgroundColorRectangle.Fill = new System.Windows.Media.SolidColorBrush(MainWindow.DownloadClockInformationOfFile().BackgroundColor);
+                ClockBackgroundColorRectangle.Fill = new System.Windows.Media.SolidColorBrush(ClockWidget.DownloadWidgetInformationOfFile().BackgroundColor);
             }
             else if (clockWidget != null)
             {
@@ -725,7 +725,7 @@ namespace GameAssistant
                             noteWidget.Rec1.Fill = new System.Windows.Media.SolidColorBrush(MainWindow.ColorDrawingToMedia(colorDialog.Color));
                             NoteBackgroundColorRectangle.Fill = new System.Windows.Media.SolidColorBrush(MainWindow.ColorDrawingToMedia(colorDialog.Color));
                         }
-                        MainWindow.UpdateNoteInformationOfFile(noteWidget);
+                        NoteWidget.UpdateWidgetInformationOfFile(noteWidget);
                     }
                 }
                 catch { }
@@ -748,9 +748,9 @@ namespace GameAssistant
         /// </summary>
         private void NoteBackgroundColorRectangle_Loaded(object sender, RoutedEventArgs e)
         {
-            if (File.Exists(MainWindow.NoteSettingsPath))
+            if (File.Exists(NoteWidget.NoteSettingsPath))
             {
-                NoteBackgroundColorRectangle.Fill = new System.Windows.Media.SolidColorBrush(MainWindow.DownloadNoteInformationOfFile().BackgroundColor);
+                NoteBackgroundColorRectangle.Fill = new System.Windows.Media.SolidColorBrush(NoteWidget.DownloadWidgetInformationOfFile().BackgroundColor);
             }
             else if (clockWidget != null)
             {
@@ -780,7 +780,7 @@ namespace GameAssistant
                             noteWidget.TextBox1.Foreground = new System.Windows.Media.SolidColorBrush(MainWindow.ColorDrawingToMedia(colorDialog.Color));
                             NoteFontColorRectangle.Fill = new System.Windows.Media.SolidColorBrush(MainWindow.ColorDrawingToMedia(colorDialog.Color));
                         }
-                        MainWindow.UpdateNoteInformationOfFile(noteWidget);
+                        NoteWidget.UpdateWidgetInformationOfFile(noteWidget);
                     }
                 }
                 catch { }
@@ -803,9 +803,9 @@ namespace GameAssistant
         /// </summary>
         private void NoteFontColorRectangle_Loaded(object sender, RoutedEventArgs e)
         {
-            if (File.Exists(MainWindow.NoteSettingsPath))
+            if (File.Exists(NoteWidget.NoteSettingsPath))
             {
-                NoteFontColorRectangle.Fill = new System.Windows.Media.SolidColorBrush(MainWindow.DownloadNoteInformationOfFile().FontColor);
+                NoteFontColorRectangle.Fill = new System.Windows.Media.SolidColorBrush(NoteWidget.DownloadWidgetInformationOfFile().FontColor);
             }
             else if (clockWidget != null)
             {
@@ -833,19 +833,19 @@ namespace GameAssistant
 
                 MainWindow.CloseWidgets(clockWidget, pictureWidget, noteWidget);
 
-                if (File.Exists(MainWindow.ClockSettingsPath))
+                if (File.Exists(ClockWidget.ClockSettingsPath))
                 {
-                    File.Delete(MainWindow.ClockSettingsPath);
+                    File.Delete(ClockWidget.ClockSettingsPath);
                 }
 
-                if (File.Exists(MainWindow.PictureSettingsPath))
+                if (File.Exists(PictureWidget.PictureSettingsPath))
                 {
-                    File.Delete(MainWindow.PictureSettingsPath);
+                    File.Delete(PictureWidget.PictureSettingsPath);
                 }
 
-                if (File.Exists(MainWindow.NoteSettingsPath))
+                if (File.Exists(NoteWidget.NoteSettingsPath))
                 {
-                    File.Delete(MainWindow.NoteSettingsPath);
+                    File.Delete(NoteWidget.NoteSettingsPath);
                 }
 
                 LoadingWidgets();

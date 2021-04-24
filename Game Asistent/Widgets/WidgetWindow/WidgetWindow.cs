@@ -12,6 +12,13 @@ namespace GameAssistant
             if (IsAllowDrag && e.LeftButton == MouseButtonState.Pressed)
                 this?.DragMove();
         }
-        
+
+        public static dynamic DownloadWidgetInformationOfFile() { return 0; }
+
+        public static dynamic CreateWidget() { return 0; }
+
+        //todo public static void UpdateWidgetInformationOfFile(w) { }
+        //todo Pomyśleć o interfejsach
+
     }
 }
