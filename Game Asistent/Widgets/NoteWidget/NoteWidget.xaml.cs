@@ -10,11 +10,34 @@ namespace GameAssistant
     /// </summary>
     public partial class NoteWidget : WidgetWindow
     {
-        public static string NotesDirePath;
-        public static string NoteSettingsPath;
+        // Varibles:
+        public static string NotesDirePath; // PATH //
+        public static string NoteSettingsPath; // PATH //
 
         public string[] NotePath = new string[] { Path.Combine(NotesDirePath, "Note_1.txt") };
 
+        public NoteWidget()
+        {
+            InitializeComponent();
+            if (!File.Exists(NotePath[0]))
+            {
+                using (StreamWriter sw = File.CreateText(NotePath[0] = Path.Combine(NoteWidget.NotesDirePath, "Note_1.txt")))
+                {
+                    sw.WriteLine("Tutaj wpisz swoją notatkę...");
+                    sw.Dispose();
+                }
+            }
+
+            string textFromFile;
+            using (StreamReader sr = new StreamReader(NotePath[0]))
+            {
+                textFromFile = sr.ReadToEnd();
+                sr.Dispose();
+            }
+            TextBox1.Text = textFromFile;
+        }
+
+        #region StaticMethods
 
         /// <summary>
         /// Read and return save informaions about NoteWidget
@@ -395,29 +418,9 @@ namespace GameAssistant
         }
         //todo !!! dynamic nie jest deklaratywna w przypadku stałego typu !!!
 
-        // ---------------------------------------------------------------- //
+        #endregion
 
-
-        public NoteWidget()
-        {
-            InitializeComponent();
-            if (!File.Exists(NotePath[0]))
-            {
-                using (StreamWriter sw = File.CreateText(NotePath[0] = Path.Combine(NoteWidget.NotesDirePath, "Note_1.txt")))
-                {
-                    sw.WriteLine("Tutaj wpisz swoją notatkę...");
-                    sw.Dispose();
-                }
-            }
-
-            string textFromFile;
-            using (StreamReader sr = new StreamReader(NotePath[0]))
-            {
-                textFromFile = sr.ReadToEnd();
-                sr.Dispose();
-            }
-            TextBox1.Text = textFromFile;
-        }
+        #region Events
 
         private void TextBox1_TextChanged(object sender, System.Windows.Controls.TextChangedEventArgs e)
         {
@@ -478,6 +481,8 @@ namespace GameAssistant
         {
             UpdateWidgetInformationOfFile(this);
         }
+
+        #endregion
 
     }
 }

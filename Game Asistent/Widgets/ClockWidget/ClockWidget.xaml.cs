@@ -11,7 +11,7 @@ namespace GameAssistant
     public partial class ClockWidget : WidgetWindow
     {
         // Varibles:
-        public static string ClockSettingsPath;
+        public static string ClockSettingsPath; // PATH //
         public DispatcherTimer clockTimer = new DispatcherTimer(DispatcherPriority.Background);
 
         public ClockWidget()
@@ -19,6 +19,8 @@ namespace GameAssistant
             InitializeComponent();
             UpdateTimeToNow();
         }
+
+        #region StaticMethods
 
         /// <summary>
         /// Read and return save informaions about ClockWidget
@@ -161,6 +163,36 @@ namespace GameAssistant
                             return null;
                         }
                     }
+                    
+                    if (true)
+                    {
+                        string a = sr.ReadLine();
+
+                        if (a == null || a == "")
+                        {
+                            sr.Close();
+                            return null;
+                        }
+                        try
+                        {
+
+                            System.Windows.Media.Color color = (System.Windows.Media.Color)System.Windows.Media.ColorConverter.ConvertFromString(a);
+                            if (color != null)
+                            {
+                                clockInformation.ForegroundColor = color;
+                            }
+                            else
+                            {
+                                sr.Close();
+                                return null;
+                            }
+                        }
+                        catch
+                        {
+                            sr.Close();
+                            return null;
+                        }
+                    }
 
                     sr.Close();
                     return clockInformation;
@@ -190,6 +222,7 @@ namespace GameAssistant
                 cf.rec1.Opacity = clockInf.BackgroundClockOpacity;
 
                 cf.rec1.Fill = new System.Windows.Media.SolidColorBrush(clockInf.BackgroundColor);
+                cf.ClockLabel.Foreground = new System.Windows.Media.SolidColorBrush(clockInf.ForegroundColor);
 
                 return cf;
             }
@@ -224,6 +257,7 @@ namespace GameAssistant
                     sw.WriteLine(argCW.rec1.Opacity.ToString());
 
                     sw.WriteLine(new System.Windows.Media.ColorConverter().ConvertToString(MainWindow.BrushToColorMedia(argCW.rec1.Fill)));
+                    sw.WriteLine(new System.Windows.Media.ColorConverter().ConvertToString(MainWindow.BrushToColorMedia(argCW.ClockLabel.Foreground)));
 
                     sw.Close();
                 }
@@ -249,6 +283,7 @@ namespace GameAssistant
                     double _backgroundClockOpacity = clockInf.BackgroundClockOpacity;
 
                     string _backgroundColor = clockInf.BackgroundColor.ToString();
+                    string _foregroundColor = clockInf.ForegroundColor.ToString();
 
                     #endregion
 
@@ -267,6 +302,7 @@ namespace GameAssistant
                         sw.WriteLine(_clockOpacity.ToString());
                         sw.WriteLine(_backgroundClockOpacity.ToString());
                         sw.WriteLine(_backgroundColor.ToString());
+                        sw.WriteLine(_foregroundColor.ToString());
 
                         sw.Close();
                     }
@@ -292,6 +328,7 @@ namespace GameAssistant
                         sw.WriteLine((0.50).ToString());
 
                         sw.WriteLine("#FFFFFFB5");
+                        sw.WriteLine("#FF000000");
 
                         sw.Close();
                     }
@@ -305,7 +342,9 @@ namespace GameAssistant
         }
         //todo !!! dynamic nie jest deklaratywna w przypadku stałego typu !!!
 
-        // ------------------------------------------------------------ //
+        #endregion
+
+        #region Events
 
         private void ClockWidget_Activated(object sender, EventArgs e)
         {
@@ -321,6 +360,25 @@ namespace GameAssistant
             UpdateTimeToNow();
         }
 
+        private void ClockWidget_SizeChanged(object sender, SizeChangedEventArgs e)
+        {
+            ClockWidget.UpdateWidgetInformationOfFile(this);
+        }
+
+        private void ClockWidget_LocationChanged(object sender, EventArgs e)
+        {
+            ClockWidget.UpdateWidgetInformationOfFile(this);
+        }
+
+        private void ClockWidget_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            clockTimer.Stop();
+        }
+
+        #endregion
+
+        #region Helpers
+        
         private void UpdateTimeToNow()
         {
             this.ClockLabel.Content =
@@ -331,20 +389,7 @@ namespace GameAssistant
                             (DateTime.Now.Second / 10).ToString() +
                             (DateTime.Now.Second % 10).ToString();
         }
-
-        private void ClockWidget_Closing(object sender, System.ComponentModel.CancelEventArgs e)
-        {
-            clockTimer.Stop();
-        }
-
-        private void ClockWidget_SizeChanged(object sender, SizeChangedEventArgs e)
-        {
-            ClockWidget.UpdateWidgetInformationOfFile(this);
-        }
         
-        private void ClockWidget_LocationChanged(object sender, EventArgs e)
-        {
-            ClockWidget.UpdateWidgetInformationOfFile(this);
-        }
+        #endregion
     }
 }

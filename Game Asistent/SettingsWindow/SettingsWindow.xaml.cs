@@ -646,7 +646,7 @@ namespace GameAssistant
 
         #endregion
 
-        #region ClockBackgroundColor
+        #region ColorButtonsAndRectangles
 
         /// <summary>
         /// Chose clock's background color
@@ -700,6 +700,61 @@ namespace GameAssistant
             else if (clockWidget != null)
             {
                 ClockBackgroundColorRectangle.Fill = clockWidget.rec1.Fill;
+            }
+        }
+        
+        /// <summary>
+        /// Chose clock's foreground color
+        /// </summary>
+        private void ChoseClockForegroundColorButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (clockWidget != null)
+            {
+                System.Drawing.Color colorDrawing = MainWindow.ColorMediaToDrawing(MainWindow.BrushToColorMedia(ClockForegroundColorRectangle.Fill));
+
+                try
+                {
+                    using (System.Windows.Forms.ColorDialog colorDialog = new System.Windows.Forms.ColorDialog()
+                    {
+                        FullOpen = true,
+                        Color = colorDrawing
+                    })
+                    {
+                        if (colorDialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+                        {
+                            clockWidget.ClockLabel.Foreground = new System.Windows.Media.SolidColorBrush(MainWindow.ColorDrawingToMedia(colorDialog.Color));
+                            ClockForegroundColorRectangle.Fill = new System.Windows.Media.SolidColorBrush(MainWindow.ColorDrawingToMedia(colorDialog.Color));
+                        }
+                        ClockWidget.UpdateWidgetInformationOfFile(clockWidget);
+                    }
+                }
+                catch { }
+            }
+            else
+            {
+                MessageBox.Show
+                    (
+                    "If you want to change clock's foreground color, you need to enable the Clock widget!",
+                    "The color cannot be changed:",
+                    MessageBoxButton.OK,
+                    MessageBoxImage.Hand,
+                    MessageBoxResult.OK
+                    );
+            }
+        }
+
+        /// <summary>
+        /// Loadnig clock's foreground color to rectangle 
+        /// </summary>
+        private void ClockForegroundColorRectangle_Loaded(object sender, RoutedEventArgs e)
+        {
+            if (File.Exists(ClockWidget.ClockSettingsPath))
+            {
+                ClockForegroundColorRectangle.Fill = new System.Windows.Media.SolidColorBrush(ClockWidget.DownloadWidgetInformationOfFile().ForegroundColor);
+            }
+            else if (clockWidget != null)
+            {
+                ClockForegroundColorRectangle.Fill = clockWidget.ClockLabel.Foreground;
             }
         }
 

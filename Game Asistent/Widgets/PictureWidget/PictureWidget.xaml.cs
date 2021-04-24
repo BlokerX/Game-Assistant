@@ -9,9 +9,17 @@ namespace GameAssistant
     /// </summary>
     public partial class PictureWidget : WidgetWindow
     {
-        public static string PictureSettingsPath;
+        // Varibles:
+        public static string PictureSettingsPath; // PATH //
         public string ImagePath = "Default";
 
+        public PictureWidget()
+        {
+            InitializeComponent();
+            rec1.Visibility = Visibility.Hidden;
+        }
+
+        #region StaticMethods
 
         /// <summary>
         /// Read and return save informaions about PictureWidget
@@ -277,13 +285,9 @@ namespace GameAssistant
         }
         //todo !!! dynamic nie jest deklaratywna w przypadku stałego typu !!!
 
-        // --------------------------------------------------- //
+        #endregion
 
-        public PictureWidget()
-        {
-            InitializeComponent();
-            rec1.Visibility = Visibility.Hidden;
-        }
+        #region Events
 
         private void PictureWidget_SizeChanged(object sender, SizeChangedEventArgs e)
         {
@@ -294,5 +298,7 @@ namespace GameAssistant
         {
             UpdateWidgetInformationOfFile(this);
         }
+
+        #endregion
     }
 }
