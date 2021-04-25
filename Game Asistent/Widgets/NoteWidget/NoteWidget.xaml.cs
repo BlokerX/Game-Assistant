@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Windows;
 using System.Windows.Input;
@@ -14,7 +15,7 @@ namespace GameAssistant
         public static string NotesDirePath; // PATH //
         public static string NoteSettingsPath; // PATH //
 
-        public string[] NotePath;
+        public List<string> NotePath = new List<string>();
         public int NotePathIndex = 0;
         public string ActuallyNotePath;
 
@@ -22,10 +23,14 @@ namespace GameAssistant
         {
             InitializeComponent();
 
-            NotePath = Directory.GetFiles(NotesDirePath);
+            string[] tab1 = Directory.GetFiles(NotesDirePath);
+            foreach (var path in tab1)
+            {
+                NotePath.Add(path);
+            }
             if (!File.Exists(ActuallyNotePath))
             {
-                if (NotePath.Length > 0 && File.Exists(this?.NotePath[0]))
+                if (NotePath.Count > 0 && File.Exists(this?.NotePath[0]))
                 {
                     ActuallyNotePath = NotePath[0];
                 }
@@ -57,14 +62,18 @@ namespace GameAssistant
         private void LoadActuallyText()
         {
             string textFromFile;
-            using (StreamReader sr = new StreamReader(ActuallyNotePath))
+            if (File.Exists(ActuallyNotePath))
             {
-                textFromFile = sr.ReadToEnd();
-                sr.Dispose();
+
+                using (StreamReader sr = new StreamReader(ActuallyNotePath))
+                {
+                    textFromFile = sr.ReadToEnd();
+                    sr.Dispose();
+                }
+                TextBox1.Text = textFromFile;
+                OnChangeActuallyNotePath();
+                UpdateWidgetInformationOfFile(this);
             }
-            TextBox1.Text = textFromFile;
-            OnChangeActuallyNotePath();
-            UpdateWidgetInformationOfFile(this);
         }
 
         private void OnChangeActuallyNotePath()
@@ -594,7 +603,7 @@ namespace GameAssistant
 
         private void NextFileButton_Click(object sender, RoutedEventArgs e)
         {
-            if (NotePathIndex + 1 < NotePath.Length)
+            if (NotePathIndex + 1 < NotePath.Count)
             {
                 NotePathIndex++;
                 ActuallyNotePath = NotePath[NotePathIndex];
@@ -605,6 +614,20 @@ namespace GameAssistant
 
         private void AddNewFileButton_Click(object sender, RoutedEventArgs e)
         {
+            var fileDialog = new System.Windows.Forms.SaveFileDialog()
+            {
+                InitialDirectory = NoteWidget.NotesDirePath,
+                Filter = "*.txt|*.txt"
+            };
+            if (fileDialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+            {
+                using (File.CreateText(fileDialog.FileName)) { }
+                this.NotePath.Add(fileDialog.FileName);
+                NotePathIndex = NotePath.Count - 1;
+                ActuallyNotePath = NotePath[NotePathIndex];
+                OnChangeActuallyNotePath();
+                LoadActuallyText();
+            }
             //todo udostępnić możliwość dodawania notatek
             NoteWidget.UpdateWidgetInformationOfFile(this);
         }
