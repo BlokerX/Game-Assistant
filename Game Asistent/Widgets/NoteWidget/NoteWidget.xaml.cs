@@ -36,7 +36,8 @@ namespace GameAssistant
                 }
                 else
                 {
-                    using (StreamWriter sw = File.CreateText(NotePath[0] = Path.Combine(NoteWidget.NotesDirePath, "Note_1.txt")))
+                    NotePath.Add(Path.Combine(NoteWidget.NotesDirePath, "Note_1.txt"));
+                    using (StreamWriter sw = File.CreateText(NotePath[0]))
                     {
                         sw.WriteLine("Tutaj wpisz swoją notatkę...");
                         sw.Dispose();
