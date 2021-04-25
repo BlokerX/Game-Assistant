@@ -14,27 +14,78 @@ namespace GameAssistant
         public static string NotesDirePath; // PATH //
         public static string NoteSettingsPath; // PATH //
 
-        public string[] NotePath = new string[] { Path.Combine(NotesDirePath, "Note_1.txt") };
+        public string[] NotePath;
+        public int NotePathIndex = 0;
+        public string ActuallyNotePath;
 
         public NoteWidget()
         {
             InitializeComponent();
-            if (!File.Exists(NotePath[0]))
+
+            NotePath = Directory.GetFiles(NotesDirePath);
+            if (!File.Exists(ActuallyNotePath))
             {
-                using (StreamWriter sw = File.CreateText(NotePath[0] = Path.Combine(NoteWidget.NotesDirePath, "Note_1.txt")))
+                if (NotePath.Length > 0 && File.Exists(this?.NotePath[0]))
                 {
-                    sw.WriteLine("Tutaj wpisz swoją notatkę...");
-                    sw.Dispose();
+                    ActuallyNotePath = NotePath[0];
+                }
+                else
+                {
+                    using (StreamWriter sw = File.CreateText(NotePath[0] = Path.Combine(NoteWidget.NotesDirePath, "Note_1.txt")))
+                    {
+                        sw.WriteLine("Tutaj wpisz swoją notatkę...");
+                        sw.Dispose();
+                    }
+                    ActuallyNotePath = NotePath[0];
                 }
             }
+            else
+            {
+                int i = 0;
+                foreach (var item in NotePath)
+                {
+                    if (item == ActuallyNotePath)
+                    {
+                        NotePathIndex = i;
+                    }
+                    i++;
+                }
+            }
+            LoadActuallyText();
+        }
 
+        private void LoadActuallyText()
+        {
             string textFromFile;
-            using (StreamReader sr = new StreamReader(NotePath[0]))
+            using (StreamReader sr = new StreamReader(ActuallyNotePath))
             {
                 textFromFile = sr.ReadToEnd();
                 sr.Dispose();
             }
             TextBox1.Text = textFromFile;
+            OnChangeActuallyNotePath();
+            UpdateWidgetInformationOfFile(this);
+        }
+
+        private void OnChangeActuallyNotePath()
+        {
+            ActuallyFileLabel.Content = Path.GetFileName(ActuallyNotePath);
+        }
+
+        private void ShowControlsPanel()
+        {
+            this.ButtonsPanel.Visibility = Visibility.Visible;
+            Thickness margin2 = TextBox1Grid.Margin;
+            margin2.Top = 35;
+            TextBox1Grid.Margin = margin2;
+        }
+
+        private void HideControlsPanel()
+        {
+            this.ButtonsPanel.Visibility = Visibility.Collapsed;
+            Thickness margin1 = TextBox1Grid.Margin;
+            margin1.Top = 0;
+            TextBox1Grid.Margin = margin1;
         }
 
         #region StaticMethods
@@ -252,6 +303,25 @@ namespace GameAssistant
                         }
                     }
 
+                    if (true)
+                    {
+                        noteInformation.ActuallyNotePath = sr.ReadLine();
+                    }
+
+                    if (true)
+                    {
+                        string a = sr.ReadLine();
+                        if (bool.TryParse(a, out bool aBool))
+                        {
+                            noteInformation.VisibilityControlPanel = aBool;
+                        }
+                        else
+                        {
+                            sr.Close();
+                            return null;
+                        }
+                    }
+
                     sr.Close();
 
                     return noteInformation;
@@ -273,7 +343,8 @@ namespace GameAssistant
                 NoteWidget nf = new NoteWidget()
                 {
                     Left = noteInf.PositionX,
-                    Top = noteInf.PositionY
+                    Top = noteInf.PositionY,
+                    ActuallyNotePath = noteInf.ActuallyNotePath
                 };
                 nf.Width = noteInf.Width;
                 nf.Height = noteInf.Heigth;
@@ -289,6 +360,16 @@ namespace GameAssistant
                 nf.TextBox1.FontFamily = noteInf.FontFamily;
 
                 nf.TextBox1.FontSize = noteInf.FontSize;
+
+                switch (noteInf.VisibilityControlPanel)
+                {
+                    case true:
+                        nf.ShowControlsPanel();
+                        break;
+                    case false:
+                        nf.HideControlsPanel();
+                        break;
+                }
 
                 return nf;
             }
@@ -329,6 +410,18 @@ namespace GameAssistant
 
                     sw.WriteLine(argNW.TextBox1.FontSize.ToString());
 
+                    sw.WriteLine(argNW.ActuallyNotePath);
+
+                    if (argNW.ButtonsPanel.Visibility == Visibility.Visible)
+                    {
+                        sw.WriteLine(true.ToString());
+                    }
+                    else
+                    {
+                        sw.WriteLine(false.ToString());
+                    }
+
+
                     sw.Close();
                 }
 
@@ -357,6 +450,8 @@ namespace GameAssistant
                     System.Windows.Media.Color _fontColor = noteInf.FontColor;
                     System.Windows.Media.FontFamily _fontFamily = noteInf.FontFamily;
                     double _fontSize = noteInf.FontSize;
+                    string _actuallyNotePath = noteInf.ActuallyNotePath;
+                    bool _visibilityControlPanel = noteInf.VisibilityControlPanel;
 
                     #endregion
 
@@ -379,6 +474,8 @@ namespace GameAssistant
                         sw.WriteLine(_fontColor.ToString());
                         sw.WriteLine(new System.Windows.Media.FontFamilyConverter().ConvertToString(_fontFamily));
                         sw.WriteLine(_fontSize.ToString());
+                        sw.WriteLine(_actuallyNotePath);
+                        sw.WriteLine(_visibilityControlPanel);
 
                         sw.Close();
                     }
@@ -407,6 +504,8 @@ namespace GameAssistant
                         sw.WriteLine("#FF000000");
                         sw.WriteLine("Century Gothic");
                         sw.WriteLine("20");
+                        sw.WriteLine("");
+                        sw.WriteLine(false.ToString());
 
                         sw.Close();
                     }
@@ -426,7 +525,7 @@ namespace GameAssistant
         {
             if (this.IsActive == true)
             {
-                if (!File.Exists(NotePath[0]))
+                if (!File.Exists(NotePath[NotePathIndex]))
                 {
                     using (StreamWriter sw = File.CreateText(NotePath[0] = Path.Combine(NoteWidget.NotesDirePath, "Note_1.txt")))
                     {
@@ -436,7 +535,7 @@ namespace GameAssistant
                 }
                 else
                 {
-                    using (StreamWriter sw = new StreamWriter(NotePath[0]))
+                    using (StreamWriter sw = new StreamWriter(NotePath[NotePathIndex]))
                     {
                         sw.Write(TextBox1.Text);
                         sw.Dispose();
@@ -482,7 +581,49 @@ namespace GameAssistant
             UpdateWidgetInformationOfFile(this);
         }
 
+        private void BackFileButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (NotePathIndex > 0)
+            {
+                NotePathIndex--;
+                ActuallyNotePath = NotePath[NotePathIndex];
+                LoadActuallyText();
+            }
+            NoteWidget.UpdateWidgetInformationOfFile(this);
+        }
+
+        private void NextFileButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (NotePathIndex + 1 < NotePath.Length)
+            {
+                NotePathIndex++;
+                ActuallyNotePath = NotePath[NotePathIndex];
+                LoadActuallyText();
+            }
+            NoteWidget.UpdateWidgetInformationOfFile(this);
+        }
+
+        private void AddNewFileButton_Click(object sender, RoutedEventArgs e)
+        {
+            //todo udostępnić możliwość dodawania notatek
+            NoteWidget.UpdateWidgetInformationOfFile(this);
+        }
+
         #endregion
 
+        private void ControlPanelViewChangeButton_Click(object sender, RoutedEventArgs e)
+        {
+            switch (this.ButtonsPanel.Visibility)
+            {
+                case Visibility.Visible:
+                    HideControlsPanel();
+                    break;
+                case Visibility.Collapsed:
+                default:
+                    ShowControlsPanel();
+                    break;
+            }
+            NoteWidget.UpdateWidgetInformationOfFile(this);
+        }
     }
 }

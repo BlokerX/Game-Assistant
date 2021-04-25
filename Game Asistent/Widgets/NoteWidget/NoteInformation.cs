@@ -10,5 +10,8 @@
         public System.Windows.Media.Color FontColor;
         public System.Windows.Media.FontFamily FontFamily;
         public double FontSize;
+
+        public string ActuallyNotePath;
+        public bool VisibilityControlPanel; // todo zrobić odwołania
     }
 }
