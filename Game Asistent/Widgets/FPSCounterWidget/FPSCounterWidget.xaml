@@ -1,0 +1,19 @@
+﻿<local:WidgetWindow x:Name="WindowComponent" x:Class="GameAssistant.FPSCounterWidget"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:GameAssistant"
+        mc:Ignorable="d"
+        Title="FPSCounterWidget" Height="62" Width="200" Closing="Window_Closing" AllowsTransparency="True" WindowStyle="None">
+    <Grid x:Name="Grid" Background="Transparent">
+        <Rectangle x:Name="rec1" Opacity="0.5">
+            <Rectangle.Fill>
+                <SolidColorBrush Color="#FFFFFFB5"/>
+            </Rectangle.Fill>
+        </Rectangle>
+
+        <Label x:Name="lab1" Content="00:00:00" FontFamily="Century Gothic" FontSize="24" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" MouseLeftButtonDown="DragWindow" TextOptions.TextHintingMode="Fixed" BorderThickness="0" Opacity="0.75" Margin="-10"/>
+
+    </Grid>
+</local:WidgetWindow>

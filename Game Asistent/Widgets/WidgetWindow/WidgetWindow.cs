@@ -8,6 +8,11 @@ namespace GameAssistant
         // Varibles
         public bool IsAllowDrag { get; set; } = false;
 
+        public WidgetWindow()
+        {
+            this.Topmost = true;
+        }
+
         // Methods
         public static dynamic DownloadWidgetInformationOfFile() { return 0; }
 
