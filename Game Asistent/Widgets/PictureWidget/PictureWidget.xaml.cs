@@ -283,7 +283,6 @@ namespace GameAssistant
             }
 
         }
-        //todo !!! dynamic nie jest deklaratywna w przypadku stałego typu !!!
 
         #endregion
 

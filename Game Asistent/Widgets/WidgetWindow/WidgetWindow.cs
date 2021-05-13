@@ -11,14 +11,15 @@ namespace GameAssistant
         public WidgetWindow()
         {
             this.Topmost = true;
+            this.ShowInTaskbar = false;
+            this.WindowStyle = WindowStyle.None;
         }
 
         // Methods
         public static dynamic DownloadWidgetInformationOfFile() { return 0; }
 
         public static dynamic CreateWidget() { return 0; }
-        //todo public static void UpdateWidgetInformationOfFile(w) { }
-        //todo Pomyśleć o interfejsach
+        /*/ TODO public static void UpdateWidgetInformationOfFile(w) { } (Pomyśleć o interfejsach) /*/
 
         protected void DragWindow(object sender, MouseButtonEventArgs e)
         {

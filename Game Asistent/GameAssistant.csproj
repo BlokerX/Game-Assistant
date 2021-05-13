@@ -126,6 +126,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Widgets\FPSCounterWidget\FPSCounterInformation.cs" />
     <Compile Include="Widgets\FPSCounterWidget\FPSCounterWidget.xaml.cs">
       <DependentUpon>FPSCounterWidget.xaml</DependentUpon>
     </Compile>

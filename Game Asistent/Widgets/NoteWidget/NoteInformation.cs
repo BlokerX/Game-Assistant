@@ -12,6 +12,6 @@
         public double FontSize;
 
         public string ActuallyNotePath;
-        public bool VisibilityControlPanel; // todo zrobić odwołania
+        public bool VisibilityControlPanel;
     }
 }

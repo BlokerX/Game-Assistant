@@ -27,6 +27,7 @@ namespace GameAssistant
         ClockWidget clockWidget;
         PictureWidget pictureWidget;
         NoteWidget noteWidget;
+        FPSCounterWidget fpsCounterWidget;
 
         // Paths
         public static string SystemDriveName = "-";
@@ -61,6 +62,7 @@ namespace GameAssistant
             ClockWidget.ClockSettingsPath = $@"{SettingsFolderPath}\ClockWidgetSettings.txt";
             PictureWidget.PictureSettingsPath = $@"{SettingsFolderPath}\PictureWidgetSettings.txt";
             NoteWidget.NoteSettingsPath = Path.Combine(SettingsFolderPath, "NoteWidgetSettings.txt");
+            FPSCounterWidget.FPSCounterSettingsPath = Path.Combine(SettingsFolderPath, "FPSCounterWidgetSettings.txt");
         }
 
         /// <summary>
@@ -127,6 +129,7 @@ namespace GameAssistant
             notifyIcon.ContextMenuStrip.Items.Add("Picture", null, NotifyIconContextMenu_Picture_Click);
             notifyIcon.ContextMenuStrip.Items.Add("Clock", null, NotifyIconContextMenu_Clock_Click);
             notifyIcon.ContextMenuStrip.Items.Add("Note", null, NotifyIconContextMenu_Note_Click);
+            notifyIcon.ContextMenuStrip.Items.Add("FPS Counter", null, NotifyIconContextMenu_FPS_Counter_Click);
             notifyIcon.ContextMenuStrip.Items.Add("-");
             notifyIcon.ContextMenuStrip.Items.Add("Open Window", null, NotifyIconContextMenu_OpenWindow_Click);
             notifyIcon.ContextMenuStrip.Items.Add("Close", null, NotifyIconContextMenu_Close_Click);
@@ -145,7 +148,7 @@ namespace GameAssistant
         /// </summary>
         private void NotifyIconContextMenu_OpenWindow_Click(object sender, EventArgs e)
         {
-            SaveWidgetsSettings(clockWidget, pictureWidget, noteWidget);
+            SaveWidgetsSettings(clockWidget, pictureWidget, noteWidget, fpsCounterWidget);
 
             #region SettingsOn
 
@@ -153,7 +156,7 @@ namespace GameAssistant
             notifyIcon.Visible = false;
 
             /*/ Widgets /*/
-            CloseWidgets(clockWidget, pictureWidget, noteWidget);
+            CloseWidgets(clockWidget, pictureWidget, noteWidget, fpsCounterWidget);
 
             #endregion
 
@@ -218,6 +221,14 @@ namespace GameAssistant
         private void NotifyIconContextMenu_Note_Click(object sender, EventArgs e)
         {
             OpenOrCloseNoteWidget();
+        }
+
+        /// <summary>
+        /// On click "FPS Counter" button in NotifyIcon
+        /// </summary>
+        private void NotifyIconContextMenu_FPS_Counter_Click(object sender, EventArgs e)
+        {
+            OpenOrCloseFPSCounterWidget();
         }
 
         #endregion
@@ -339,6 +350,41 @@ namespace GameAssistant
                     noteWidget = NoteWidget.CreateWidget();
                     noteWidget.Show();
                 }
+
+                FPSCounterInformation fpsCounterInf = FPSCounterWidget.DownloadWidgetInformationOfFile();
+                if (fpsCounterInf != null)
+                {
+                    if (fpsCounterInf.IsChosed == true)
+                    {
+                        if (fpsCounterWidget != null)
+                        {
+                            fpsCounterWidget.Close();
+                        }
+                        fpsCounterWidget = FPSCounterWidget.CreateWidget();
+                        fpsCounterWidget.Show();
+
+                        System.Windows.Forms.ToolStripMenuItem menuitem = (System.Windows.Forms.ToolStripMenuItem)notifyIcon.ContextMenuStrip.Items[3];
+                        if (menuitem != null)
+                            menuitem.Checked = true;
+                    }
+                    else
+                    {
+                        fpsCounterWidget = null;
+
+                        System.Windows.Forms.ToolStripMenuItem menuitem = (System.Windows.Forms.ToolStripMenuItem)notifyIcon.ContextMenuStrip.Items[3];
+                        if (menuitem != null)
+                            menuitem.Checked = false;
+                    }
+                }
+                else
+                {
+                    if (fpsCounterWidget != null)
+                    {
+                        fpsCounterWidget.Close();
+                    }
+                    fpsCounterWidget = FPSCounterWidget.CreateWidget();
+                    fpsCounterWidget.Show();
+                }
             }
         }
 
@@ -424,16 +470,43 @@ namespace GameAssistant
             }
         }
 
+        /// <summary>
+        /// Open or close clock widget
+        /// </summary>
+        public void OpenOrCloseFPSCounterWidget()
+        {
+            System.Windows.Forms.ToolStripMenuItem menuitem = (System.Windows.Forms.ToolStripMenuItem)notifyIcon.ContextMenuStrip.Items[3];
+
+            if (fpsCounterWidget != null)
+            {
+                FPSCounterWidget.UpdateWidgetInformationOfFile(this.fpsCounterWidget);
+                fpsCounterWidget.Close();
+                fpsCounterWidget = null;
+                FPSCounterWidget.UpdateWidgetInformationOfFile(this.fpsCounterWidget);
+                if (menuitem != null)
+                    menuitem.Checked = false;
+            }
+            else
+            {
+                fpsCounterWidget = FPSCounterWidget.CreateWidget();
+                fpsCounterWidget.Show();
+                FPSCounterWidget.UpdateWidgetInformationOfFile(this.fpsCounterWidget);
+                if (menuitem != null)
+                    menuitem.Checked = true;
+            }
+        }
+
         #endregion
 
-        public static void SaveWidgetsSettings(ClockWidget clockWidget, PictureWidget pictureWidget, NoteWidget noteWidget)
+        public static void SaveWidgetsSettings(ClockWidget clockWidget, PictureWidget pictureWidget, NoteWidget noteWidget, FPSCounterWidget fpsCounterWidget)
         {
             ClockWidget.UpdateWidgetInformationOfFile(clockWidget);
             PictureWidget.UpdateWidgetInformationOfFile(pictureWidget);
             NoteWidget.UpdateWidgetInformationOfFile(noteWidget);
+            FPSCounterWidget.UpdateWidgetInformationOfFile(fpsCounterWidget);
         }
 
-        public static void CloseWidgets(ClockWidget clockWidget, PictureWidget pictureWidget, NoteWidget noteWidget)
+        public static void CloseWidgets(ClockWidget clockWidget, PictureWidget pictureWidget, NoteWidget noteWidget, FPSCounterWidget fpsCounterWidget)
         {
             /// Close ClockWidget
             clockWidget?.Close();
@@ -443,11 +516,14 @@ namespace GameAssistant
 
             /// Close NoteWidget
             noteWidget?.Close();
+            
+            /// Close FPSCounterWidget
+            fpsCounterWidget?.Close();
         }
 
         private void CloseWidgetsWithNotifyIcon()
         {
-            CloseWidgets(clockWidget, pictureWidget, noteWidget);
+            CloseWidgets(clockWidget, pictureWidget, noteWidget, fpsCounterWidget);
 
             /// Delete NotifyIcon
             notifyIcon?.Dispose();
@@ -460,7 +536,7 @@ namespace GameAssistant
         private void CloseApplication_Click()
         {
             // Update select settngs in program's files
-            SaveWidgetsSettings(clockWidget, pictureWidget, noteWidget);
+            SaveWidgetsSettings(clockWidget, pictureWidget, noteWidget, fpsCounterWidget);
 
             // Close application
             this?.Close();

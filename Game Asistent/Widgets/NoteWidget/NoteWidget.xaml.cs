@@ -525,7 +525,6 @@ namespace GameAssistant
             }
 
         }
-        //todo !!! dynamic nie jest deklaratywna w przypadku stałego typu !!!
 
         #endregion
 
@@ -629,7 +628,7 @@ namespace GameAssistant
                 OnChangeActuallyNotePath();
                 LoadActuallyText();
             }
-            //todo udostępnić możliwość dodawania notatek
+            //todo udostępnić możliwość kasowania notatek
             NoteWidget.UpdateWidgetInformationOfFile(this);
         }
 

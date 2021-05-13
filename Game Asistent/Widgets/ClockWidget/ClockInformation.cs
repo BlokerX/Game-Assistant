@@ -6,6 +6,5 @@
         public double BackgroundClockOpacity;
         public System.Windows.Media.Color BackgroundColor;
         public System.Windows.Media.Color ForegroundColor;
-        //todo dodaj odwołania public System.Windows.Media.Color ClockColor;
     }
 }

@@ -1,6 +1,8 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Media.Imaging;
 
 namespace GameAssistant
@@ -16,6 +18,7 @@ namespace GameAssistant
         public ClockWidget clockWidget = null;
         public PictureWidget pictureWidget = null;
         public NoteWidget noteWidget = null;
+        public FPSCounterWidget fpsCounterWidget = null;
 
         // Varibles
         /// <summary>
@@ -247,6 +250,80 @@ namespace GameAssistant
 
             #endregion
 
+            #region FPSCounterWidgetLoading
+
+            FPSCounterInformation fpsCounterInf = FPSCounterWidget.DownloadWidgetInformationOfFile();
+
+            if (fpsCounterInf != null)
+            {
+                if (fpsCounterInf.IsChosed == true)
+                {
+                    fpsCounterWidget = FPSCounterWidget.CreateWidget();
+                    fpsCounterWidget.Show();
+                }
+                else
+                {
+                    fpsCounterWidget = null;
+                }
+
+                switch (fpsCounterInf.FPSOpacity)
+                {
+                    case 1:
+                        this.FPSCounterForegroundOpacityComboBox.SelectedIndex = 0;
+                        break;
+                    case 0.75:
+                        this.FPSCounterForegroundOpacityComboBox.SelectedIndex = 1;
+                        break;
+                    case 0.5:
+                        this.FPSCounterForegroundOpacityComboBox.SelectedIndex = 2;
+                        break;
+                    case 0.25:
+                        this.FPSCounterForegroundOpacityComboBox.SelectedIndex = 3;
+                        break;
+                    case 0:
+                        this.FPSCounterForegroundOpacityComboBox.SelectedIndex = 4;
+                        break;
+                    default:
+                        this.FPSCounterForegroundOpacityComboBox.SelectedIndex = 1;
+                        break;
+                }
+
+                switch (fpsCounterInf.BackgroundOpacity)
+                {
+                    case 1:
+                        this.FPSCounterBackgroundOpacityComboBox.SelectedIndex = 0;
+                        break;
+                    case 0.75:
+                        this.FPSCounterBackgroundOpacityComboBox.SelectedIndex = 1;
+                        break;
+                    case 0.5:
+                        this.FPSCounterBackgroundOpacityComboBox.SelectedIndex = 2;
+                        break;
+                    case 0.25:
+                        this.FPSCounterBackgroundOpacityComboBox.SelectedIndex = 3;
+                        break;
+                    case 0:
+                        this.FPSCounterBackgroundOpacityComboBox.SelectedIndex = 4;
+                        break;
+                    default:
+                        this.FPSCounterBackgroundOpacityComboBox.SelectedIndex = 1;
+                        break;
+                }
+
+            }
+            else
+            {
+                fpsCounterWidget = FPSCounterWidget.CreateWidget();
+                fpsCounterWidget.Show();
+            }
+
+            if (fpsCounterWidget != null)
+            {
+                fpsCounterWidget.IsAllowDrag = true;
+                fpsCounterWidget.ResizeMode = ResizeMode.CanResizeWithGrip;
+            }
+
+            #endregion
         }
 
         #endregion
@@ -455,6 +532,57 @@ namespace GameAssistant
 
         #endregion
 
+        #region FPSCounterVisibleCheckBox
+
+        /// <summary>
+        /// It does when FPSCounterVisibleCheckBox checked 
+        /// </summary>
+        private void FPSCounterVisibleCheckBox_Checked(object sender, RoutedEventArgs e)
+        {
+            if (fpsCounterWidget == null)
+            {
+                fpsCounterWidget = FPSCounterWidget.CreateWidget();
+                if (fpsCounterWidget != null)
+                {
+                    fpsCounterWidget.IsAllowDrag = true;
+                    fpsCounterWidget.ResizeMode = ResizeMode.CanResizeWithGrip;
+                }
+                fpsCounterWidget.Show();
+                FPSCounterWidget.UpdateWidgetInformationOfFile(fpsCounterWidget);
+            }
+        }
+
+        /// <summary>
+        /// It does when FPSCounterVisibleCheckBox unchecked 
+        /// </summary>
+        private void FPSCounterVisibleCheckBox_Unchecked(object sender, RoutedEventArgs e)
+        {
+            if (fpsCounterWidget != null)
+            {
+                FPSCounterWidget.UpdateWidgetInformationOfFile(fpsCounterWidget);
+                fpsCounterWidget.Close();
+                fpsCounterWidget = null;
+                FPSCounterWidget.UpdateWidgetInformationOfFile(fpsCounterWidget);
+            }
+        }
+
+        /// <summary>
+        /// It do when FPSCounterVisibleCheckBox Loaded
+        /// </summary>
+        private void FPSCounterVisibleCheckBox_Loaded(object sender, RoutedEventArgs e)
+        {
+            if (fpsCounterWidget != null)
+            {
+                this.FPSCounterVisibleCheckBox.IsChecked = true;
+            }
+            else if (fpsCounterWidget == null)
+            {
+                this.FPSCounterVisibleCheckBox.IsChecked = false;
+            }
+        }
+
+        #endregion
+
         #endregion
 
         #region OpacitiesComboBoxes
@@ -564,7 +692,6 @@ namespace GameAssistant
                     {
                         if (fontDialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
                         {
-                            // todo naprawić font family
                             noteWidget.TextBox1.FontFamily = (System.Windows.Media.FontFamily)new System.Windows.Media.FontFamilyConverter().ConvertFrom(fontDialog.Font.FontFamily.Name);
                             noteWidget.TextBox1.FontSize = fontDialog.Font.Size;
                         }
@@ -644,6 +771,62 @@ namespace GameAssistant
 
         #endregion
 
+        #region FPSCounterWidgetOpacity
+
+        private void FPSCounterForegroundOpacityComboBox_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
+        {
+            if (fpsCounterWidget != null)
+            {
+                switch (FPSCounterForegroundOpacityComboBox.SelectedIndex)
+                {
+                    case 0:
+                        fpsCounterWidget.lab1.Opacity = 1;
+                        break;
+                    case 1:
+                        fpsCounterWidget.lab1.Opacity = 0.75;
+                        break;
+                    case 2:
+                        fpsCounterWidget.lab1.Opacity = 0.5;
+                        break;
+                    case 3:
+                        fpsCounterWidget.lab1.Opacity = 0.25;
+                        break;
+                    case 4:
+                        fpsCounterWidget.lab1.Opacity = 0;
+                        break;
+                }
+                FPSCounterWidget.UpdateWidgetInformationOfFile(fpsCounterWidget);
+            }
+        }
+
+        private void FPSCounterBackgroundOpacityComboBox_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
+        {
+            if (fpsCounterWidget != null)
+            {
+                switch (FPSCounterBackgroundOpacityComboBox.SelectedIndex)
+                {
+                    case 0:
+                        fpsCounterWidget.rec1.Opacity = 1;
+                        break;
+                    case 1:
+                        fpsCounterWidget.rec1.Opacity = 0.75;
+                        break;
+                    case 2:
+                        fpsCounterWidget.rec1.Opacity = 0.5;
+                        break;
+                    case 3:
+                        fpsCounterWidget.rec1.Opacity = 0.25;
+                        break;
+                    case 4:
+                        fpsCounterWidget.rec1.Opacity = 0;
+                        break;
+                }
+                FPSCounterWidget.UpdateWidgetInformationOfFile(fpsCounterWidget);
+            }
+        }
+
+        #endregion
+
         #endregion
 
         #region ColorButtonsAndRectangles
@@ -702,7 +885,7 @@ namespace GameAssistant
                 ClockBackgroundColorRectangle.Fill = clockWidget.rec1.Fill;
             }
         }
-        
+
         /// <summary>
         /// Chose clock's foreground color
         /// </summary>
@@ -868,6 +1051,116 @@ namespace GameAssistant
             }
         }
 
+        /// <summary>
+        /// Chose fpsCounter's background color
+        /// </summary>
+        private void ChoseFPSCounterBackgroundColorButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (fpsCounterWidget != null)
+            {
+                System.Drawing.Color colorDrawing = MainWindow.ColorMediaToDrawing(MainWindow.BrushToColorMedia(FPSCounterBackgroundColorRectangle.Fill));
+
+                try
+                {
+                    using (System.Windows.Forms.ColorDialog colorDialog = new System.Windows.Forms.ColorDialog()
+                    {
+                        FullOpen = true,
+                        Color = colorDrawing
+                    })
+                    {
+                        if (colorDialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+                        {
+                            fpsCounterWidget.rec1.Fill = new System.Windows.Media.SolidColorBrush(MainWindow.ColorDrawingToMedia(colorDialog.Color));
+                            FPSCounterBackgroundColorRectangle.Fill = new System.Windows.Media.SolidColorBrush(MainWindow.ColorDrawingToMedia(colorDialog.Color));
+                        }
+                        FPSCounterWidget.UpdateWidgetInformationOfFile(fpsCounterWidget);
+                    }
+                }
+                catch { }
+            }
+            else
+            {
+                MessageBox.Show
+                    (
+                    "If you want to change FPS Counter's background color, you need to enable the FPS Counter widget!",
+                    "The color cannot be changed:",
+                    MessageBoxButton.OK,
+                    MessageBoxImage.Hand,
+                    MessageBoxResult.OK
+                    );
+            }
+        }
+
+        /// <summary>
+        /// Loadnig fpsCounter's background color to rectangle 
+        /// </summary>
+        private void FPSCounterBackgroundColorRectangle_Loaded(object sender, RoutedEventArgs e)
+        {
+            if (File.Exists(FPSCounterWidget.FPSCounterSettingsPath))
+            {
+                FPSCounterBackgroundColorRectangle.Fill = new System.Windows.Media.SolidColorBrush(FPSCounterWidget.DownloadWidgetInformationOfFile().BackgroundColor);
+            }
+            else if (fpsCounterWidget != null)
+            {
+                FPSCounterBackgroundColorRectangle.Fill = fpsCounterWidget.rec1.Fill;
+            }
+        }
+
+        /// <summary>
+        /// Chose fpsCounter's foreground color
+        /// </summary>
+        private void ChoseFPSCounterForegroundColorButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (fpsCounterWidget != null)
+            {
+                System.Drawing.Color colorDrawing = MainWindow.ColorMediaToDrawing(MainWindow.BrushToColorMedia(FPSCounterForegroundColorRectangle.Fill));
+
+                try
+                {
+                    using (System.Windows.Forms.ColorDialog colorDialog = new System.Windows.Forms.ColorDialog()
+                    {
+                        FullOpen = true,
+                        Color = colorDrawing
+                    })
+                    {
+                        if (colorDialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+                        {
+                            fpsCounterWidget.lab1.Foreground = new System.Windows.Media.SolidColorBrush(MainWindow.ColorDrawingToMedia(colorDialog.Color));
+                            FPSCounterForegroundColorRectangle.Fill = new System.Windows.Media.SolidColorBrush(MainWindow.ColorDrawingToMedia(colorDialog.Color));
+                        }
+                        FPSCounterWidget.UpdateWidgetInformationOfFile(fpsCounterWidget);
+                    }
+                }
+                catch { }
+            }
+            else
+            {
+                MessageBox.Show
+                    (
+                    "If you want to change FPS Counter's foreground color, you need to enable the FPS Counter widget!",
+                    "The color cannot be changed:",
+                    MessageBoxButton.OK,
+                    MessageBoxImage.Hand,
+                    MessageBoxResult.OK
+                    );
+            }
+        }
+
+        /// <summary>
+        /// Loadnig fpsCounter's foreground color to rectangle 
+        /// </summary>
+        private void FPSCounterForegroundColorRectangle_Loaded(object sender, RoutedEventArgs e)
+        {
+            if (File.Exists(FPSCounterWidget.FPSCounterSettingsPath))
+            {
+                FPSCounterForegroundColorRectangle.Fill = new System.Windows.Media.SolidColorBrush(FPSCounterWidget.DownloadWidgetInformationOfFile().ForegroundColor);
+            }
+            else if (fpsCounterWidget != null)
+            {
+                FPSCounterForegroundColorRectangle.Fill = fpsCounterWidget.lab1.Foreground;
+            }
+        }
+
         #endregion
 
         #region ButtonResetSettingsToDefault
@@ -886,7 +1179,7 @@ namespace GameAssistant
                 MessageBoxResult.No) == MessageBoxResult.Yes)
             {
 
-                MainWindow.CloseWidgets(clockWidget, pictureWidget, noteWidget);
+                MainWindow.CloseWidgets(clockWidget, pictureWidget, noteWidget, fpsCounterWidget);
 
                 if (File.Exists(ClockWidget.ClockSettingsPath))
                 {
@@ -934,12 +1227,60 @@ namespace GameAssistant
 
         private void MainWindowElement_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
-            MainWindow.SaveWidgetsSettings(clockWidget, pictureWidget, noteWidget);
-            MainWindow.CloseWidgets(clockWidget, pictureWidget, noteWidget);
+            MainWindow.SaveWidgetsSettings(clockWidget, pictureWidget, noteWidget, fpsCounterWidget);
+            MainWindow.CloseWidgets(clockWidget, pictureWidget, noteWidget, fpsCounterWidget);
         }
 
         #endregion
 
+        private void GetActiveProcesses(object sender, RoutedEventArgs e)
+        {
+            FPSCounterWidget.LoadFPSReader();
+            var frames = FPSCounterWidget.GetFrames();
+
+            FPSCounterProcessesComboBox.Items.Clear();
+            if (frames.Count > 0)
+            {
+                foreach (var item in frames)
+                {
+                    FPSCounterProcessesComboBox.Items.Add(item.Value.Name);
+                }
+            }
+            else
+            {
+                FPSCounterProcessesComboBox.Items.Add(" - No items - "); // todo tu skońcxzyłem!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+            }
+
+            FPSCounterProcessesComboBox.SelectedIndex = -1;
+            for (int i = 0; i < FPSCounterProcessesComboBox.Items.Count; i++)
+            {
+                if (FPSCounterProcessesComboBox.Items[i].ToString() == fpsCounterWidget.SelectProcessFPS)
+                {
+                    FPSCounterProcessesComboBox.SelectedIndex = i;
+                    break;
+                }
+            }
+            if (FPSCounterProcessesComboBox.SelectedIndex == -1)
+            {
+                FPSCounterProcessesComboBox.Items.Add(fpsCounterWidget.SelectProcessFPS);
+                FPSCounterProcessesComboBox.SelectedIndex = FPSCounterProcessesComboBox.Items.Count - 1;
+            }
+
+        }
+
+        private void FPSCounterProcessesComboBox_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
+        {
+            if (fpsCounterWidget != null)
+            {
+                fpsCounterWidget.SelectProcessFPS = FPSCounterProcessesComboBox.Items[FPSCounterProcessesComboBox.SelectedIndex].ToString();
+                FPSCounterWidget.UpdateWidgetInformationOfFile(fpsCounterWidget);
+                fpsCounterWidget.Close();
+                fpsCounterWidget = FPSCounterWidget.CreateWidget();
+                fpsCounterWidget.IsAllowDrag = true;
+                fpsCounterWidget.ResizeMode = ResizeMode.CanResizeWithGrip;
+                fpsCounterWidget.Show();
+            }
+        }
     }
 }
 
