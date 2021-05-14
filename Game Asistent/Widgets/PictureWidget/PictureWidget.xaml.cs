@@ -17,6 +17,12 @@ namespace GameAssistant
         {
             InitializeComponent();
             rec1.Visibility = Visibility.Hidden;
+
+            if (ImagePath == "Default")
+            {
+                ImageBox.Source = MainWindow.GetBitmapSource(Properties.Resources.DefaultImageToImageBox);
+                ImagePath = "Default";
+            }
         }
 
         #region StaticMethods
@@ -183,7 +189,9 @@ namespace GameAssistant
                 return pf;
             }
             else
-            { return new PictureWidget(); }
+            {
+                return new PictureWidget();
+            }
         }
 
         /// <summary>

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Windows;
 using System.Windows.Controls;
@@ -45,81 +46,6 @@ namespace GameAssistant
 
         private void LoadingWidgets()
         {
-            #region ClockWidgetLoading
-
-            ClockInformation clockInf = ClockWidget.DownloadWidgetInformationOfFile();
-
-            if (clockInf != null)
-            {
-                if (clockInf.IsChosed == true)
-                {
-                    clockWidget = ClockWidget.CreateWidget();
-                    clockWidget.Show();
-                }
-                else
-                {
-                    clockWidget = null;
-                }
-
-                switch (clockInf.ClockOpacity)
-                {
-                    case 1:
-                        this.ClockOpacityComboBox.SelectedIndex = 0;
-                        break;
-                    case 0.75:
-                        this.ClockOpacityComboBox.SelectedIndex = 1;
-                        break;
-                    case 0.5:
-                        this.ClockOpacityComboBox.SelectedIndex = 2;
-                        break;
-                    case 0.25:
-                        this.ClockOpacityComboBox.SelectedIndex = 3;
-                        break;
-                    case 0:
-                        this.ClockOpacityComboBox.SelectedIndex = 4;
-                        break;
-                    default:
-                        this.ClockOpacityComboBox.SelectedIndex = 1;
-                        break;
-                }
-
-                switch (clockInf.BackgroundClockOpacity)
-                {
-                    case 1:
-                        this.ClockBackgroundOpacityComboBox.SelectedIndex = 0;
-                        break;
-                    case 0.75:
-                        this.ClockBackgroundOpacityComboBox.SelectedIndex = 1;
-                        break;
-                    case 0.5:
-                        this.ClockBackgroundOpacityComboBox.SelectedIndex = 2;
-                        break;
-                    case 0.25:
-                        this.ClockBackgroundOpacityComboBox.SelectedIndex = 3;
-                        break;
-                    case 0:
-                        this.ClockBackgroundOpacityComboBox.SelectedIndex = 4;
-                        break;
-                    default:
-                        this.ClockBackgroundOpacityComboBox.SelectedIndex = 1;
-                        break;
-                }
-
-            }
-            else
-            {
-                clockWidget = ClockWidget.CreateWidget();
-                clockWidget.Show();
-            }
-
-            if (clockWidget != null)
-            {
-                clockWidget.IsAllowDrag = true;
-                clockWidget.ResizeMode = ResizeMode.CanResizeWithGrip;
-            }
-
-            #endregion
-
             #region PictureWidgetLoading
 
             PictureInformation pictureInf = PictureWidget.DownloadWidgetInformationOfFile();
@@ -246,6 +172,81 @@ namespace GameAssistant
             {
                 noteWidget.IsAllowDrag = true;
                 noteWidget.ResizeMode = ResizeMode.CanResizeWithGrip;
+            }
+
+            #endregion
+
+            #region ClockWidgetLoading
+
+            ClockInformation clockInf = ClockWidget.DownloadWidgetInformationOfFile();
+
+            if (clockInf != null)
+            {
+                if (clockInf.IsChosed == true)
+                {
+                    clockWidget = ClockWidget.CreateWidget();
+                    clockWidget.Show();
+                }
+                else
+                {
+                    clockWidget = null;
+                }
+
+                switch (clockInf.ClockOpacity)
+                {
+                    case 1:
+                        this.ClockOpacityComboBox.SelectedIndex = 0;
+                        break;
+                    case 0.75:
+                        this.ClockOpacityComboBox.SelectedIndex = 1;
+                        break;
+                    case 0.5:
+                        this.ClockOpacityComboBox.SelectedIndex = 2;
+                        break;
+                    case 0.25:
+                        this.ClockOpacityComboBox.SelectedIndex = 3;
+                        break;
+                    case 0:
+                        this.ClockOpacityComboBox.SelectedIndex = 4;
+                        break;
+                    default:
+                        this.ClockOpacityComboBox.SelectedIndex = 1;
+                        break;
+                }
+
+                switch (clockInf.BackgroundClockOpacity)
+                {
+                    case 1:
+                        this.ClockBackgroundOpacityComboBox.SelectedIndex = 0;
+                        break;
+                    case 0.75:
+                        this.ClockBackgroundOpacityComboBox.SelectedIndex = 1;
+                        break;
+                    case 0.5:
+                        this.ClockBackgroundOpacityComboBox.SelectedIndex = 2;
+                        break;
+                    case 0.25:
+                        this.ClockBackgroundOpacityComboBox.SelectedIndex = 3;
+                        break;
+                    case 0:
+                        this.ClockBackgroundOpacityComboBox.SelectedIndex = 4;
+                        break;
+                    default:
+                        this.ClockBackgroundOpacityComboBox.SelectedIndex = 1;
+                        break;
+                }
+
+            }
+            else
+            {
+                clockWidget = ClockWidget.CreateWidget();
+                clockWidget.Show();
+            }
+
+            if (clockWidget != null)
+            {
+                clockWidget.IsAllowDrag = true;
+                clockWidget.ResizeMode = ResizeMode.CanResizeWithGrip;
             }
 
             #endregion
@@ -1195,18 +1196,40 @@ namespace GameAssistant
                 {
                     File.Delete(NoteWidget.NoteSettingsPath);
                 }
+                
+                if (File.Exists(FPSCounterWidget.FPSCounterSettingsPath))
+                {
+                    File.Delete(FPSCounterWidget.FPSCounterSettingsPath);
+                }
 
+                LoadingWidgets();
+                MainWindow.CloseWidgets(clockWidget, pictureWidget, noteWidget, fpsCounterWidget);
                 LoadingWidgets();
 
                 ClockVisibleCheckBox_Loaded(sender, e);
                 PictureBoxVisibleCheckBox_Loaded(sender, e);
                 NoteVisibleCheckBox_Loaded(sender, e);
+                FPSCounterVisibleCheckBox_Loaded(sender, e);
 
                 ClockBackgroundColorRectangle_Loaded(sender, e);
+                ClockForegroundColorRectangle_Loaded(sender, e);
                 NoteBackgroundColorRectangle_Loaded(sender, e);
                 NoteFontColorRectangle_Loaded(sender, e);
-
+                FPSCounterBackgroundColorRectangle_Loaded(sender, e);
+                FPSCounterForegroundColorRectangle_Loaded(sender, e);
             }
+        }
+
+        #endregion
+
+        #region ButtonSettingsDire
+
+        /// <summary>
+        /// Open settings dire in Explorer
+        /// </summary>
+        private void ButtonProgramDataDire_Click(object sender, RoutedEventArgs e)
+        {
+            Process.Start(MainWindow.GameAssistantFolderPath);
         }
 
         #endregion
@@ -1233,7 +1256,7 @@ namespace GameAssistant
 
         #endregion
 
-        private void GetActiveProcesses(object sender, RoutedEventArgs e)
+        private void GetActiveProcesses(object sender, EventArgs e)
         {
             FPSCounterWidget.LoadFPSReader();
             var frames = FPSCounterWidget.GetFrames();
@@ -1248,22 +1271,50 @@ namespace GameAssistant
             }
             else
             {
-                FPSCounterProcessesComboBox.Items.Add(" - No items - "); // todo tu skońcxzyłem!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+                FPSCounterProcessesComboBox.Items.Add(" - No items - ");
             }
 
-            FPSCounterProcessesComboBox.SelectedIndex = -1;
-            for (int i = 0; i < FPSCounterProcessesComboBox.Items.Count; i++)
+            if (fpsCounterWidget != null)
             {
-                if (FPSCounterProcessesComboBox.Items[i].ToString() == fpsCounterWidget.SelectProcessFPS)
+                for (int i = 0; i < FPSCounterProcessesComboBox.Items.Count; i++)
                 {
-                    FPSCounterProcessesComboBox.SelectedIndex = i;
-                    break;
+                    if (FPSCounterProcessesComboBox.Items[i].ToString() == fpsCounterWidget.SelectProcessFPS)
+                    {
+                        FPSCounterProcessesComboBox.SelectedIndex = i;
+                        break;
+                    }
                 }
             }
+            else if (File.Exists(FPSCounterWidget.FPSCounterSettingsPath))
+            {
+                string nameOfProcess_ = FPSCounterWidget.DownloadWidgetInformationOfFile().SelectedProcess;
+                for (int i = 0; i < FPSCounterProcessesComboBox.Items.Count; i++)
+                {
+                    if (FPSCounterProcessesComboBox.Items[i].ToString() == nameOfProcess_)
+                    {
+                        FPSCounterProcessesComboBox.SelectedIndex = i;
+                        break;
+                    }
+                }
+            }
+
             if (FPSCounterProcessesComboBox.SelectedIndex == -1)
             {
-                FPSCounterProcessesComboBox.Items.Add(fpsCounterWidget.SelectProcessFPS);
-                FPSCounterProcessesComboBox.SelectedIndex = FPSCounterProcessesComboBox.Items.Count - 1;
+                if (fpsCounterWidget != null)
+                {
+                    FPSCounterProcessesComboBox.Items.Add(fpsCounterWidget.SelectProcessFPS);
+                    FPSCounterProcessesComboBox.SelectedIndex = FPSCounterProcessesComboBox.Items.Count - 1;
+                }
+                else if (File.Exists(FPSCounterWidget.FPSCounterSettingsPath))
+                {
+                    FPSCounterProcessesComboBox.Items.Add(FPSCounterWidget.DownloadWidgetInformationOfFile()?.SelectedProcess);
+                    FPSCounterProcessesComboBox.SelectedIndex = FPSCounterProcessesComboBox.Items.Count - 1;
+                }
+                else
+                {
+                    if (FPSCounterProcessesComboBox.Items[0].ToString() == " - No items - ")
+                        FPSCounterProcessesComboBox.SelectedIndex = 0;
+                }
             }
 
         }
@@ -1272,15 +1323,20 @@ namespace GameAssistant
         {
             if (fpsCounterWidget != null)
             {
+                //fpsCounterWidget.SelectProcessFPS = FPSCounterProcessesComboBox.Items[FPSCounterProcessesComboBox.SelectedIndex].ToString();
+                //FPSCounterWidget.UpdateWidgetInformationOfFile(fpsCounterWidget);
+                //fpsCounterWidget.Close();
+                //fpsCounterWidget = FPSCounterWidget.CreateWidget();
+                //fpsCounterWidget.IsAllowDrag = true;
+                //fpsCounterWidget.ResizeMode = ResizeMode.CanResizeWithGrip;
+                //fpsCounterWidget.Show();
+
+                fpsCounterWidget.lab1.Content = "0 FPS";
                 fpsCounterWidget.SelectProcessFPS = FPSCounterProcessesComboBox.Items[FPSCounterProcessesComboBox.SelectedIndex].ToString();
                 FPSCounterWidget.UpdateWidgetInformationOfFile(fpsCounterWidget);
-                fpsCounterWidget.Close();
-                fpsCounterWidget = FPSCounterWidget.CreateWidget();
-                fpsCounterWidget.IsAllowDrag = true;
-                fpsCounterWidget.ResizeMode = ResizeMode.CanResizeWithGrip;
-                fpsCounterWidget.Show();
             }
         }
+
     }
 }
 

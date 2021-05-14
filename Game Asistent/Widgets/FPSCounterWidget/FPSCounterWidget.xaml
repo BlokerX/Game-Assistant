@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:GameAssistant"
         mc:Ignorable="d"
-        Title="FPSCounterWidget" Height="62" Width="200" Closing="Window_Closing" AllowsTransparency="True" WindowStyle="None" Background="Transparent" Topmost="True" ShowInTaskbar="False">
+        Title="FPSCounterWidget" Height="62" Width="200" Closing="Window_Closing" AllowsTransparency="True" WindowStyle="None" Background="Transparent" Topmost="True" ShowInTaskbar="False" SizeChanged="WindowComponent_SizeChanged" LocationChanged="WindowComponent_LocationChanged">
     <Grid x:Name="Grid" Background="Transparent">
         <Rectangle x:Name="rec1" Opacity="0.5">
             <Rectangle.Fill>

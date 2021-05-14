@@ -29,6 +29,14 @@ namespace GameAssistant
         NoteWidget noteWidget;
         FPSCounterWidget fpsCounterWidget;
 
+        enum WidgetsIndexInNotify
+        {
+            NoteWidget,
+            PictureWidget,
+            FpsCounterWidget,
+            ClockWidget
+        }
+
         // Paths
         public static string SystemDriveName = "-";
 
@@ -99,11 +107,13 @@ namespace GameAssistant
             this.Visibility = Visibility.Collapsed;
 
             #region FileAndDirectoresSystemStart
+
             // Set Paths
             SetPaths();
 
             // Check dires system
             CheckProgramDiresArchitecture();
+
             #endregion
 
             NotifyIconLoadingComponents();
@@ -126,11 +136,11 @@ namespace GameAssistant
                 ShowCheckMargin = true
             };
 
-            notifyIcon.ContextMenuStrip.Items.Add("Picture", null, NotifyIconContextMenu_Picture_Click);
-            notifyIcon.ContextMenuStrip.Items.Add("Clock", null, NotifyIconContextMenu_Clock_Click);
             notifyIcon.ContextMenuStrip.Items.Add("Note", null, NotifyIconContextMenu_Note_Click);
+            notifyIcon.ContextMenuStrip.Items.Add("Picture", null, NotifyIconContextMenu_Picture_Click);
             notifyIcon.ContextMenuStrip.Items.Add("FPS Counter", null, NotifyIconContextMenu_FPS_Counter_Click);
-            notifyIcon.ContextMenuStrip.Items.Add("-");
+            notifyIcon.ContextMenuStrip.Items.Add("Clock", null, NotifyIconContextMenu_Clock_Click);
+            notifyIcon.ContextMenuStrip.Items.Add("-"); // TODO (Tu się ustawia nazwy menu items)
             notifyIcon.ContextMenuStrip.Items.Add("Open Window", null, NotifyIconContextMenu_OpenWindow_Click);
             notifyIcon.ContextMenuStrip.Items.Add("Close", null, NotifyIconContextMenu_Close_Click);
         }
@@ -190,10 +200,10 @@ namespace GameAssistant
             }
             LoadingWidgets();
 
-        #endregion
+            #endregion
 
-        #region EndOfMethod
-        End:;
+            #region EndOfMethod
+            End:;
             #endregion
         }
 
@@ -242,34 +252,22 @@ namespace GameAssistant
         /// </summary>
         private void LoadingWidgets()
         {
-            if (true)
+            LoadingPictureWidget();
+            LoadingNoteWidget();
+            LoadingClockWidget();
+            LoadingFPSCounterWidget();
+        }
+
+        /// <summary>
+        /// Loading ClockWidget
+        /// </summary>
+        private void LoadingClockWidget()
+        {
+            ClockInformation clockInf = ClockWidget.DownloadWidgetInformationOfFile();
+            System.Windows.Forms.ToolStripMenuItem menuitemClock = (System.Windows.Forms.ToolStripMenuItem)notifyIcon.ContextMenuStrip.Items[(int)WidgetsIndexInNotify.ClockWidget];
+            if (clockInf != null)
             {
-                ClockInformation clockInf = ClockWidget.DownloadWidgetInformationOfFile();
-                if (clockInf != null)
-                {
-                    if (clockInf.IsChosed == true)
-                    {
-                        if (clockWidget != null)
-                        {
-                            clockWidget.Close();
-                        }
-                        clockWidget = ClockWidget.CreateWidget();
-                        clockWidget.Show();
-
-                        System.Windows.Forms.ToolStripMenuItem menuitem = (System.Windows.Forms.ToolStripMenuItem)notifyIcon.ContextMenuStrip.Items[1];
-                        if (menuitem != null)
-                            menuitem.Checked = true;
-                    }
-                    else
-                    {
-                        clockWidget = null;
-
-                        System.Windows.Forms.ToolStripMenuItem menuitem = (System.Windows.Forms.ToolStripMenuItem)notifyIcon.ContextMenuStrip.Items[1];
-                        if (menuitem != null)
-                            menuitem.Checked = false;
-                    }
-                }
-                else
+                if (clockInf.IsChosed == true)
                 {
                     if (clockWidget != null)
                     {
@@ -277,106 +275,124 @@ namespace GameAssistant
                     }
                     clockWidget = ClockWidget.CreateWidget();
                     clockWidget.Show();
-                }
 
-                PictureInformation pictureInf = PictureWidget.DownloadWidgetInformationOfFile();
-                if (pictureInf != null)
-                {
-                    if (pictureInf.IsChosed == true)
-                    {
-                        if (pictureWidget != null)
-                        {
-                            pictureWidget.Close();
-                        }
-
-                        pictureWidget = PictureWidget.CreateWidget();
-                        pictureWidget.Show();
-
-                        System.Windows.Forms.ToolStripMenuItem menuitem = (System.Windows.Forms.ToolStripMenuItem)notifyIcon.ContextMenuStrip.Items[0];
-                        if (menuitem != null)
-                            menuitem.Checked = true;
-                    }
-                    else
-                    {
-                        pictureWidget = null;
-
-                        System.Windows.Forms.ToolStripMenuItem menuitem = (System.Windows.Forms.ToolStripMenuItem)notifyIcon.ContextMenuStrip.Items[0];
-                        if (menuitem != null)
-                            menuitem.Checked = false;
-                    }
+                    if (menuitemClock != null)
+                        menuitemClock.Checked = true;
                 }
                 else
+                {
+                    clockWidget = null;
+                    if (menuitemClock != null)
+                        menuitemClock.Checked = false;
+                }
+            }
+            else
+            {
+                if (clockWidget != null)
+                {
+                    clockWidget.Close();
+                }
+                clockWidget = ClockWidget.CreateWidget();
+                clockWidget.Show();
+                if (menuitemClock != null)
+                    menuitemClock.Checked = true;
+            }
+        }
+
+        /// <summary>
+        /// Loading PictureWidget
+        /// </summary>
+        private void LoadingPictureWidget()
+        {
+            PictureInformation pictureInf = PictureWidget.DownloadWidgetInformationOfFile();
+            System.Windows.Forms.ToolStripMenuItem menuitemPicture = (System.Windows.Forms.ToolStripMenuItem)notifyIcon.ContextMenuStrip.Items[(int)WidgetsIndexInNotify.PictureWidget];
+            if (pictureInf != null)
+            {
+                if (pictureInf.IsChosed == true)
                 {
                     if (pictureWidget != null)
                     {
                         pictureWidget.Close();
                     }
+
                     pictureWidget = PictureWidget.CreateWidget();
                     pictureWidget.Show();
-                }
 
-                NoteInformation noteInf = NoteWidget.DownloadWidgetInformationOfFile();
-                if (noteInf != null)
-                {
-                    if (noteInf.IsChosed == true)
-                    {
-                        if (noteWidget != null)
-                        {
-                            noteWidget.Close();
-                        }
-
-                        noteWidget = NoteWidget.CreateWidget();
-                        noteWidget.Show();
-
-                        System.Windows.Forms.ToolStripMenuItem menuitem = (System.Windows.Forms.ToolStripMenuItem)notifyIcon.ContextMenuStrip.Items[2];
-                        if (menuitem != null)
-                            menuitem.Checked = true;
-                    }
-                    else
-                    {
-                        noteWidget = null;
-
-                        System.Windows.Forms.ToolStripMenuItem menuitem = (System.Windows.Forms.ToolStripMenuItem)notifyIcon.ContextMenuStrip.Items[2];
-                        if (menuitem != null)
-                            menuitem.Checked = false;
-                    }
+                    if (menuitemPicture != null)
+                        menuitemPicture.Checked = true;
                 }
                 else
+                {
+                    pictureWidget = null;
+                    if (menuitemPicture != null)
+                        menuitemPicture.Checked = false;
+                }
+            }
+            else
+            {
+                if (pictureWidget != null)
+                {
+                    pictureWidget.Close();
+                }
+                pictureWidget = PictureWidget.CreateWidget();
+                pictureWidget.Show();
+                if (menuitemPicture != null)
+                    menuitemPicture.Checked = true;
+            }
+        }
+
+        /// <summary>
+        /// Loading NoteWidget
+        /// </summary>
+        private void LoadingNoteWidget()
+        {
+            NoteInformation noteInf = NoteWidget.DownloadWidgetInformationOfFile();
+            System.Windows.Forms.ToolStripMenuItem menuitemNote = (System.Windows.Forms.ToolStripMenuItem)notifyIcon.ContextMenuStrip.Items[(int)WidgetsIndexInNotify.NoteWidget];
+            if (noteInf != null)
+            {
+                if (noteInf.IsChosed == true)
                 {
                     if (noteWidget != null)
                     {
                         noteWidget.Close();
                     }
+
                     noteWidget = NoteWidget.CreateWidget();
                     noteWidget.Show();
-                }
 
-                FPSCounterInformation fpsCounterInf = FPSCounterWidget.DownloadWidgetInformationOfFile();
-                if (fpsCounterInf != null)
-                {
-                    if (fpsCounterInf.IsChosed == true)
-                    {
-                        if (fpsCounterWidget != null)
-                        {
-                            fpsCounterWidget.Close();
-                        }
-                        fpsCounterWidget = FPSCounterWidget.CreateWidget();
-                        fpsCounterWidget.Show();
-
-                        System.Windows.Forms.ToolStripMenuItem menuitem = (System.Windows.Forms.ToolStripMenuItem)notifyIcon.ContextMenuStrip.Items[3];
-                        if (menuitem != null)
-                            menuitem.Checked = true;
-                    }
-                    else
-                    {
-                        fpsCounterWidget = null;
-
-                        System.Windows.Forms.ToolStripMenuItem menuitem = (System.Windows.Forms.ToolStripMenuItem)notifyIcon.ContextMenuStrip.Items[3];
-                        if (menuitem != null)
-                            menuitem.Checked = false;
-                    }
+                    if (menuitemNote != null)
+                        menuitemNote.Checked = true;
                 }
                 else
+                {
+                    noteWidget = null;
+                    if (menuitemNote != null)
+                        menuitemNote.Checked = false;
+                }
+            }
+            else
+            {
+                if (noteWidget != null)
+                {
+                    noteWidget.Close();
+                }
+                noteWidget = NoteWidget.CreateWidget();
+                noteWidget.Show();
+                if (menuitemNote != null)
+                    menuitemNote.Checked = true;
+            }
+        }
+
+        /// <summary>
+        /// Loading FPSCounterWidget
+        /// </summary>
+        private void LoadingFPSCounterWidget()
+        {
+            FPSCounterInformation fpsCounterInf = FPSCounterWidget.DownloadWidgetInformationOfFile();
+            System.Windows.Forms.ToolStripMenuItem menuitemFPSCounter = (System.Windows.Forms.ToolStripMenuItem)notifyIcon.ContextMenuStrip.Items[(int)WidgetsIndexInNotify.FpsCounterWidget];
+            if (fpsCounterInf != null)
+            {
+                if (fpsCounterInf.IsChosed == true)
                 {
                     if (fpsCounterWidget != null)
                     {
@@ -384,7 +400,27 @@ namespace GameAssistant
                     }
                     fpsCounterWidget = FPSCounterWidget.CreateWidget();
                     fpsCounterWidget.Show();
+
+                    if (menuitemFPSCounter != null)
+                        menuitemFPSCounter.Checked = true;
                 }
+                else
+                {
+                    fpsCounterWidget = null;
+                    if (menuitemFPSCounter != null)
+                        menuitemFPSCounter.Checked = false;
+                }
+            }
+            else
+            {
+                if (fpsCounterWidget != null)
+                {
+                    fpsCounterWidget.Close();
+                }
+                fpsCounterWidget = FPSCounterWidget.CreateWidget();
+                fpsCounterWidget.Show();
+                if (menuitemFPSCounter != null)
+                    menuitemFPSCounter.Checked = true;
             }
         }
 
@@ -395,7 +431,7 @@ namespace GameAssistant
         /// </summary>
         public void OpenOrCloseClockWidget()
         {
-            System.Windows.Forms.ToolStripMenuItem menuitem = (System.Windows.Forms.ToolStripMenuItem)notifyIcon.ContextMenuStrip.Items[1];
+            System.Windows.Forms.ToolStripMenuItem menuitem = (System.Windows.Forms.ToolStripMenuItem)notifyIcon.ContextMenuStrip.Items[(int)WidgetsIndexInNotify.ClockWidget];
 
             if (clockWidget != null)
             {
@@ -421,7 +457,7 @@ namespace GameAssistant
         /// </summary>
         public void OpenOrClosePictureWidget()
         {
-            System.Windows.Forms.ToolStripMenuItem menuitem = (System.Windows.Forms.ToolStripMenuItem)notifyIcon.ContextMenuStrip.Items[0];
+            System.Windows.Forms.ToolStripMenuItem menuitem = (System.Windows.Forms.ToolStripMenuItem)notifyIcon.ContextMenuStrip.Items[(int)WidgetsIndexInNotify.PictureWidget];
 
             if (pictureWidget != null)
             {
@@ -448,7 +484,7 @@ namespace GameAssistant
         /// </summary>
         public void OpenOrCloseNoteWidget()
         {
-            System.Windows.Forms.ToolStripMenuItem menuitem = (System.Windows.Forms.ToolStripMenuItem)notifyIcon.ContextMenuStrip.Items[2];
+            System.Windows.Forms.ToolStripMenuItem menuitem = (System.Windows.Forms.ToolStripMenuItem)notifyIcon.ContextMenuStrip.Items[(int)WidgetsIndexInNotify.NoteWidget];
 
             if (noteWidget != null)
             {
@@ -475,7 +511,7 @@ namespace GameAssistant
         /// </summary>
         public void OpenOrCloseFPSCounterWidget()
         {
-            System.Windows.Forms.ToolStripMenuItem menuitem = (System.Windows.Forms.ToolStripMenuItem)notifyIcon.ContextMenuStrip.Items[3];
+            System.Windows.Forms.ToolStripMenuItem menuitem = (System.Windows.Forms.ToolStripMenuItem)notifyIcon.ContextMenuStrip.Items[(int)WidgetsIndexInNotify.FpsCounterWidget];
 
             if (fpsCounterWidget != null)
             {
@@ -516,7 +552,7 @@ namespace GameAssistant
 
             /// Close NoteWidget
             noteWidget?.Close();
-            
+
             /// Close FPSCounterWidget
             fpsCounterWidget?.Close();
         }

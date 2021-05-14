@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:GameAssistant"
         xmlns:System="clr-namespace:System;assembly=mscorlib" x:Name="MainWindowElement" x:Class="GameAssistant.SettingsWindow"
         mc:Ignorable="d"
-        Title="Settings window" Height="663.409" Width="582.955" Visibility="Visible" Closing="MainWindowElement_Closing">
+        Title="Settings window" Height="746" Width="590" Visibility="Visible" Closing="MainWindowElement_Closing">
     <Grid x:Name="Grid">
         <Rectangle x:Name="gt" Stroke="Transparent">
             <Rectangle.Fill>
@@ -63,7 +63,11 @@
             </Rectangle.Fill>
         </Rectangle>
         <Label x:Name="ColorsLabel" Content="Colors:" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,343,0,0" FontSize="16"/>
-        <Button x:Name="ButtonResetSettingsToDefault" Content="Default Settings" Margin="0,0,117,10" Click="ButtonResetSettingsToDefault_Click" Height="20" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="102" Background="#FFD4D4D4"/>
+        <Button x:Name="ButtonResetSettingsToDefault" Content="Default Settings" Margin="0,0,224,10" Click="ButtonResetSettingsToDefault_Click" Height="20" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="102">
+            <Button.Background>
+                <SolidColorBrush Color="#FFFFFF6A" Opacity="0.5"/>
+            </Button.Background>
+        </Button>
         <CheckBox x:Name="NoteVisibleCheckBox" Content="Note" HorizontalAlignment="Left" Margin="20,85,0,0" VerticalAlignment="Top" Checked="NoteVisibleCheckBox_Checked" Unchecked="NoteVisibleCheckBox_Unchecked" Loaded="NoteVisibleCheckBox_Loaded"/>
         <ComboBox x:Name="NoteBackgroundOpacityComboBox" HorizontalAlignment="Left" Margin="173,223,0,0" VerticalAlignment="Top" Width="120" SelectedIndex="2" Height="24" SelectionChanged="NoteBackgroundOpacityComboBox_SelectionChanged">
             <System:String>100%</System:String>
@@ -160,7 +164,10 @@
                 <SolidColorBrush Color="White" Opacity="0.01"/>
             </Rectangle.Fill>
         </Rectangle>
-        <ComboBox x:Name="FPSCounterProcessesComboBox" HorizontalAlignment="Left" Margin="96,65,0,0" VerticalAlignment="Top" Width="132" Loaded="GetActiveProcesses" SelectionChanged="FPSCounterProcessesComboBox_SelectionChanged"/>
+        <ComboBox x:Name="FPSCounterProcessesComboBox" HorizontalAlignment="Left" Margin="126,636,0,0" VerticalAlignment="Top" Width="132" SelectionChanged="FPSCounterProcessesComboBox_SelectionChanged" Initialized="GetActiveProcesses"/>
+        <Label x:Name="FPSCounterSelectedProcessLabel" Content="Selected process:" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="20,634,0,0"/>
+        <Button x:Name="ButtonProgramDataDire" Content="Open data dire" Margin="0,0,117,10" Click="ButtonProgramDataDire_Click" Height="20" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="102" Background="#FFB8CBE6"/>
+        <Label x:Name="FPSCounterOptionsLabel" Content="FPS Counter options:" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,598,0,0" FontSize="16"/>
 
     </Grid>
 </Window>

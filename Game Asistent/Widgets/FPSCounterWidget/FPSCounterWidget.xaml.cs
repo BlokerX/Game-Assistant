@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Threading;
+using System.Windows;
 using System.Windows.Threading;
 
 namespace GameAssistant
@@ -341,12 +342,12 @@ namespace GameAssistant
                 {
                     #region CreateFileOfSettings DeffaultSettings
 
-                    using (StreamWriter sw = File.CreateText(ClockWidget.ClockSettingsPath))
+                    using (StreamWriter sw = File.CreateText(FPSCounterWidget.FPSCounterSettingsPath))
                     {
                         sw.WriteLine(true.ToString());
 
-                        sw.WriteLine("100");
-                        sw.WriteLine("100");
+                        sw.WriteLine("70");
+                        sw.WriteLine("60");
 
                         sw.WriteLine("200");
                         sw.WriteLine("62");
@@ -429,7 +430,6 @@ namespace GameAssistant
 
                         //calculate FPS
                         lab1.Content = /*x.Name + ": " +*/ (double)count / dt * 1000.0 + " FPS";
-                        //todo usunąć name
                     }
                 }
 
@@ -466,7 +466,6 @@ namespace GameAssistant
                         if (!frames.ContainsKey(pid))
                         {
                             frames[pid] = new TimestampCollection();
-                            //TODO frames reader
 
                             string name = "";
                             var proc = Process.GetProcessById(pid);
@@ -492,6 +491,16 @@ namespace GameAssistant
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
             m_EtwSession.Dispose();
+        }
+
+        private void WindowComponent_SizeChanged(object sender, SizeChangedEventArgs e)
+        {
+            FPSCounterWidget.UpdateWidgetInformationOfFile(this);
+        }
+
+        private void WindowComponent_LocationChanged(object sender, EventArgs e)
+        {
+            FPSCounterWidget.UpdateWidgetInformationOfFile(this);
         }
     }
 
