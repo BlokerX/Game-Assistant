@@ -239,6 +239,7 @@ namespace GameAssistant
                     Top = fpsCounterInf.PositionY,
                     SelectProcessFPS = fpsCounterInf.SelectedProcess
                 };
+
                 fcw.Width = fpsCounterInf.Width;
                 fcw.Height = fpsCounterInf.Heigth;
 
@@ -377,12 +378,6 @@ namespace GameAssistant
         {
             InitializeComponent();
 
-            #region TimerStartProcedure
-            fcwTimer.Interval = TimeSpan.FromMilliseconds(25);
-            fcwTimer.Tick += OnFPSTimer_Tick;
-            fcwTimer.Start();
-            #endregion
-
             LoadFPSReader();
 
             watch = new Stopwatch();
@@ -393,6 +388,12 @@ namespace GameAssistant
                 IsBackground = true
             };
             thETW.Start();
+
+            #region TimerStartProcedure
+            fcwTimer.Interval = TimeSpan.FromMilliseconds(25);
+            fcwTimer.Tick += OnFPSTimer_Tick;
+            fcwTimer.Start();
+            #endregion
 
             //Thread thOutput = new Thread(OutputThreadProc);
             //thOutput.IsBackground = true;
@@ -420,7 +421,7 @@ namespace GameAssistant
             {
                 t2 = watch.ElapsedMilliseconds;
                 t1 = t2 - dt;
-
+                if(frames.Count != 0)
                 foreach (var x in frames.Values)
                 {
                     if (x.Name == SelectProcessFPS)

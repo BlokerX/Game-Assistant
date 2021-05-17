@@ -164,7 +164,7 @@
                 <SolidColorBrush Color="White" Opacity="0.01"/>
             </Rectangle.Fill>
         </Rectangle>
-        <ComboBox x:Name="FPSCounterProcessesComboBox" HorizontalAlignment="Left" Margin="126,636,0,0" VerticalAlignment="Top" Width="132" SelectionChanged="FPSCounterProcessesComboBox_SelectionChanged" Initialized="GetActiveProcesses"/>
+        <ComboBox x:Name="FPSCounterProcessesComboBox" HorizontalAlignment="Left" Margin="126,636,0,0" VerticalAlignment="Top" Width="132" SelectionChanged="FPSCounterProcessesComboBox_SelectionChanged" Initialized="FPSCounterProcessesComboBox_Initialized"/>
         <Label x:Name="FPSCounterSelectedProcessLabel" Content="Selected process:" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="20,634,0,0"/>
         <Button x:Name="ButtonProgramDataDire" Content="Open data dire" Margin="0,0,117,10" Click="ButtonProgramDataDire_Click" Height="20" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="102" Background="#FFB8CBE6"/>
         <Label x:Name="FPSCounterOptionsLabel" Content="FPS Counter options:" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,598,0,0" FontSize="16"/>

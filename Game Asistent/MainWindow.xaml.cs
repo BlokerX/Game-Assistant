@@ -106,15 +106,8 @@ namespace GameAssistant
             InitializeComponent();
             this.Visibility = Visibility.Collapsed;
 
-            #region FileAndDirectoresSystemStart
-
-            // Set Paths
             SetPaths();
-
-            // Check dires system
             CheckProgramDiresArchitecture();
-
-            #endregion
 
             NotifyIconLoadingComponents();
             LoadingWidgets();
@@ -140,7 +133,9 @@ namespace GameAssistant
             notifyIcon.ContextMenuStrip.Items.Add("Picture", null, NotifyIconContextMenu_Picture_Click);
             notifyIcon.ContextMenuStrip.Items.Add("FPS Counter", null, NotifyIconContextMenu_FPS_Counter_Click);
             notifyIcon.ContextMenuStrip.Items.Add("Clock", null, NotifyIconContextMenu_Clock_Click);
+
             notifyIcon.ContextMenuStrip.Items.Add("-"); // TODO (Tu się ustawia nazwy menu items)
+
             notifyIcon.ContextMenuStrip.Items.Add("Open Window", null, NotifyIconContextMenu_OpenWindow_Click);
             notifyIcon.ContextMenuStrip.Items.Add("Close", null, NotifyIconContextMenu_Close_Click);
         }

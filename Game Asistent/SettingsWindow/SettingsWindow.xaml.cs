@@ -1196,7 +1196,7 @@ namespace GameAssistant
                 {
                     File.Delete(NoteWidget.NoteSettingsPath);
                 }
-                
+
                 if (File.Exists(FPSCounterWidget.FPSCounterSettingsPath))
                 {
                     File.Delete(FPSCounterWidget.FPSCounterSettingsPath);
@@ -1244,23 +1244,40 @@ namespace GameAssistant
 
         #endregion
 
-        #endregion
+        #region FPSCounterSettings
 
-        #region CloseMethod
-
-        private void MainWindowElement_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        private void FPSCounterProcessesComboBox_Initialized(object sender, EventArgs e)
         {
-            MainWindow.SaveWidgetsSettings(clockWidget, pictureWidget, noteWidget, fpsCounterWidget);
-            MainWindow.CloseWidgets(clockWidget, pictureWidget, noteWidget, fpsCounterWidget);
+            GetActiveProcesses();
         }
 
-        #endregion
+        private void FPSCounterProcessesComboBox_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
+        {
+            if (fpsCounterWidget != null)
+            {
+                //fpsCounterWidget.SelectProcessFPS = FPSCounterProcessesComboBox.Items[FPSCounterProcessesComboBox.SelectedIndex].ToString();
+                //FPSCounterWidget.UpdateWidgetInformationOfFile(fpsCounterWidget);
+                //fpsCounterWidget.Close();
+                //fpsCounterWidget = FPSCounterWidget.CreateWidget();
+                //fpsCounterWidget.IsAllowDrag = true;
+                //fpsCounterWidget.ResizeMode = ResizeMode.CanResizeWithGrip;
+                //fpsCounterWidget.Show();
 
-        private void GetActiveProcesses(object sender, EventArgs e)
+                fpsCounterWidget.lab1.Content = "0 FPS";
+                if (FPSCounterProcessesComboBox.SelectedIndex < FPSCounterProcessesComboBox.Items.Count && FPSCounterProcessesComboBox.SelectedIndex > -1)
+                {
+                    fpsCounterWidget.SelectProcessFPS = FPSCounterProcessesComboBox.Items[FPSCounterProcessesComboBox.SelectedIndex].ToString();
+                }
+                FPSCounterWidget.UpdateWidgetInformationOfFile(fpsCounterWidget);
+            }
+        }
+
+        private void GetActiveProcesses()
         {
             FPSCounterWidget.LoadFPSReader();
             var frames = FPSCounterWidget.GetFrames();
 
+            FPSCounterProcessesComboBox.SelectedIndex = -1;
             FPSCounterProcessesComboBox.Items.Clear();
             if (frames.Count > 0)
             {
@@ -1319,23 +1336,21 @@ namespace GameAssistant
 
         }
 
-        private void FPSCounterProcessesComboBox_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
-        {
-            if (fpsCounterWidget != null)
-            {
-                //fpsCounterWidget.SelectProcessFPS = FPSCounterProcessesComboBox.Items[FPSCounterProcessesComboBox.SelectedIndex].ToString();
-                //FPSCounterWidget.UpdateWidgetInformationOfFile(fpsCounterWidget);
-                //fpsCounterWidget.Close();
-                //fpsCounterWidget = FPSCounterWidget.CreateWidget();
-                //fpsCounterWidget.IsAllowDrag = true;
-                //fpsCounterWidget.ResizeMode = ResizeMode.CanResizeWithGrip;
-                //fpsCounterWidget.Show();
+        #endregion
 
-                fpsCounterWidget.lab1.Content = "0 FPS";
-                fpsCounterWidget.SelectProcessFPS = FPSCounterProcessesComboBox.Items[FPSCounterProcessesComboBox.SelectedIndex].ToString();
-                FPSCounterWidget.UpdateWidgetInformationOfFile(fpsCounterWidget);
-            }
+        #endregion
+
+        #region CloseMethod
+
+        private void MainWindowElement_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            MainWindow.SaveWidgetsSettings(clockWidget, pictureWidget, noteWidget, fpsCounterWidget);
+            MainWindow.CloseWidgets(clockWidget, pictureWidget, noteWidget, fpsCounterWidget);
         }
+
+
+
+        #endregion
 
     }
 }
