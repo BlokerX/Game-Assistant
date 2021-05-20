@@ -1274,7 +1274,7 @@ namespace GameAssistant
 
         private void GetActiveProcesses()
         {
-            FPSCounterWidget.LoadFPSReader();
+            //FPSCounterWidget.LoadFPSReader();
             var frames = FPSCounterWidget.GetFrames();
 
             FPSCounterProcessesComboBox.SelectedIndex = -1;

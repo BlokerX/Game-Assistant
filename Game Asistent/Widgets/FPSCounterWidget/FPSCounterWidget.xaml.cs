@@ -378,7 +378,8 @@ namespace GameAssistant
         {
             InitializeComponent();
 
-            LoadFPSReader();
+            //LoadFPSReader();
+            //todo to do naprawy
 
             watch = new Stopwatch();
             watch.Start();
@@ -408,7 +409,8 @@ namespace GameAssistant
         static void EtwThreadProc()
         {
             //start tracing
-            m_EtwSession.Source.Process();
+            //m_EtwSession.Source.Process();
+            //todo to do naprawy
         }
 
         void OutputThreadProc()
@@ -462,7 +464,7 @@ namespace GameAssistant
                     lock (sync)
                     {
                         t = watch.ElapsedMilliseconds;
-
+                        
                         //if process is not yet in Dictionary, add it
                         if (!frames.ContainsKey(pid))
                         {
@@ -470,6 +472,7 @@ namespace GameAssistant
 
                             string name = "";
                             var proc = Process.GetProcessById(pid);
+                            proc.StartInfo.Verb = "runas";
                             if (proc != null)
                             {
                                 using (proc)
@@ -491,7 +494,7 @@ namespace GameAssistant
 
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
-            m_EtwSession.Dispose();
+            m_EtwSession?.Dispose();
         }
 
         private void WindowComponent_SizeChanged(object sender, SizeChangedEventArgs e)
