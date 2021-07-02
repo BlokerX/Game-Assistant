@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:GameAssistant"
         xmlns:System="clr-namespace:System;assembly=mscorlib" x:Name="MainWindowElement" x:Class="GameAssistant.SettingsWindow"
         mc:Ignorable="d"
-        Title="Settings window" Height="746" Width="590" Visibility="Visible" Closing="MainWindowElement_Closing">
+        Title="Settings window" Height="730" Width="600" Visibility="Visible" Closing="MainWindowElement_Closing">
     <Grid x:Name="Grid">
         <Rectangle x:Name="gt" Stroke="Transparent">
             <Rectangle.Fill>
@@ -153,7 +153,7 @@
             </Rectangle.Fill>
         </Rectangle>
         <Button x:Name="ChoseFPSCounterForegroundColorButton" Content="Chose FPS Counter's foreground color" HorizontalAlignment="Left" Margin="289,429,0,0" VerticalAlignment="Top" Width="220" Height="20" Click="ChoseFPSCounterForegroundColorButton_Click"/>
-        <Rectangle x:Name="FPSCounterForegroundColorRectangle" HorizontalAlignment="Left" Height="20" Margin="514,429,0,0" VerticalAlignment="Top" Width="39" Loaded="FPSCounterForegroundColorRectangle_Loaded">
+        <Rectangle x:Name="FPSCounterForegroundColorRectangle" Height="20" Margin="514,429,0,0" VerticalAlignment="Top" Loaded="FPSCounterForegroundColorRectangle_Loaded" HorizontalAlignment="Left" Width="39">
             <Rectangle.Stroke>
                 <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
                     <GradientStop Color="Black" Offset="0"/>
@@ -168,6 +168,31 @@
         <Label x:Name="FPSCounterSelectedProcessLabel" Content="Selected process:" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="20,634,0,0"/>
         <Button x:Name="ButtonProgramDataDire" Content="Open data dire" Margin="0,0,117,10" Click="ButtonProgramDataDire_Click" Height="20" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="102" Background="#FFB8CBE6"/>
         <Label x:Name="FPSCounterOptionsLabel" Content="FPS Counter options:" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,598,0,0" FontSize="16"/>
+        <Label x:Name="AnimationsLabel" Content="Animations:" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="305,105,0,0" FontSize="16"/>
+        <ComboBox x:Name="ClockWidgetAnimationComboBox" HorizontalAlignment="Left" Margin="418,143,0,0" VerticalAlignment="Top" Width="120" SelectedIndex="0" SelectionChanged="ClockWidgetAnimationComboBox_SelectionChanged">
+            <System:String>NULL</System:String>
+            <System:String>ColorRainbowRGB</System:String>
+            <System:String>ColorRainbowRGB2</System:String>
+        </ComboBox>
+        <ComboBox x:Name="PictureWidgetAnimationComboBox" HorizontalAlignment="Left" Margin="425,174,0,0" VerticalAlignment="Top" Width="120" SelectedIndex="0" SelectionChanged="PictureWidgetAnimationComboBox_SelectionChanged">
+            <System:String>NULL</System:String>
+            <System:String>ColorRainbowRGB</System:String>
+            <System:String>ColorRainbowRGB2</System:String>
+        </ComboBox>
+        <ComboBox x:Name="NoteWidgetAnimationComboBox" HorizontalAlignment="Left" Margin="418,205,0,0" VerticalAlignment="Top" Width="120" SelectedIndex="0" SelectionChanged="NoteWidgetAnimationComboBox_SelectionChanged">
+            <System:String>NULL</System:String>
+            <System:String>ColorRainbowRGB</System:String>
+            <System:String>ColorRainbowRGB2</System:String>
+        </ComboBox>
+        <ComboBox x:Name="FPSCounterWidgetAnimationComboBox" Margin="457,236,0,0" VerticalAlignment="Top" SelectedIndex="0" SelectionChanged="FPSCounterWidgetAnimationComboBox_SelectionChanged" HorizontalAlignment="Left" Width="120">
+            <System:String>NULL</System:String>
+            <System:String>ColorRainbowRGB</System:String>
+            <System:String>ColorRainbowRGB2</System:String>
+        </ComboBox>
+        <Label x:Name="ClockAnimationLabel" Content="Clock animation:" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="315,141,0,0"/>
+        <Label x:Name="PictureAnimationLabel" Content="Picture animation:" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="315,172,0,0"/>
+        <Label x:Name="NoteAnimationLabel" Content="Note animation:" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="318,203,0,0"/>
+        <Label x:Name="FPSCounterAnimationLabel_Copy" Content="FPS Counter animation:" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="318,234,0,0"/>
 
     </Grid>
 </Window>

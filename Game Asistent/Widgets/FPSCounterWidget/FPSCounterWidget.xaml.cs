@@ -217,6 +217,20 @@ namespace GameAssistant
 
                     fpsCounterInformation.SelectedProcess = sr.ReadLine(); //todo musi to być ostatnie na liście
 
+                    if (true)
+                    {
+                        string a = sr.ReadLine();
+                        if (Animations.TryParse(a, out Animations aAnimations))
+                        {
+                            fpsCounterInformation.Animation = aAnimations;
+                        }
+                        else
+                        {
+                            sr.Close();
+                            return null;
+                        }
+                    }
+
                     sr.Close();
                     return fpsCounterInformation;
                 }
@@ -248,6 +262,8 @@ namespace GameAssistant
 
                 fcw.rec1.Fill = new System.Windows.Media.SolidColorBrush(fpsCounterInf.BackgroundColor);
                 fcw.lab1.Foreground = new System.Windows.Media.SolidColorBrush(fpsCounterInf.ForegroundColor);
+
+                fcw.SelectAnimation(fpsCounterInf);
 
                 return fcw;
             }
@@ -284,6 +300,7 @@ namespace GameAssistant
                     sw.WriteLine(new System.Windows.Media.ColorConverter().ConvertToString(MainWindow.BrushToColorMedia(argFCW.rec1.Fill)));
                     sw.WriteLine(new System.Windows.Media.ColorConverter().ConvertToString(MainWindow.BrushToColorMedia(argFCW.lab1.Foreground)));
                     sw.WriteLine(argFCW.SelectProcessFPS);
+                    sw.WriteLine(argFCW.ChosedAnimation.ToString());
 
                     sw.Close();
                 }
@@ -313,6 +330,8 @@ namespace GameAssistant
 
                     string _selectedProcess = fpsCounterInf.SelectedProcess;
 
+                    Animations _chosedAnimation = fpsCounterInf.Animation;
+
                     #endregion
 
                     #region OverwriteFile
@@ -332,6 +351,7 @@ namespace GameAssistant
                         sw.WriteLine(_backgroundColor.ToString());
                         sw.WriteLine(_foregroundColor.ToString());
                         sw.WriteLine(_selectedProcess.ToString());
+                        sw.WriteLine(_chosedAnimation.ToString());
 
                         sw.Close();
                     }
@@ -360,6 +380,8 @@ namespace GameAssistant
                         sw.WriteLine("#FF000000");
 
                         sw.WriteLine("dwm");
+
+                        sw.WriteLine(Animations.NULL.ToString());
 
                         sw.Close();
                     }
@@ -506,6 +528,22 @@ namespace GameAssistant
         {
             FPSCounterWidget.UpdateWidgetInformationOfFile(this);
         }
+
+
+        #region Animations
+
+        protected override void Animation_ColorRainbowRGB_GoOn()
+        {
+            rec1.Fill = this.Animation_ColorRainbowRGB(rec1.Fill);
+        }
+
+        protected override void Animation_ColorRainbowRGB2_GoOn()
+        {
+            rec1.Fill = this.Animation_ColorRainbowRGB2(rec1.Fill);
+        }
+
+        #endregion
+
     }
 
     //helper class to store frame timestamps

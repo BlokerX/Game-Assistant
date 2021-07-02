@@ -5,6 +5,7 @@ using System.IO;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media.Imaging;
+using static GameAssistant.WidgetWindow;
 
 namespace GameAssistant
 {
@@ -85,6 +86,22 @@ namespace GameAssistant
                 }
 
                 this.PicturePathTextBox.Text = pictureInf.PicturePath;
+                
+                switch (pictureInf.Animation)
+                {
+                    case Animations.ColorRainbowRGB:
+                        this.PictureWidgetAnimationComboBox.SelectedIndex = 1;
+                        break;
+
+                    case Animations.ColorRainbowRGB2:
+                        this.PictureWidgetAnimationComboBox.SelectedIndex = 2;
+                        break;
+
+                    case Animations.NULL:
+                    default:
+                        this.PictureWidgetAnimationComboBox.SelectedIndex = 0;
+                        break;
+                }
 
             }
             else
@@ -158,6 +175,22 @@ namespace GameAssistant
                         break;
                     default:
                         this.NoteFontOpacityComboBox.SelectedIndex = 0;
+                        break;
+                }
+
+                switch (noteInf.Animation)
+                {
+                    case Animations.ColorRainbowRGB:
+                        this.NoteWidgetAnimationComboBox.SelectedIndex = 1;
+                        break;
+
+                    case Animations.ColorRainbowRGB2:
+                        this.NoteWidgetAnimationComboBox.SelectedIndex = 2;
+                        break;
+
+                    case Animations.NULL:
+                    default:
+                        this.NoteWidgetAnimationComboBox.SelectedIndex = 0;
                         break;
                 }
 
@@ -236,6 +269,22 @@ namespace GameAssistant
                         break;
                 }
 
+                switch (clockInf.Animation)
+                {
+                    case Animations.ColorRainbowRGB:
+                        this.ClockWidgetAnimationComboBox.SelectedIndex = 1;
+                        break;
+
+                    case Animations.ColorRainbowRGB2:
+                        this.ClockWidgetAnimationComboBox.SelectedIndex = 2;
+                        break;
+
+                    case Animations.NULL:
+                    default:
+                        this.ClockWidgetAnimationComboBox.SelectedIndex = 0;
+                        break;
+                }
+
             }
             else
             {
@@ -308,6 +357,22 @@ namespace GameAssistant
                         break;
                     default:
                         this.FPSCounterBackgroundOpacityComboBox.SelectedIndex = 1;
+                        break;
+                }
+
+                switch (fpsCounterInf.Animation)
+                {
+                    case Animations.ColorRainbowRGB:
+                        this.FPSCounterWidgetAnimationComboBox.SelectedIndex = 1;
+                        break;
+
+                    case Animations.ColorRainbowRGB2:
+                        this.FPSCounterWidgetAnimationComboBox.SelectedIndex = 2;
+                        break;
+
+                    case Animations.NULL:
+                    default:
+                        this.FPSCounterWidgetAnimationComboBox.SelectedIndex = 0;
                         break;
                 }
 
@@ -725,19 +790,19 @@ namespace GameAssistant
                 switch (NoteBackgroundOpacityComboBox.SelectedIndex)
                 {
                     case 0:
-                        noteWidget.Rec1.Opacity = 1;
+                        noteWidget.rec1.Opacity = 1;
                         break;
                     case 1:
-                        noteWidget.Rec1.Opacity = 0.75;
+                        noteWidget.rec1.Opacity = 0.75;
                         break;
                     case 2:
-                        noteWidget.Rec1.Opacity = 0.5;
+                        noteWidget.rec1.Opacity = 0.5;
                         break;
                     case 3:
-                        noteWidget.Rec1.Opacity = 0.25;
+                        noteWidget.rec1.Opacity = 0.25;
                         break;
                     case 4:
-                        noteWidget.Rec1.Opacity = 0;
+                        noteWidget.rec1.Opacity = 0;
                         break;
                 }
                 NoteWidget.UpdateWidgetInformationOfFile(noteWidget);
@@ -961,7 +1026,7 @@ namespace GameAssistant
                     {
                         if (colorDialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
                         {
-                            noteWidget.Rec1.Fill = new System.Windows.Media.SolidColorBrush(MainWindow.ColorDrawingToMedia(colorDialog.Color));
+                            noteWidget.rec1.Fill = new System.Windows.Media.SolidColorBrush(MainWindow.ColorDrawingToMedia(colorDialog.Color));
                             NoteBackgroundColorRectangle.Fill = new System.Windows.Media.SolidColorBrush(MainWindow.ColorDrawingToMedia(colorDialog.Color));
                         }
                         NoteWidget.UpdateWidgetInformationOfFile(noteWidget);
@@ -993,7 +1058,7 @@ namespace GameAssistant
             }
             else if (clockWidget != null)
             {
-                NoteBackgroundColorRectangle.Fill = noteWidget.Rec1.Fill;
+                NoteBackgroundColorRectangle.Fill = noteWidget.rec1.Fill;
             }
         }
 
@@ -1352,6 +1417,45 @@ namespace GameAssistant
 
         #endregion
 
+        private void PictureWidgetAnimationComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (pictureWidget != null)
+            {
+                ComboBox sender1 = (ComboBox)sender;
+                Enum.TryParse(sender1.Items[sender1.SelectedIndex].ToString(), out Animations animations1);
+                pictureWidget.ChosedAnimation = animations1;
+            }
+        }
+
+        private void ClockWidgetAnimationComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (clockWidget != null)
+            {
+                ComboBox sender1 = (ComboBox)sender;
+                Enum.TryParse(sender1.Items[sender1.SelectedIndex].ToString(), out Animations animations1);
+                clockWidget.ChosedAnimation = animations1;
+            }
+        }
+
+        private void NoteWidgetAnimationComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (noteWidget != null)
+            {
+                ComboBox sender1 = (ComboBox)sender;
+                Enum.TryParse(sender1.Items[sender1.SelectedIndex].ToString(), out Animations animations1);
+                noteWidget.ChosedAnimation = animations1;
+            }
+        }
+
+        private void FPSCounterWidgetAnimationComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (fpsCounterWidget != null)
+            {
+                ComboBox sender1 = (ComboBox)sender;
+                Enum.TryParse(sender1.Items[sender1.SelectedIndex].ToString(), out Animations animations1);
+                fpsCounterWidget.ChosedAnimation = animations1;
+            }
+        }
     }
 }
 

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.IO;
 using System.Windows;
+using System.Windows.Media;
 
 namespace GameAssistant
 {
@@ -141,6 +142,20 @@ namespace GameAssistant
                         }
                     }
 
+                    if (true)
+                    {
+                        string a = sr.ReadLine();
+                        if (Animations.TryParse(a, out Animations aAnimations))
+                        {
+                            pictureInformation.Animation = aAnimations;
+                        }
+                        else
+                        {
+                            sr.Close();
+                            return null;
+                        }
+                    }
+
                     sr.Close();
 
                     return pictureInformation;
@@ -186,6 +201,18 @@ namespace GameAssistant
                     pf.ImageBox.Source = MainWindow.GetBitmapSource(Properties.Resources.DefaultImageToImageBox);
                     pf.ImagePath = "Default";
                 }
+
+                pf.SelectAnimation(pictureInf);
+                if(pictureInf.Animation != Animations.NULL)
+                {
+                    if(pf.Grid1.Background is System.Windows.Media.SolidColorBrush scb)
+                    {
+                        Color cl = scb.Color;
+                        cl.A = (byte)(pictureInf.PictureOpacity * 255);
+                        pf.Grid1.Background = new SolidColorBrush(cl);
+                    }
+                }
+
                 return pf;
             }
             else
@@ -219,6 +246,8 @@ namespace GameAssistant
                     sw.WriteLine(argPW.ImageBox.Opacity.ToString());
                     sw.WriteLine(argPW.ImagePath.ToString());
 
+                    sw.WriteLine(argPW.ChosedAnimation.ToString());
+
                     sw.Close();
                 }
 
@@ -243,6 +272,8 @@ namespace GameAssistant
                     double _pictureOpacity = pictureInf.PictureOpacity;
                     string _picturePath = pictureInf.PicturePath;
 
+                    Animations _chosedAnimation = pictureInf.Animation;
+
                     #endregion
 
                     #region OverwriteFile
@@ -259,6 +290,8 @@ namespace GameAssistant
 
                         sw.WriteLine(_pictureOpacity.ToString());
                         sw.WriteLine(_picturePath);
+
+                        sw.WriteLine(_chosedAnimation.ToString());
 
                         sw.Close();
                     }
@@ -283,6 +316,8 @@ namespace GameAssistant
                         sw.WriteLine((1).ToString());
                         sw.WriteLine("Default");
 
+                        sw.WriteLine(Animations.NULL.ToString());
+
                         sw.Close();
                     }
 
@@ -304,6 +339,20 @@ namespace GameAssistant
         private void PictureWidget_LocationChanged(object sender, EventArgs e)
         {
             UpdateWidgetInformationOfFile(this);
+        }
+
+        #endregion
+
+        #region Animations
+
+        protected override void Animation_ColorRainbowRGB_GoOn()
+        {
+            Grid1.Background = this.Animation_ColorRainbowRGB(Grid1.Background);
+        }
+
+        protected override void Animation_ColorRainbowRGB2_GoOn()
+        {
+            Grid1.Background = this.Animation_ColorRainbowRGB2(Grid1.Background);
         }
 
         #endregion

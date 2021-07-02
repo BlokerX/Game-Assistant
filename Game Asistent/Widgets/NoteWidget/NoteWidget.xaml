@@ -7,7 +7,7 @@
         mc:Ignorable="d"
         Title="NoteWidget" Height="360" Width="302" AllowsTransparency="True" WindowStyle="None" Background="Transparent" MouseLeftButtonDown="DragWindow" ShowInTaskbar="False" ResizeMode="NoResize" Topmost="True" SizeChanged="NoteWidget_SizeChanged" LocationChanged="NoteWidget_LocationChanged">
     <Grid x:Name="Grid" MouseLeftButtonDown="DragWindow">
-        <Rectangle x:Name="Rec1" Fill="#FFF3E126" Stroke="Transparent" Opacity="0.5" MouseLeftButtonDown="DragWindow"/>
+        <Rectangle x:Name="rec1" Fill="#FFF3E126" Stroke="Transparent" Opacity="0.5" MouseLeftButtonDown="DragWindow"/>
         <Grid x:Name="ButtonsPanel" Height="35" VerticalAlignment="Top">
             <Grid.Background>
                 <ImageBrush/>

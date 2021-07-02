@@ -194,6 +194,20 @@ namespace GameAssistant
                         }
                     }
 
+                    if (true)
+                    {
+                        string a = sr.ReadLine();
+                        if (Animations.TryParse(a, out Animations aAnimations))
+                        {
+                            clockInformation.Animation = aAnimations;
+                        }
+                        else
+                        {
+                            sr.Close();
+                            return null;
+                        }
+                    }
+
                     sr.Close();
                     return clockInformation;
                 }
@@ -223,6 +237,8 @@ namespace GameAssistant
 
                 cf.rec1.Fill = new System.Windows.Media.SolidColorBrush(clockInf.BackgroundColor);
                 cf.ClockLabel.Foreground = new System.Windows.Media.SolidColorBrush(clockInf.ForegroundColor);
+
+                cf.SelectAnimation(clockInf);
 
                 return cf;
             }
@@ -258,6 +274,7 @@ namespace GameAssistant
 
                     sw.WriteLine(new System.Windows.Media.ColorConverter().ConvertToString(MainWindow.BrushToColorMedia(argCW.rec1.Fill)));
                     sw.WriteLine(new System.Windows.Media.ColorConverter().ConvertToString(MainWindow.BrushToColorMedia(argCW.ClockLabel.Foreground)));
+                    sw.WriteLine(argCW.ChosedAnimation.ToString());
 
                     sw.Close();
                 }
@@ -285,6 +302,8 @@ namespace GameAssistant
                     string _backgroundColor = clockInf.BackgroundColor.ToString();
                     string _foregroundColor = clockInf.ForegroundColor.ToString();
 
+                    Animations _chosedAnimation = clockInf.Animation;
+
                     #endregion
 
                     #region OverwriteFile
@@ -303,6 +322,7 @@ namespace GameAssistant
                         sw.WriteLine(_backgroundClockOpacity.ToString());
                         sw.WriteLine(_backgroundColor.ToString());
                         sw.WriteLine(_foregroundColor.ToString());
+                        sw.WriteLine(_chosedAnimation.ToString());
 
                         sw.Close();
                     }
@@ -329,6 +349,7 @@ namespace GameAssistant
 
                         sw.WriteLine("#FFFFFFB5");
                         sw.WriteLine("#FF000000");
+                        sw.WriteLine(Animations.NULL.ToString());
 
                         sw.Close();
                     }
@@ -376,8 +397,22 @@ namespace GameAssistant
 
         #endregion
 
+        #region Animations
+
+        protected override void Animation_ColorRainbowRGB_GoOn()
+        {
+            rec1.Fill = this.Animation_ColorRainbowRGB(rec1.Fill);
+        }
+
+        protected override void Animation_ColorRainbowRGB2_GoOn()
+        {
+            rec1.Fill = this.Animation_ColorRainbowRGB2(rec1.Fill);
+        }
+
+        #endregion
+
         #region Helpers
-        
+
         private void UpdateTimeToNow()
         {
             this.ClockLabel.Content =

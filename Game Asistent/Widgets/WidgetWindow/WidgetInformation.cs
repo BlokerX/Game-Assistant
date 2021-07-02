@@ -1,4 +1,6 @@
-﻿namespace GameAssistant
+﻿using static GameAssistant.WidgetWindow;
+
+namespace GameAssistant
 {
     public class WidgetInformation
     {
@@ -9,5 +11,7 @@
 
         public int Width;
         public int Heigth;
+
+        public Animations Animation;
     }
 }

@@ -332,6 +332,20 @@ namespace GameAssistant
                         }
                     }
 
+                    if (true)
+                    {
+                        string a = sr.ReadLine();
+                        if (Animations.TryParse(a, out Animations aAnimations))
+                        {
+                            noteInformation.Animation = aAnimations;
+                        }
+                        else
+                        {
+                            sr.Close();
+                            return null;
+                        }
+                    }
+
                     sr.Close();
 
                     return noteInformation;
@@ -359,9 +373,9 @@ namespace GameAssistant
                 nf.Width = noteInf.Width;
                 nf.Height = noteInf.Heigth;
 
-                nf.Rec1.Opacity = noteInf.BackgroundOpacity;
+                nf.rec1.Opacity = noteInf.BackgroundOpacity;
 
-                nf.Rec1.Fill = new System.Windows.Media.SolidColorBrush(noteInf.BackgroundColor);
+                nf.rec1.Fill = new System.Windows.Media.SolidColorBrush(noteInf.BackgroundColor);
 
                 nf.TextBox1.Opacity = noteInf.FontOpacity;
 
@@ -370,6 +384,8 @@ namespace GameAssistant
                 nf.TextBox1.FontFamily = noteInf.FontFamily;
 
                 nf.TextBox1.FontSize = noteInf.FontSize;
+
+                nf.SelectAnimation(noteInf);
 
                 switch (noteInf.VisibilityControlPanel)
                 {
@@ -409,8 +425,8 @@ namespace GameAssistant
                     sw.WriteLine(argNW.Width.ToString());
                     sw.WriteLine(argNW.Height.ToString());
 
-                    sw.WriteLine(argNW.Rec1.Opacity);
-                    sw.WriteLine(new System.Windows.Media.ColorConverter().ConvertToString(MainWindow.BrushToColorMedia(argNW.Rec1.Fill)));
+                    sw.WriteLine(argNW.rec1.Opacity);
+                    sw.WriteLine(new System.Windows.Media.ColorConverter().ConvertToString(MainWindow.BrushToColorMedia(argNW.rec1.Fill)));
 
                     sw.WriteLine(argNW.TextBox1.Opacity.ToString());
 
@@ -430,7 +446,7 @@ namespace GameAssistant
                     {
                         sw.WriteLine(false.ToString());
                     }
-
+                    sw.WriteLine(argNW.ChosedAnimation.ToString());
 
                     sw.Close();
                 }
@@ -463,6 +479,8 @@ namespace GameAssistant
                     string _actuallyNotePath = noteInf.ActuallyNotePath;
                     bool _visibilityControlPanel = noteInf.VisibilityControlPanel;
 
+                    Animations _chosedAnimation = noteInf.Animation;
+
                     #endregion
 
                     #region OverwriteFile
@@ -485,7 +503,8 @@ namespace GameAssistant
                         sw.WriteLine(new System.Windows.Media.FontFamilyConverter().ConvertToString(_fontFamily));
                         sw.WriteLine(_fontSize.ToString());
                         sw.WriteLine(_actuallyNotePath);
-                        sw.WriteLine(_visibilityControlPanel);
+                        sw.WriteLine(_visibilityControlPanel.ToString());
+                        sw.WriteLine(_chosedAnimation.ToString());
 
                         sw.Close();
                     }
@@ -516,6 +535,7 @@ namespace GameAssistant
                         sw.WriteLine("20");
                         sw.WriteLine("");
                         sw.WriteLine(false.ToString());
+                        sw.WriteLine(Animations.NULL.ToString());
 
                         sw.Close();
                     }
@@ -630,6 +650,21 @@ namespace GameAssistant
             }
             //todo udostępnić możliwość kasowania notatek
             NoteWidget.UpdateWidgetInformationOfFile(this);
+        }
+
+        #endregion
+
+
+        #region Animations
+
+        protected override void Animation_ColorRainbowRGB_GoOn()
+        {
+            rec1.Fill = this.Animation_ColorRainbowRGB(rec1.Fill);
+        }
+
+        protected override void Animation_ColorRainbowRGB2_GoOn()
+        {
+            rec1.Fill = this.Animation_ColorRainbowRGB2(rec1.Fill);
         }
 
         #endregion
