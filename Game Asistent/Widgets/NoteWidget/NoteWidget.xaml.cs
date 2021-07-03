@@ -112,74 +112,10 @@ namespace GameAssistant
 
                 using (StreamReader sr = File.OpenText(NoteWidget.NoteSettingsPath))
                 {
-                    if (true)
+                    noteInformation = (NoteInformation)GetWidgetInformationOfFile(noteInformation, sr);
+                    if (noteInformation == null)
                     {
-                        string a = sr.ReadLine();
-                        if (bool.TryParse(a, out bool aBool))
-                        {
-                            noteInformation.IsChosed = aBool;
-                        }
-                        else
-                        {
-                            sr.Close();
-                            return null;
-                        }
-                    }
-
-                    if (true)
-                    {
-                        string a = sr.ReadLine();
-                        if (int.TryParse(a, out int aInt))
-                        {
-                            noteInformation.PositionX = aInt;
-                        }
-                        else
-                        {
-                            sr.Close();
-                            return null;
-                        }
-                    }
-
-                    if (true)
-                    {
-                        string a = sr.ReadLine();
-                        if (int.TryParse(a, out int aInt))
-                        {
-                            noteInformation.PositionY = aInt;
-                        }
-                        else
-                        {
-                            sr.Close();
-                            return null;
-                        }
-                    }
-
-                    if (true)
-                    {
-                        string a = sr.ReadLine();
-                        if (int.TryParse(a, out int aInt))
-                        {
-                            noteInformation.Width = aInt;
-                        }
-                        else
-                        {
-                            sr.Close();
-                            return null;
-                        }
-                    }
-
-                    if (true)
-                    {
-                        string a = sr.ReadLine();
-                        if (int.TryParse(a, out int aInt))
-                        {
-                            noteInformation.Heigth = aInt;
-                        }
-                        else
-                        {
-                            sr.Close();
-                            return null;
-                        }
+                        return null;
                     }
 
                     if (true)
@@ -332,20 +268,6 @@ namespace GameAssistant
                         }
                     }
 
-                    if (true)
-                    {
-                        string a = sr.ReadLine();
-                        if (Animations.TryParse(a, out Animations aAnimations))
-                        {
-                            noteInformation.Animation = aAnimations;
-                        }
-                        else
-                        {
-                            sr.Close();
-                            return null;
-                        }
-                    }
-
                     sr.Close();
 
                     return noteInformation;
@@ -417,13 +339,7 @@ namespace GameAssistant
 
                 using (StreamWriter sw = File.CreateText(NoteWidget.NoteSettingsPath))
                 {
-                    sw.WriteLine(true.ToString());
-
-                    sw.WriteLine(argNW.Left.ToString());
-                    sw.WriteLine(argNW.Top.ToString());
-
-                    sw.WriteLine(argNW.Width.ToString());
-                    sw.WriteLine(argNW.Height.ToString());
+                    UpdateWidgetInformationOfFileSaveObject(argNW, sw);
 
                     sw.WriteLine(argNW.rec1.Opacity);
                     sw.WriteLine(new System.Windows.Media.ColorConverter().ConvertToString(MainWindow.BrushToColorMedia(argNW.rec1.Fill)));
@@ -446,7 +362,6 @@ namespace GameAssistant
                     {
                         sw.WriteLine(false.ToString());
                     }
-                    sw.WriteLine(argNW.ChosedAnimation.ToString());
 
                     sw.Close();
                 }
@@ -458,53 +373,23 @@ namespace GameAssistant
                 NoteInformation nI = DownloadWidgetInformationOfFile();
                 if (File.Exists(NoteWidget.NoteSettingsPath) && nI != null)
                 {
-                    #region DownloadInformationsOfFile
-
-                    NoteInformation noteInf = DownloadWidgetInformationOfFile();
-                    bool _isChosed = false;
-
-                    int _positionX = noteInf.PositionX;
-                    int _positionY = noteInf.PositionY;
-
-                    int _width = noteInf.Width;
-                    int _heigth = noteInf.Heigth;
-
-                    double _backgroundOpacity = noteInf.BackgroundOpacity;
-                    System.Windows.Media.Color _backgroundColor = noteInf.BackgroundColor;
-
-                    double _fontOpacity = noteInf.FontOpacity;
-                    System.Windows.Media.Color _fontColor = noteInf.FontColor;
-                    System.Windows.Media.FontFamily _fontFamily = noteInf.FontFamily;
-                    double _fontSize = noteInf.FontSize;
-                    string _actuallyNotePath = noteInf.ActuallyNotePath;
-                    bool _visibilityControlPanel = noteInf.VisibilityControlPanel;
-
-                    Animations _chosedAnimation = noteInf.Animation;
-
-                    #endregion
-
                     #region OverwriteFile
+                    
+                    NoteInformation noteInf = DownloadWidgetInformationOfFile();
 
                     using (StreamWriter sw = File.CreateText(NoteWidget.NoteSettingsPath))
                     {
-                        sw.WriteLine(_isChosed.ToString());
+                        UpdateWidgetInformationOfFileSaveWidgetInformation(noteInf, sw);
 
-                        sw.WriteLine(_positionX.ToString());
-                        sw.WriteLine(_positionY.ToString());
+                        sw.WriteLine(noteInf.BackgroundOpacity.ToString());
+                        sw.WriteLine(noteInf.BackgroundColor.ToString());
 
-                        sw.WriteLine(_width.ToString());
-                        sw.WriteLine(_heigth.ToString());
-
-                        sw.WriteLine(_backgroundOpacity.ToString());
-                        sw.WriteLine(_backgroundColor.ToString());
-
-                        sw.WriteLine(_fontOpacity.ToString());
-                        sw.WriteLine(_fontColor.ToString());
-                        sw.WriteLine(new System.Windows.Media.FontFamilyConverter().ConvertToString(_fontFamily));
-                        sw.WriteLine(_fontSize.ToString());
-                        sw.WriteLine(_actuallyNotePath);
-                        sw.WriteLine(_visibilityControlPanel.ToString());
-                        sw.WriteLine(_chosedAnimation.ToString());
+                        sw.WriteLine(noteInf.FontOpacity.ToString());
+                        sw.WriteLine(noteInf.FontColor.ToString());
+                        sw.WriteLine(new System.Windows.Media.FontFamilyConverter().ConvertToString(noteInf.FontFamily));
+                        sw.WriteLine(noteInf.FontSize.ToString());
+                        sw.WriteLine(noteInf.ActuallyNotePath);
+                        sw.WriteLine(noteInf.VisibilityControlPanel.ToString());
 
                         sw.Close();
                     }
@@ -526,6 +411,8 @@ namespace GameAssistant
                         sw.WriteLine("302");
                         sw.WriteLine("330");
 
+                        sw.WriteLine(Animations.NULL.ToString());
+
                         sw.WriteLine((0.5).ToString());
                         sw.WriteLine("#FFF3E126");
 
@@ -535,7 +422,6 @@ namespace GameAssistant
                         sw.WriteLine("20");
                         sw.WriteLine("");
                         sw.WriteLine(false.ToString());
-                        sw.WriteLine(Animations.NULL.ToString());
 
                         sw.Close();
                     }

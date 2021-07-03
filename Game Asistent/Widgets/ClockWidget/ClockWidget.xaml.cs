@@ -34,75 +34,10 @@ namespace GameAssistant
 
                 using (StreamReader sr = File.OpenText(ClockSettingsPath))
                 {
-
-                    if (true)
+                    clockInformation = (ClockInformation)GetWidgetInformationOfFile(clockInformation, sr);
+                    if (clockInformation == null)
                     {
-                        string a = sr.ReadLine();
-                        if (bool.TryParse(a, out bool aBool))
-                        {
-                            clockInformation.IsChosed = aBool;
-                        }
-                        else
-                        {
-                            sr.Close();
-                            return null;
-                        }
-                    }
-
-                    if (true)
-                    {
-                        string a = sr.ReadLine();
-                        if (int.TryParse(a, out int aInt))
-                        {
-                            clockInformation.PositionX = aInt;
-                        }
-                        else
-                        {
-                            sr.Close();
-                            return null;
-                        }
-                    }
-
-                    if (true)
-                    {
-                        string a = sr.ReadLine();
-                        if (int.TryParse(a, out int aInt))
-                        {
-                            clockInformation.PositionY = aInt;
-                        }
-                        else
-                        {
-                            sr.Close();
-                            return null;
-                        }
-                    }
-
-                    if (true)
-                    {
-                        string a = sr.ReadLine();
-                        if (int.TryParse(a, out int aInt))
-                        {
-                            clockInformation.Width = aInt;
-                        }
-                        else
-                        {
-                            sr.Close();
-                            return null;
-                        }
-                    }
-
-                    if (true)
-                    {
-                        string a = sr.ReadLine();
-                        if (int.TryParse(a, out int aInt))
-                        {
-                            clockInformation.Heigth = aInt;
-                        }
-                        else
-                        {
-                            sr.Close();
-                            return null;
-                        }
+                        return null;
                     }
 
                     if (true)
@@ -163,7 +98,7 @@ namespace GameAssistant
                             return null;
                         }
                     }
-                    
+
                     if (true)
                     {
                         string a = sr.ReadLine();
@@ -188,20 +123,6 @@ namespace GameAssistant
                             }
                         }
                         catch
-                        {
-                            sr.Close();
-                            return null;
-                        }
-                    }
-
-                    if (true)
-                    {
-                        string a = sr.ReadLine();
-                        if (Animations.TryParse(a, out Animations aAnimations))
-                        {
-                            clockInformation.Animation = aAnimations;
-                        }
-                        else
                         {
                             sr.Close();
                             return null;
@@ -261,20 +182,13 @@ namespace GameAssistant
 
                 using (StreamWriter sw = File.CreateText(ClockWidget.ClockSettingsPath))
                 {
-                    sw.WriteLine(true.ToString());
-
-                    sw.WriteLine(argCW.Left.ToString());
-                    sw.WriteLine(argCW.Top.ToString());
-
-                    sw.WriteLine(argCW.Width.ToString());
-                    sw.WriteLine(argCW.Height.ToString());
+                    UpdateWidgetInformationOfFileSaveObject(argCW, sw);
 
                     sw.WriteLine(argCW.ClockLabel.Opacity.ToString());
                     sw.WriteLine(argCW.rec1.Opacity.ToString());
 
                     sw.WriteLine(new System.Windows.Media.ColorConverter().ConvertToString(MainWindow.BrushToColorMedia(argCW.rec1.Fill)));
                     sw.WriteLine(new System.Windows.Media.ColorConverter().ConvertToString(MainWindow.BrushToColorMedia(argCW.ClockLabel.Foreground)));
-                    sw.WriteLine(argCW.ChosedAnimation.ToString());
 
                     sw.Close();
                 }
@@ -285,44 +199,19 @@ namespace GameAssistant
                 ClockInformation cI = ClockWidget.DownloadWidgetInformationOfFile();
                 if (File.Exists(ClockWidget.ClockSettingsPath) && cI != null)
                 {
-                    #region DownloadInformationsOfFile
+                    #region OverwriteFile
 
                     ClockInformation clockInf = ClockWidget.DownloadWidgetInformationOfFile();
-                    bool _isChosed = false;
-
-                    int _positionX = clockInf.PositionX;
-                    int _positionY = clockInf.PositionY;
-
-                    int _width = clockInf.Width;
-                    int _heigth = clockInf.Heigth;
-
-                    double _clockOpacity = clockInf.ClockOpacity;
-                    double _backgroundClockOpacity = clockInf.BackgroundClockOpacity;
-
-                    string _backgroundColor = clockInf.BackgroundColor.ToString();
-                    string _foregroundColor = clockInf.ForegroundColor.ToString();
-
-                    Animations _chosedAnimation = clockInf.Animation;
-
-                    #endregion
-
-                    #region OverwriteFile
 
                     using (StreamWriter sw = File.CreateText(ClockWidget.ClockSettingsPath))
                     {
-                        sw.WriteLine(_isChosed.ToString());
+                        UpdateWidgetInformationOfFileSaveWidgetInformation(clockInf, sw);
 
-                        sw.WriteLine(_positionX.ToString());
-                        sw.WriteLine(_positionY.ToString());
+                        sw.WriteLine(clockInf.ClockOpacity);
+                        sw.WriteLine(clockInf.BackgroundClockOpacity);
 
-                        sw.WriteLine(_width.ToString());
-                        sw.WriteLine(_heigth.ToString());
-
-                        sw.WriteLine(_clockOpacity.ToString());
-                        sw.WriteLine(_backgroundClockOpacity.ToString());
-                        sw.WriteLine(_backgroundColor.ToString());
-                        sw.WriteLine(_foregroundColor.ToString());
-                        sw.WriteLine(_chosedAnimation.ToString());
+                        sw.WriteLine(clockInf.BackgroundColor.ToString());
+                        sw.WriteLine(clockInf.ForegroundColor.ToString());
 
                         sw.Close();
                     }
@@ -344,12 +233,13 @@ namespace GameAssistant
                         sw.WriteLine("200");
                         sw.WriteLine("62");
 
+                        sw.WriteLine(Animations.NULL.ToString());
+
                         sw.WriteLine((0.75).ToString());
                         sw.WriteLine((0.50).ToString());
 
                         sw.WriteLine("#FFFFFFB5");
                         sw.WriteLine("#FF000000");
-                        sw.WriteLine(Animations.NULL.ToString());
 
                         sw.Close();
                     }
@@ -423,7 +313,7 @@ namespace GameAssistant
                             (DateTime.Now.Second / 10).ToString() +
                             (DateTime.Now.Second % 10).ToString();
         }
-        
+
         #endregion
     }
 }

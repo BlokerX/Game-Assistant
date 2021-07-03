@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using System.Windows;
 using System.Windows.Input;
 using System.Windows.Media;
@@ -23,7 +24,7 @@ namespace GameAssistant
         /// <summary>
         /// Animation Timer
         /// </summary>
-        private System.Windows.Threading.DispatcherTimer Animation = new System.Windows.Threading.DispatcherTimer();
+        private readonly System.Windows.Threading.DispatcherTimer Animation = new System.Windows.Threading.DispatcherTimer();
         private void Dispatcher_Tick(object sender, EventArgs e)
         {
             switch (ChosedAnimation)
@@ -331,6 +332,122 @@ namespace GameAssistant
 
         // Methods
         public static dynamic DownloadWidgetInformationOfFile() { return 0; }
+
+        public static WidgetInformation GetWidgetInformationOfFile(WidgetInformation widgetInformation, StreamReader sr)
+        {
+
+            if (true)
+            {
+                string a = sr.ReadLine();
+                if (bool.TryParse(a, out bool aBool))
+                {
+                    widgetInformation.IsChosed = aBool;
+                }
+                else
+                {
+                    sr.Close();
+                    return null;
+                }
+            }
+
+            if (true)
+            {
+                string a = sr.ReadLine();
+                if (int.TryParse(a, out int aInt))
+                {
+                    widgetInformation.PositionX = aInt;
+                }
+                else
+                {
+                    sr.Close();
+                    return null;
+                }
+            }
+
+            if (true)
+            {
+                string a = sr.ReadLine();
+                if (int.TryParse(a, out int aInt))
+                {
+                    widgetInformation.PositionY = aInt;
+                }
+                else
+                {
+                    sr.Close();
+                    return null;
+                }
+            }
+
+            if (true)
+            {
+                string a = sr.ReadLine();
+                if (int.TryParse(a, out int aInt))
+                {
+                    widgetInformation.Width = aInt;
+                }
+                else
+                {
+                    sr.Close();
+                    return null;
+                }
+            }
+
+            if (true)
+            {
+                string a = sr.ReadLine();
+                if (int.TryParse(a, out int aInt))
+                {
+                    widgetInformation.Heigth = aInt;
+                }
+                else
+                {
+                    sr.Close();
+                    return null;
+                }
+            }
+
+            if (true)
+            {
+                string a = sr.ReadLine();
+                if (Animations.TryParse(a, out Animations aAnimations))
+                {
+                    widgetInformation.Animation = aAnimations;
+                }
+                else
+                {
+                    sr.Close();
+                    return null;
+                }
+            }
+
+            return widgetInformation;
+        }
+
+        public static void UpdateWidgetInformationOfFileSaveObject(WidgetWindow argWW, StreamWriter sw)
+        {
+            sw.WriteLine(true.ToString());
+
+            sw.WriteLine(argWW.Left.ToString());
+            sw.WriteLine(argWW.Top.ToString());
+
+            sw.WriteLine(argWW.Width.ToString());
+            sw.WriteLine(argWW.Height.ToString());
+
+            sw.WriteLine(argWW.ChosedAnimation.ToString());
+        }
+
+        public static void UpdateWidgetInformationOfFileSaveWidgetInformation(WidgetInformation widgetInf, StreamWriter sw)
+        {
+            sw.WriteLine(false);
+
+            sw.WriteLine(widgetInf.PositionX);
+            sw.WriteLine(widgetInf.PositionY);
+
+            sw.WriteLine(widgetInf.Width);
+            sw.WriteLine(widgetInf.Heigth);
+
+            sw.WriteLine(widgetInf.Animation);
+        }
 
         public static dynamic CreateWidget() { return 0; }
         /*/ TODO public static void UpdateWidgetInformationOfFile(w) { } (Pomyśleć o interfejsach) /*/

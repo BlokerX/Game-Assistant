@@ -40,74 +40,10 @@ namespace GameAssistant
 
                 using (StreamReader sr = File.OpenText(PictureWidget.PictureSettingsPath))
                 {
-                    if (true)
+                    pictureInformation = (PictureInformation)GetWidgetInformationOfFile(pictureInformation, sr);
+                    if (pictureInformation == null)
                     {
-                        string a = sr.ReadLine();
-                        if (bool.TryParse(a, out bool aBool))
-                        {
-                            pictureInformation.IsChosed = aBool;
-                        }
-                        else
-                        {
-                            sr.Close();
-                            return null;
-                        }
-                    }
-
-                    if (true)
-                    {
-                        string a = sr.ReadLine();
-                        if (int.TryParse(a, out int aInt))
-                        {
-                            pictureInformation.PositionX = aInt;
-                        }
-                        else
-                        {
-                            sr.Close();
-                            return null;
-                        }
-                    }
-
-                    if (true)
-                    {
-                        string a = sr.ReadLine();
-                        if (int.TryParse(a, out int aInt))
-                        {
-                            pictureInformation.PositionY = aInt;
-                        }
-                        else
-                        {
-                            sr.Close();
-                            return null;
-                        }
-                    }
-
-                    if (true)
-                    {
-                        string a = sr.ReadLine();
-                        if (int.TryParse(a, out int aInt))
-                        {
-                            pictureInformation.Width = aInt;
-                        }
-                        else
-                        {
-                            sr.Close();
-                            return null;
-                        }
-                    }
-
-                    if (true)
-                    {
-                        string a = sr.ReadLine();
-                        if (int.TryParse(a, out int aInt))
-                        {
-                            pictureInformation.Heigth = aInt;
-                        }
-                        else
-                        {
-                            sr.Close();
-                            return null;
-                        }
+                        return null;
                     }
 
                     if (true)
@@ -134,20 +70,6 @@ namespace GameAssistant
                         else if (File.Exists(a))
                         {
                             pictureInformation.PicturePath = a;
-                        }
-                        else
-                        {
-                            sr.Close();
-                            return null;
-                        }
-                    }
-
-                    if (true)
-                    {
-                        string a = sr.ReadLine();
-                        if (Animations.TryParse(a, out Animations aAnimations))
-                        {
-                            pictureInformation.Animation = aAnimations;
                         }
                         else
                         {
@@ -235,18 +157,10 @@ namespace GameAssistant
 
                 using (StreamWriter sw = File.CreateText(PictureWidget.PictureSettingsPath))
                 {
-                    sw.WriteLine(true.ToString());
-
-                    sw.WriteLine(argPW.Left.ToString());
-                    sw.WriteLine(argPW.Top.ToString());
-
-                    sw.WriteLine(argPW.Width.ToString());
-                    sw.WriteLine(argPW.Height.ToString());
+                    UpdateWidgetInformationOfFileSaveObject(argPW, sw);
 
                     sw.WriteLine(argPW.ImageBox.Opacity.ToString());
                     sw.WriteLine(argPW.ImagePath.ToString());
-
-                    sw.WriteLine(argPW.ChosedAnimation.ToString());
 
                     sw.Close();
                 }
@@ -258,40 +172,17 @@ namespace GameAssistant
                 PictureInformation pI = DownloadWidgetInformationOfFile();
                 if (File.Exists(PictureWidget.PictureSettingsPath) && pI != null)
                 {
-                    #region DownloadInformationsOfFile
-
-                    PictureInformation pictureInf = DownloadWidgetInformationOfFile();
-                    bool _isChosed = false;
-
-                    int _positionX = pictureInf.PositionX;
-                    int _positionY = pictureInf.PositionY;
-
-                    int _width = pictureInf.Width;
-                    int _heigth = pictureInf.Heigth;
-
-                    double _pictureOpacity = pictureInf.PictureOpacity;
-                    string _picturePath = pictureInf.PicturePath;
-
-                    Animations _chosedAnimation = pictureInf.Animation;
-
-                    #endregion
 
                     #region OverwriteFile
 
+                    PictureInformation pictureInf = DownloadWidgetInformationOfFile();
+
                     using (StreamWriter sw = File.CreateText(PictureWidget.PictureSettingsPath))
                     {
-                        sw.WriteLine(_isChosed.ToString());
+                        UpdateWidgetInformationOfFileSaveWidgetInformation(pictureInf, sw);
 
-                        sw.WriteLine(_positionX.ToString());
-                        sw.WriteLine(_positionY.ToString());
-
-                        sw.WriteLine(_width.ToString());
-                        sw.WriteLine(_heigth.ToString());
-
-                        sw.WriteLine(_pictureOpacity.ToString());
-                        sw.WriteLine(_picturePath);
-
-                        sw.WriteLine(_chosedAnimation.ToString());
+                        sw.WriteLine(pictureInf.PictureOpacity.ToString());
+                        sw.WriteLine(pictureInf.PicturePath);
 
                         sw.Close();
                     }
@@ -313,10 +204,10 @@ namespace GameAssistant
                         sw.WriteLine("733");
                         sw.WriteLine("413");
 
+                        sw.WriteLine(Animations.NULL.ToString());
+
                         sw.WriteLine((1).ToString());
                         sw.WriteLine("Default");
-
-                        sw.WriteLine(Animations.NULL.ToString());
 
                         sw.Close();
                     }

@@ -55,75 +55,10 @@ namespace GameAssistant
 
                 using (StreamReader sr = File.OpenText(FPSCounterSettingsPath))
                 {
-
-                    if (true)
+                    fpsCounterInformation = (FPSCounterInformation)GetWidgetInformationOfFile(fpsCounterInformation, sr);
+                    if (fpsCounterInformation == null)
                     {
-                        string a = sr.ReadLine();
-                        if (bool.TryParse(a, out bool aBool))
-                        {
-                            fpsCounterInformation.IsChosed = aBool;
-                        }
-                        else
-                        {
-                            sr.Close();
-                            return null;
-                        }
-                    }
-
-                    if (true)
-                    {
-                        string a = sr.ReadLine();
-                        if (int.TryParse(a, out int aInt))
-                        {
-                            fpsCounterInformation.PositionX = aInt;
-                        }
-                        else
-                        {
-                            sr.Close();
-                            return null;
-                        }
-                    }
-
-                    if (true)
-                    {
-                        string a = sr.ReadLine();
-                        if (int.TryParse(a, out int aInt))
-                        {
-                            fpsCounterInformation.PositionY = aInt;
-                        }
-                        else
-                        {
-                            sr.Close();
-                            return null;
-                        }
-                    }
-
-                    if (true)
-                    {
-                        string a = sr.ReadLine();
-                        if (int.TryParse(a, out int aInt))
-                        {
-                            fpsCounterInformation.Width = aInt;
-                        }
-                        else
-                        {
-                            sr.Close();
-                            return null;
-                        }
-                    }
-
-                    if (true)
-                    {
-                        string a = sr.ReadLine();
-                        if (int.TryParse(a, out int aInt))
-                        {
-                            fpsCounterInformation.Heigth = aInt;
-                        }
-                        else
-                        {
-                            sr.Close();
-                            return null;
-                        }
+                        return null;
                     }
 
                     if (true)
@@ -217,20 +152,6 @@ namespace GameAssistant
 
                     fpsCounterInformation.SelectedProcess = sr.ReadLine(); //todo musi to być ostatnie na liście
 
-                    if (true)
-                    {
-                        string a = sr.ReadLine();
-                        if (Animations.TryParse(a, out Animations aAnimations))
-                        {
-                            fpsCounterInformation.Animation = aAnimations;
-                        }
-                        else
-                        {
-                            sr.Close();
-                            return null;
-                        }
-                    }
-
                     sr.Close();
                     return fpsCounterInformation;
                 }
@@ -286,13 +207,7 @@ namespace GameAssistant
 
                 using (StreamWriter sw = File.CreateText(FPSCounterWidget.FPSCounterSettingsPath))
                 {
-                    sw.WriteLine(true.ToString());
-
-                    sw.WriteLine(argFCW.Left.ToString());
-                    sw.WriteLine(argFCW.Top.ToString());
-
-                    sw.WriteLine(argFCW.Width.ToString());
-                    sw.WriteLine(argFCW.Height.ToString());
+                    UpdateWidgetInformationOfFileSaveObject(argFCW, sw);
 
                     sw.WriteLine(argFCW.lab1.Opacity.ToString());
                     sw.WriteLine(argFCW.rec1.Opacity.ToString());
@@ -300,7 +215,6 @@ namespace GameAssistant
                     sw.WriteLine(new System.Windows.Media.ColorConverter().ConvertToString(MainWindow.BrushToColorMedia(argFCW.rec1.Fill)));
                     sw.WriteLine(new System.Windows.Media.ColorConverter().ConvertToString(MainWindow.BrushToColorMedia(argFCW.lab1.Foreground)));
                     sw.WriteLine(argFCW.SelectProcessFPS);
-                    sw.WriteLine(argFCW.ChosedAnimation.ToString());
 
                     sw.Close();
                 }
@@ -311,47 +225,19 @@ namespace GameAssistant
                 FPSCounterInformation fcI = FPSCounterWidget.DownloadWidgetInformationOfFile();
                 if (File.Exists(FPSCounterWidget.FPSCounterSettingsPath) && fcI != null)
                 {
-                    #region DownloadInformationsOfFile
+                    #region OverwriteFile
 
                     FPSCounterInformation fpsCounterInf = FPSCounterWidget.DownloadWidgetInformationOfFile();
-                    bool _isChosed = false;
-
-                    int _positionX = fpsCounterInf.PositionX;
-                    int _positionY = fpsCounterInf.PositionY;
-
-                    int _width = fpsCounterInf.Width;
-                    int _heigth = fpsCounterInf.Heigth;
-
-                    double _fpsOpacity = fpsCounterInf.FPSOpacity;
-                    double _backgroundOpacity = fpsCounterInf.BackgroundOpacity;
-
-                    string _backgroundColor = fpsCounterInf.BackgroundColor.ToString();
-                    string _foregroundColor = fpsCounterInf.ForegroundColor.ToString();
-
-                    string _selectedProcess = fpsCounterInf.SelectedProcess;
-
-                    Animations _chosedAnimation = fpsCounterInf.Animation;
-
-                    #endregion
-
-                    #region OverwriteFile
 
                     using (StreamWriter sw = File.CreateText(FPSCounterWidget.FPSCounterSettingsPath))
                     {
-                        sw.WriteLine(_isChosed.ToString());
+                        UpdateWidgetInformationOfFileSaveWidgetInformation(fpsCounterInf, sw);
 
-                        sw.WriteLine(_positionX.ToString());
-                        sw.WriteLine(_positionY.ToString());
-
-                        sw.WriteLine(_width.ToString());
-                        sw.WriteLine(_heigth.ToString());
-
-                        sw.WriteLine(_fpsOpacity.ToString());
-                        sw.WriteLine(_backgroundOpacity.ToString());
-                        sw.WriteLine(_backgroundColor.ToString());
-                        sw.WriteLine(_foregroundColor.ToString());
-                        sw.WriteLine(_selectedProcess.ToString());
-                        sw.WriteLine(_chosedAnimation.ToString());
+                        sw.WriteLine(fpsCounterInf.FPSOpacity.ToString());
+                        sw.WriteLine(fpsCounterInf.BackgroundOpacity.ToString());
+                        sw.WriteLine(fpsCounterInf.BackgroundColor.ToString());
+                        sw.WriteLine(fpsCounterInf.ForegroundColor.ToString());
+                        sw.WriteLine(fpsCounterInf.SelectedProcess);
 
                         sw.Close();
                     }
@@ -373,6 +259,8 @@ namespace GameAssistant
                         sw.WriteLine("200");
                         sw.WriteLine("62");
 
+                        sw.WriteLine(Animations.NULL.ToString());
+
                         sw.WriteLine((0.75).ToString());
                         sw.WriteLine((0.50).ToString());
 
@@ -380,8 +268,6 @@ namespace GameAssistant
                         sw.WriteLine("#FF000000");
 
                         sw.WriteLine("dwm");
-
-                        sw.WriteLine(Animations.NULL.ToString());
 
                         sw.Close();
                     }
